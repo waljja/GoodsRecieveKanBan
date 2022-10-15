@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+ http://www.springframework.org/schema/context 
+ http://www.springframework.org/schema/context/spring-context-2.5.xsd
+ http://www.springframework.org/schema/aop
+ http://www.springframework.org/schema/tx/spring-aop-2.5.xsd
+ http://www.springframework.org/schema/tx 
+ http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!-- 配置文件占位符 -->
+	<context:property-placeholder location="classpath:jdbc.properties" />
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${driverClassName}">
+		</property>
+		<property name="url" value="${url}">
+		</property>
+		<property name="username" value="${username}"></property>
+		<property name="password" value="${password}"></property>
+	</bean>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.connection.release_mode">after_statement</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.format_sql">true</prop><!-- 格式化sql语句 -->
+				<prop key="hibernate.use_sql_comments">true</prop><!-- 显示sql语句的注释 -->
+			</props>
+		</property>
+		
+	</bean>
+	
+	<!--自己扫描-->
+	<context:component-scan base-package="ht" />
+
+	<bean id="jdbctemplateDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${driverClassName}">
+		</property>
+		<property name="url" value="${url}">
+		</property>
+		<property name="username" value="${username}"></property>
+		<property name="password" value="${password}"></property>
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="jdbctemplateDataSource" />
+	</bean>
+
+
+
+	<!-- 基于注解配置事务JDBC -->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="jdbctemplateDataSource" />
+	</bean>
+	<tx:annotation-driven transaction-manager="txManager" />
+	
+	
+	<!--定时任务：  -->
+	<bean name="autoTask01" class="ht.task.AutoDownloadNotFinishSOTask" />
+	<bean id="startTask01" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+  		<!-- 要调用的bean -->
+  		<property name="targetObject" ref="autoTask01"></property>
+  		<!-- 要调用的Method -->
+  		<property name="targetMethod" value="execute"></property>
+  		<!-- 是否并发,false表示 如果发生错误也不影响下一次的调用 -->
+  		<property name="concurrent" value="false"></property>
+ 	</bean>
+ 	<!-- 配置一个触发器() -->
+	<bean id="startTrigger07" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  <property name="jobDetail" ref="startTask01"></property>
+	  <property name="cronExpression" value="0 40 7 * * ?"></property> <!--每日21点30分执行-->
+	</bean>
+	
+	
+	
+	<!--定时任务： 1.待点收看板 -->
+	<bean name="autoTask101" class="ht.task.AutoToReceiveCheck" />
+	<bean id="startTask101" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+  		<!-- 要调用的bean -->
+  		<property name="targetObject" ref="autoTask101"></property>
+  		<!-- 要调用的Method -->
+  		<property name="targetMethod" value="execute"></property>
+  		<!-- 是否并发,false表示 如果发生错误也不影响下一次的调用 -->
+  		<property name="concurrent" value="false"></property>
+ 	</bean>
+ 	<!-- 配置一个触发器() -->
+	<bean id="startTrigger101" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  <property name="jobDetail" ref="startTask101"></property>
+	  <property name="cronExpression" value="0 0/15 * ? * 2-7"></property> <!--每10分钟执行一次 "0 14 17 ? * 1-7"   "0 0/15 * ? * 2-7"  -->
+	</bean>
+	
+		<!--定时任务：  2a. 急料检验看板（非OCR）  -->
+	<bean name="autoTask102" class="ht.task.AutoUrgentMaterialCheckNotOCR" />
+	<bean id="startTask102" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+  		<!-- 要调用的bean -->
+  		<property name="targetObject" ref="autoTask102"></property>
+  		<!-- 要调用的Method -->
+  		<property name="targetMethod" value="execute"></property>
+  		<!-- 是否并发,false表示 如果发生错误也不影响下一次的调用 -->
+  		<property name="concurrent" value="false"></property>
+ 	</bean>
+ 	<!-- 配置一个触发器() -->
+	<bean id="startTrigger102" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  <property name="jobDetail" ref="startTask102"></property>
+	  <property name="cronExpression" value="0 0/15 * ? * 2-7"></property> <!--每10分钟执行一次-->
+	</bean>
+	
+	
+		<!--定时任务：  2b. 急料检验看板（OCR） -->
+	<bean name="autoTask103" class="ht.task.AutoUrgentMaterialCheckOCR" />
+	<bean id="startTask103" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+  		<!-- 要调用的bean -->
+  		<property name="targetObject" ref="autoTask103"></property>
+  		<!-- 要调用的Method -->
+  		<property name="targetMethod" value="execute"></property>
+  		<!-- 是否并发,false表示 如果发生错误也不影响下一次的调用 -->
+  		<property name="concurrent" value="false"></property>
+ 	</bean>
+ 	<!-- 配置一个触发器() -->
+	<bean id="startTrigger103" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  <property name="jobDetail" ref="startTask103"></property>
+	  <property name="cronExpression" value="0 0/15 * ? * 2-7"></property> <!--每10分钟执行一次-->
+	</bean>
+	
+	
+		<!--定时任务：   3a. 待入主料仓物料看板 -->
+	<bean name="autoTask104" class="ht.task.AutoToReceiveWarehouse" />
+	<bean id="startTask104" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+  		<!-- 要调用的bean -->
+  		<property name="targetObject" ref="autoTask104"></property>
+  		<!-- 要调用的Method -->
+  		<property name="targetMethod" value="execute"></property>
+  		<!-- 是否并发,false表示 如果发生错误也不影响下一次的调用 -->
+  		<property name="concurrent" value="false"></property>
+ 	</bean>
+ 	<!-- 配置一个触发器() -->
+	<bean id="startTrigger104" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  <property name="jobDetail" ref="startTask104"></property>
+	  <property name="cronExpression" value="0 0/15 * ? * 2-7"></property> <!--每10分钟执行一次-->
+	</bean>
+	
+	
+		<!--定时任务： 3b. 待入退貨仓物料看板  -->
+	<bean name="autoTask105" class="ht.task.AutoToReceiveWarehouseB" />
+	<bean id="startTask105" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+  		<!-- 要调用的bean -->
+  		<property name="targetObject" ref="autoTask105"></property>
+  		<!-- 要调用的Method -->
+  		<property name="targetMethod" value="execute"></property>
+  		<!-- 是否并发,false表示 如果发生错误也不影响下一次的调用 -->
+  		<property name="concurrent" value="false"></property>
+ 	</bean>
+ 	<!-- 配置一个触发器() -->
+	<bean id="startTrigger105" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  <property name="jobDetail" ref="startTask105"></property>
+	  <property name="cronExpression" value="0 0/15 * ? * 2-7"></property> <!--每10分钟执行一次-->
+	</bean>
+	
+	
+	
+
+	
+	
+	<!-- 总调度,用于启动定时器 -->
+	<bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+	   <!--如果多个任务设定同一时间执行，必须 QuartzScheduler 延时启动，应用启动后 QuartzScheduler 再启动-->
+       <!--<property name="startupDelay" value="60"/>-->
+	   <property name="triggers" >
+	   	<list>
+	   	
+	   <!--
+	   		<ref bean="startTrigger07"/> 
+	   		
+	   		<ref bean="startTrigger101"/> 
+	   		<ref bean="startTrigger102"/> 
+	   		<ref bean="startTrigger103"/> 
+	   		<ref bean="startTrigger104"/> 
+	   		<ref bean="startTrigger105"/> 
+	   		
+	  	
+	   
+	   	   	
+	   			
+	   		
+	   		 
+	   	
+	   		 	-->
+	   		
+	   		
+	   	</list>
+	  </property>
+	</bean>
+
+</beans>
