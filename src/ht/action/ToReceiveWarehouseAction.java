@@ -1,23 +1,17 @@
 package ht.action;
 
-import java.sql.ResultSet;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
 import ht.biz.IToReceiveWarehouseService;
 import ht.entity.ToReceiveWarehouse;
 import ht.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
+
+import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  *
@@ -98,8 +92,8 @@ public class ToReceiveWarehouseAction extends ActionSupport{
     }
     
     public void doSaveRecords() throws Exception {
+        ConMes conMes = new ConMes();
         ConVPS vpsDB = new ConVPS();
-        ConAegis aegisDB = new ConAegis();
         ConDashBoard grnewdbDB = new ConDashBoard();
         //
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -139,10 +133,10 @@ public class ToReceiveWarehouseAction extends ActionSupport{
                 rsMap.put(grn+pn, dou);
             }
         }
-        //System.out.println("vendorrid size:"+rsMap.size());
+
         for(String key : rsMap.keySet()) {
             String[] temp = rsMap.get(key);
-            ResultSet rsA = aegisDB.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+            ResultSet rsA = conMes.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
             		" from ItemInventories II " +
                     " left join ItemTypes IT on IT.ID = II.ItemTypeID " +
                     " left join FactoryResourceBases FRB on FRB.ID = II.StockResourceID " +
@@ -152,6 +146,7 @@ public class ToReceiveWarehouseAction extends ActionSupport{
                     " left join ProductMeasurementDatas PMD on PMD.ProductInspectionHistoryID = PIH.ID" +
                     " where II.Identifier in ("+temp[3]+") and FRB.Name like '%QM%' and PMD.MeasurementType ='321'" +
                     " order by IIH.TimePosted_BaseDateTimeUTC desc ");
+
             //IQC归还时间, TimePosted_BaseDateTimeUTC
             if(rsA.next()){
                 ToReceiveWarehouse trw = new ToReceiveWarehouse();
@@ -265,7 +260,7 @@ public class ToReceiveWarehouseAction extends ActionSupport{
         //System.out.println("pcbvendorrid size:"+rsMap.size());
         for(String key : rsMap.keySet()) {
             String[] temp = rsMap.get(key);
-            ResultSet rsA = aegisDB.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+            ResultSet rsA = conMes.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
             		" from ItemInventories II " +
                     " left join ItemTypes IT on IT.ID = II.ItemTypeID " +
                     " left join FactoryResourceBases FRB on FRB.ID = II.StockResourceID " +
@@ -362,7 +357,7 @@ public class ToReceiveWarehouseAction extends ActionSupport{
         request.put("toReceiveWarehouseList", list);
         //
         vpsDB.close();
-        aegisDB.close();
+        conMes.close();
         grnewdbDB.close();
     }
     

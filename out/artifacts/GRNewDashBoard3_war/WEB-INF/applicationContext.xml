@@ -114,8 +114,7 @@
 	  <property name="jobDetail" ref="startTask102"></property>
 	  <property name="cronExpression" value="0 0/15 * ? * 2-7"></property> <!--每10分钟执行一次-->
 	</bean>
-	
-	
+
 		<!--定时任务：  2b. 急料检验看板（OCR） -->
 	<bean name="autoTask103" class="ht.task.AutoUrgentMaterialCheckOCR" />
 	<bean id="startTask103" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -131,8 +130,7 @@
 	  <property name="jobDetail" ref="startTask103"></property>
 	  <property name="cronExpression" value="0 0/15 * ? * 2-7"></property> <!--每10分钟执行一次-->
 	</bean>
-	
-	
+
 		<!--定时任务：   3a. 待入主料仓物料看板 -->
 	<bean name="autoTask104" class="ht.task.AutoToReceiveWarehouse" />
 	<bean id="startTask104" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -148,8 +146,7 @@
 	  <property name="jobDetail" ref="startTask104"></property>
 	  <property name="cronExpression" value="0 0/15 * ? * 2-7"></property> <!--每10分钟执行一次-->
 	</bean>
-	
-	
+
 		<!--定时任务： 3b. 待入退貨仓物料看板  -->
 	<bean name="autoTask105" class="ht.task.AutoToReceiveWarehouseB" />
 	<bean id="startTask105" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -165,40 +162,15 @@
 	  <property name="jobDetail" ref="startTask105"></property>
 	  <property name="cronExpression" value="0 0/15 * ? * 2-7"></property> <!--每10分钟执行一次-->
 	</bean>
-	
-	
-	
 
-	
-	
 	<!-- 总调度,用于启动定时器 -->
 	<bean id="schedulerFactory" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 	   <!--如果多个任务设定同一时间执行，必须 QuartzScheduler 延时启动，应用启动后 QuartzScheduler 再启动-->
        <!--<property name="startupDelay" value="60"/>-->
 	   <property name="triggers" >
 	   	<list>
-	   	
-	   <!--
-	   		<ref bean="startTrigger07"/> 
-	   		
-	   		<ref bean="startTrigger101"/> 
-	   		<ref bean="startTrigger102"/> 
-	   		<ref bean="startTrigger103"/> 
-	   		<ref bean="startTrigger104"/> 
-	   		<ref bean="startTrigger105"/> 
-	   		
-	  	
-	   
-	   	   	
-	   			
-	   		
-	   		 
-	   	
-	   		 	-->
-	   		
 	   		
 	   	</list>
 	  </property>
 	</bean>
-
 </beans>

@@ -1,28 +1,21 @@
 package ht.task;
 
 import ht.biz.IToReceiveCheckService;
-import ht.dao.INotFinishSODao;
-import ht.entity.NotFinishSO;
 import ht.entity.ToReceiveCheck;
-import ht.util.*;
+import ht.util.ConDashBoard;
+import ht.util.ConMes;
+import ht.util.ConVPS;
+import ht.util.DateUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.opensymphony.xwork2.ActionContext;
+import java.util.*;
 
 /**
  * 1.待点收看板
@@ -43,8 +36,6 @@ public class AutoToReceiveCheck {
 			Connection connMes = conMes.con;
 	    	ConVPS vpsDB = new ConVPS();
 	    	Connection connVPS = vpsDB.con;
-	    	ConAegis aegisDB = new ConAegis();
-	    	Connection connAegis = aegisDB.con;
 	    	ConDashBoard grnewdbDB = new ConDashBoard();
 	    	Connection connDB = grnewdbDB.con;
 	    	//
@@ -133,7 +124,7 @@ public class AutoToReceiveCheck {
 						" where II.Identifier = ? and (FRB.Name is not null and FRB.Name <> '') ");
 				*/
 
-				PreparedStatement pstmtA3 = connAegis.prepareStatement("select RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+				PreparedStatement pstmtA3 = connMes.prepareStatement("select RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
 						" where PartNumber = ? and convert(varchar(10),RequireTime,23) =? order by RequireTime ");
 				PreparedStatement pstmtDB1 = connDB.prepareStatement("select inventory,needQty,gotQty,soStartDate " +
 						" from NotFinishSO where plant=? and bom=? order by soStartDate ");
@@ -328,7 +319,7 @@ public class AutoToReceiveCheck {
 			}
 			
 			vpsDB.close();
-			aegisDB.close();
+			conMes.close();
 			grnewdbDB.close();
 			
 		} catch (Exception e) {

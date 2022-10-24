@@ -37,7 +37,6 @@ public class Copy_2_of_AutoToReceiveCheck {
 		try {
 			ConMes conMes = new ConMes();
 	    	ConVPS vpsDB = new ConVPS();
-	    	ConAegis aegisDB = new ConAegis();
 	    	ConDashBoard grnewdbDB = new ConDashBoard();
 	    	//
 	    	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -135,8 +134,14 @@ public class Copy_2_of_AutoToReceiveCheck {
 					trc.setItemNumber(temp[0]);
 					trc.setGRNQuantity(temp[1]);
 					trc.setUIDQuantity(temp[2]);
-					ResultSet rsB = aegisDB.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+
+					ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
+
+					/*
+						ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
 							" where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
+					*/
+
 					if(rsB.next()) {
 						trc.setProductionTime(rsB.getString("RequireTime").substring(0, 10));
 					}else {
@@ -251,20 +256,29 @@ public class Copy_2_of_AutoToReceiveCheck {
 			System.out.println("pcbvendorrid size:"+rsMap.size());
 			for(String key : rsMap.keySet()) {
 				String[] temp = rsMap.get(key);
-				ResultSet rsA = aegisDB.executeQuery(" select FRB.Name from ItemInventories II " +
+				ResultSet rsA = conMes.executeQuery(SqlStatements.findStockNull(temp[3])); // 131 DB modified by GuoZhao Ding
+
+				/*
+					ResultSet rsA = conMes.executeQuery(" select FRB.Name from ItemInventories II " +
 						" left join ItemTypes IT on IT.ID = II.ItemTypeID " +
 						" left join FactoryResourceBases FRB on FRB.ID = II.StockResourceID " +
 						" where II.Identifier = '"+temp[3]+"' and (FRB.Name is null or FRB.Name = '') ");
-				//" where II.Identifier = '"+temp[3]+"' and FRB.Name is not null and FRB.Name <> '' ");
+				*/
+
 				if(rsA.next()){
-					//System.out.println("pcbvendorrid UID:"+temp[3]);
 					ToReceiveCheck trc = new ToReceiveCheck();
 					trc.setGRN(key.substring(0, 10));
 					trc.setItemNumber(temp[0]);
 					trc.setGRNQuantity(temp[1]);
 					trc.setUIDQuantity(temp[2]);
-					ResultSet rsB = aegisDB.executeQuery("select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+
+					ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
+
+					/*
+						ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
 							" where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
+					*/
+
 					if(rsB.next()) {
 						trc.setProductionTime(rsB.getString("RequireTime").substring(0, 10));
 					}else {
@@ -356,7 +370,7 @@ public class Copy_2_of_AutoToReceiveCheck {
 			}
 			//
 			vpsDB.close();
-			aegisDB.close();
+			conMes.close();
 			grnewdbDB.close();
 			
 		} catch (Exception e) {

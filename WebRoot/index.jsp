@@ -16,9 +16,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
   </head>
   <script>
         function toPage1(){
@@ -64,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <table width="60%" border="0" cellspacing="0" cellpadding="0">
       <br><br><br>
 	  <tr>
-	    <td colspan="2"><div align="center"><span style="font-size:30px">收货部及IQC急料看板</span></div></td>
+	    <td colspan="2"><div align="center"><span style="font-size:30px">鸿通 MES 2.0</span></div></td>
 	  </tr>
 	
 	  <tr>

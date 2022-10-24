@@ -4,12 +4,9 @@ import ht.biz.IToReceiveWarehouseService;
 import ht.dao.INotFinishSODao;
 import ht.entity.NotFinishSO;
 import ht.entity.ToReceiveWarehouse;
-import ht.util.ConAegis;
-import ht.util.ConDashBoard;
-import ht.util.ConVPS;
-import ht.util.DateUtils;
-import ht.util.SAPService;
+import ht.util.*;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,8 +36,8 @@ public class CopyOfAutoToReceiveWarehouse {
 		System.out.println("start...AutoToReceiveWarehouse "+new Date());
 		
 		try {
+			ConMes conMes = new ConMes();
 			ConVPS vpsDB = new ConVPS();
-	        ConAegis aegisDB = new ConAegis();
 	        ConDashBoard grnewdbDB = new ConDashBoard();
 	        //
 	        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -120,7 +117,7 @@ public class CopyOfAutoToReceiveWarehouse {
 	        System.out.println("AutoToReceiveWarehouse vendorrid size:"+rsMap.size());
 	        for(String key : rsMap.keySet()) {
 	            String[] temp = rsMap.get(key);
-	            ResultSet rsA = aegisDB.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+	            ResultSet rsA = conMes.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 	            		" from ItemInventories II " +
 	                    " left join ItemTypes IT on IT.ID = II.ItemTypeID " +
 	                    " left join FactoryResourceBases FRB on FRB.ID = II.StockResourceID " +
@@ -137,9 +134,15 @@ public class CopyOfAutoToReceiveWarehouse {
 	                trw.setItemNumber(temp[0]);
 	                trw.setGRNQuantity(temp[1]);               
 	                trw.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-	                ResultSet rsB = aegisDB.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
-	                        " where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
-	                if(rsB.next()) {
+
+					ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
+
+					/*
+						ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+							" where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
+					*/
+
+					if(rsB.next()) {
 	                    trw.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
 	                }else {
 	                    //根据工厂 物料 取工单开始日期
@@ -243,7 +246,7 @@ public class CopyOfAutoToReceiveWarehouse {
 	        System.out.println("AutoToReceiveWarehouse pcbvendorrid size:"+rsMap.size());
 	        for(String key : rsMap.keySet()) {
 	            String[] temp = rsMap.get(key);
-	            ResultSet rsA = aegisDB.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+	            ResultSet rsA = conMes.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 	            		" from ItemInventories II " +
 	                    " left join ItemTypes IT on IT.ID = II.ItemTypeID " +
 	                    " left join FactoryResourceBases FRB on FRB.ID = II.StockResourceID " +
@@ -259,9 +262,15 @@ public class CopyOfAutoToReceiveWarehouse {
 	                trw.setItemNumber(temp[0]);
 	                trw.setGRNQuantity(temp[1]);
 	                trw.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-	                ResultSet rsB = aegisDB.executeQuery("select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
-	                        "where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
-	                if(rsB.next()) {
+
+					ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
+
+					/*
+						ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+							" where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
+					*/
+
+					if(rsB.next()) {
 	                    trw.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
 	                }else {
 	                    //根据工厂 物料 取工单开始日期
@@ -343,7 +352,7 @@ public class CopyOfAutoToReceiveWarehouse {
 			}
 	        //
 	        vpsDB.close();
-	        aegisDB.close();
+	        conMes.close();
 	        grnewdbDB.close();
 		} catch (Exception e) {
 			e.printStackTrace();

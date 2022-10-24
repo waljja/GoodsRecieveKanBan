@@ -21,6 +21,8 @@ import org.springframework.stereotype.Controller;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+import static ht.util.SqlStatements.findStock;
+
 /**
  *
  * 待点收看板
@@ -106,6 +108,7 @@ public class ToReceiveCheckAction extends ActionSupport{
     	grnewdbDB.close();
     }
 
+    // 统计类别
     public String reloadIndex() throws Exception {
     	Map request = (Map) ActionContext.getContext().get("request");
     	ConDashBoard grnewdbDB = new ConDashBoard();
@@ -157,13 +160,13 @@ public class ToReceiveCheckAction extends ActionSupport{
     	}
     	//
     	grnewdbDB.close();
+
     	return "toIndex";
     }
     
     public void doSaveRecords() throws Exception {
     	ConMes conMes = new ConMes();
     	ConVPS vpsDB = new ConVPS();
-    	ConAegis aegisDB = new ConAegis();
     	ConDashBoard grnewdbDB = new ConDashBoard();
     	//f
     	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -208,7 +211,7 @@ public class ToReceiveCheckAction extends ActionSupport{
 
 		for(String key : rsMap.keySet()) { 
 			String[] temp = rsMap.get(key);
-			ResultSet rsA = conMes.executeQuery(SqlStatements.findStock(temp[3])); // 131 DB modified by GuoZhao Ding
+			ResultSet rsA = conMes.executeQuery(findStock(temp[3])); // 131 DB modified by GuoZhao Ding
 
 			/*
 				ResultSet rsA = aegisDB.executeQuery(" select FRB.Name as stockname from ItemInventories II " +
@@ -336,15 +339,20 @@ public class ToReceiveCheckAction extends ActionSupport{
 				rsMap.put(grn+pn, dou);
 			}
 		}
-		//System.out.println("pcbvendorrid size:"+rsMap.size());
+
 		for(String key : rsMap.keySet()) {
 			String[] temp = rsMap.get(key);
-			ResultSet rsA = aegisDB.executeQuery(" select FRB.Name from ItemInventories II " +
+
+			ResultSet rsA = conMes.executeQuery(findStock(temp[3])); // 131 DB Modified by GuoZhao Ding
+
+			/*
+				ResultSet rsA = conMes.executeQuery(" select FRB.Name from ItemInventories II " +
 					" left join ItemTypes IT on IT.ID = II.ItemTypeID " +
 					" left join FactoryResourceBases FRB on FRB.ID = II.StockResourceID " +
 					" where II.Identifier = '"+temp[3]+"' and FRB.Name is not null and FRB.Name <> '' ");
+			*/
+
 			if(!rsA.next()){
-				//System.out.println("pcbvendorrid UID:"+temp[3]);
 				ToReceiveCheck trc = new ToReceiveCheck();
 				trc.setGRN(key.substring(0, 10));
 				trc.setItemNumber(temp[0]);
@@ -440,7 +448,7 @@ public class ToReceiveCheckAction extends ActionSupport{
         request.put("toReceiveCheckList", list);
 		//
 		vpsDB.close();
-		aegisDB.close();
+		conMes.close();
 		grnewdbDB.close();
     }
     

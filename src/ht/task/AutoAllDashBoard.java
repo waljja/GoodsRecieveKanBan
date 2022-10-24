@@ -1,32 +1,17 @@
 package ht.task;
 
-import ht.biz.IToReceiveCheckService;
-import ht.biz.IToReceiveWarehouseBService;
-import ht.biz.IToReceiveWarehouseService;
-import ht.biz.IUrgentMaterialCheckNotOCRService;
-import ht.biz.IUrgentMaterialCheckOCRService;
-import ht.dao.INotFinishSODao;
-import ht.entity.NotFinishSO;
-import ht.entity.ToReceiveCheck;
-import ht.entity.ToReceiveWarehouse;
-import ht.entity.ToReceiveWarehouseB;
-import ht.entity.UrgentMaterialCheckNotOCR;
-import ht.entity.UrgentMaterialCheckOCR;
+import ht.biz.*;
+import ht.entity.*;
 import ht.util.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.opensymphony.xwork2.ActionContext;
 
 /**
  * 
@@ -277,15 +262,21 @@ public class AutoAllDashBoard {
 					rsMap.put(grn+pn, dou);
 				}
 			}
+
 			System.out.println("pcbvendorrid size:"+rsMap.size());
+
 			for(String key : rsMap.keySet()) {
 				String[] temp = rsMap.get(key);
-				ResultSet rsA = conMes.executeQuery(" select FRB.Name from ItemInventories II " +
+				ResultSet rsA = conMes.executeQuery(SqlStatements.findStock(temp[3])); // 131 DB modified by GuoZhao Ding
+
+				/*
+					ResultSet rsA = conMes.executeQuery(" select FRB.Name from ItemInventories II " +
 						" left join ItemTypes IT on IT.ID = II.ItemTypeID " +
 						" left join FactoryResourceBases FRB on FRB.ID = II.StockResourceID " +
 						" where II.Identifier = '"+temp[3]+"' and FRB.Name is not null and FRB.Name <> '' ");
+				*/
+
 				if(!rsA.next()){
-					//System.out.println("pcbvendorrid UID:"+temp[3]);
 					ToReceiveCheck trc = new ToReceiveCheck();
 					trc.setGRN(key.substring(0, 10));
 					trc.setItemNumber(temp[0]);
@@ -425,26 +416,36 @@ public class AutoAllDashBoard {
 	                rsMap.put(pn+grnDate, dou);
 	            }
 	        }
+
 	        System.out.println("AutoUrgentMaterialCheckNotOCR");
 	        System.out.println("vendorrid size:"+rsMap.size());
+
 	        for(String key : rsMap.keySet()) {
 	            String[] temp = rsMap.get(key);
-	            //System.out.println(temp[3]);
-	            ResultSet rsA = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+				ResultSet rsA = conMes.executeQuery(SqlStatements.findLatestTransInfo(temp[3])); // 131 DB Modified by GuoZhao Ding
+
+				/*
+	            	ResultSet rsA = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 	            		" from ItemInventories II " +
 	                    " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
 	                    " left join StockLocations SL on SL.ID = IIH.StockLocationID" +
 	                    " where SL.Identifier is not null and (SL.Identifier like'%IQ%') and II.Identifier in ("+temp[3]+") " +
 	            		" order by IIH.TimePosted_BaseDateTimeUTC desc ");
+	            */
+
 	            if(rsA.next()){ //有IQ库位，但此UID，还有QM在后，表示已归还
 	            	String uid = rsA.getString("Identifier");
-	            	//System.out.println("Identifier:"+uid);
-	            	ResultSet rsA2 = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+					ResultSet rsA2 = conMes.executeQuery(SqlStatements.findLatestTransInfo1(uid)); // 131 DB modified by GuoZhao Ding
+
+	            	/*
+	            		ResultSet rsA2 = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 		            		" from ItemInventories II " +
 		                    " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
 		                    " left join StockLocations SL on SL.ID = IIH.StockLocationID" +
 		                    " where II.Identifier = '"+uid+"' and SL.Identifier is not null " +
 		            		" order by IIH.TimePosted_BaseDateTimeUTC desc ");
+	            	*/
+
 	            	if(rsA2.next() && !rsA2.getString("historyStock").contains("IQ")){
 	            		//有IQ库位，但此UID，还有QM在后，表示已归还
 	            	}else{
@@ -544,10 +545,15 @@ public class AutoAllDashBoard {
 	                    //umCheckNotOCRService.saveUrgentMaterialCheckNotOCR(umcn);
 	            	}
 	            }else {
-	            	rsA = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation " +
+					rsA = conMes.executeQuery(SqlStatements.findUidStock(temp[3].replaceAll("'", "").substring(0,21))); // 131 DB modified by GuoZhao Ding
+
+	            	/*
+	            		rsA = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation " +
 	            			" from ItemInventories II " +
 	            			" where (II.StockLocation like'%QM%') and II.Identifier = '"+temp[3].replaceAll("'", "").substring(0,21)+"' " +
 		            		" ");
+	            	*/
+
 	            	if(rsA.next()) {
 	            		UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
 		                umcn.setGRN(temp[5]);
@@ -687,23 +693,32 @@ public class AutoAllDashBoard {
 	        System.out.println("pcbvendorrid size:"+rsMap.size());
 	        for(String key : rsMap.keySet()) {
 	            String[] temp = rsMap.get(key);
-	            //System.out.println(temp[3]);
-	            ResultSet rsA = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+
+				ResultSet rsA = conMes.executeQuery(SqlStatements.findLatestTransInfo(temp[3])); // 131 DB Modified by GuoZhao Ding
+
+				/*
+	            	ResultSet rsA = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 	            		" from ItemInventories II " +
 	                    " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
 	                    " left join StockLocations SL on SL.ID = IIH.StockLocationID" +
 	                    " where SL.Identifier is not null and (SL.Identifier like'%IQ%') and II.Identifier in ("+temp[3]+") " +
 	            		" order by IIH.TimePosted_BaseDateTimeUTC desc ");
-	            if(rsA.next()){ //有IQ库位，但此UID，还有QM在后，表示已归还
+	            */
+
+				if(rsA.next()){ //有IQ库位，但此UID，还有QM在后，表示已归还
 	            	String uid = rsA.getString("Identifier");
-	            	//System.out.println("Identifier:"+uid);
-	            	ResultSet rsA2 = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+					ResultSet rsA2 = conMes.executeQuery(SqlStatements.findLatestTransInfo1(uid)); // 131 DB modified by GuoZhao Ding
+
+	            	/*
+	            		ResultSet rsA2 = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 		            		" from ItemInventories II " +
 		                    " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
 		                    " left join StockLocations SL on SL.ID = IIH.StockLocationID" +
-		                    " where II.Identifier = '"+uid+"' and SL.Identifier is not null  " +
+		                    " where II.Identifier = '"+uid+"' and SL.Identifier is not null " +
 		            		" order by IIH.TimePosted_BaseDateTimeUTC desc ");
-	            	if(rsA2.next() && !rsA2.getString("historyStock").contains("IQ")){
+	            	*/
+
+					if(rsA2.next() && !rsA2.getString("historyStock").contains("IQ")){
 	            		//有IQ库位，但此UID，还有QM在后，表示已归还
 	            		
 	            	}else{
@@ -803,11 +818,16 @@ public class AutoAllDashBoard {
 	                    //umCheckNotOCRService.saveUrgentMaterialCheckNotOCR(umcn);
 	            	}
 	            }else {
-	            	rsA = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation  " +
+					rsA = conMes.executeQuery(SqlStatements.findUidStock(temp[3].replaceAll("'", "").substring(0,21))); // 131 DB modified by GuoZhao Ding
+
+	            	/*
+	            		rsA = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation " +
 	            			" from ItemInventories II " +
 	            			" where (II.StockLocation like'%QM%') and II.Identifier = '"+temp[3].replaceAll("'", "").substring(0,21)+"' " +
-		            		"  ");
-	            	if(rsA.next()) {
+		            		" ");
+	            	*/
+
+					if(rsA.next()) {
 	            		UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
 		                umcn.setGRN(temp[5]);
 		                umcn.setItemNumber(temp[0]);
@@ -1106,45 +1126,51 @@ public class AutoAllDashBoard {
 	                String auditDataTime = rsA.getString("localtime").substring(0,16);
 	            	ResultSet ocrRs = ocrDB.executeQuery("select UID from LabelMsg where UID in ("+temp[3]+")");
 	            	if(!ocrRs.next()){
-	            		  UrgentMaterialCheckOCR umc = new UrgentMaterialCheckOCR();
-	                      umc.setGRN(key.substring(0,10));
-	                      umc.setItemNumber(temp[0]);
-	                      umc.setGRNQuantity(temp[1]);
-	                      umc.setUIDQuantity(temp[2]);
-	                      umc.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-	                      ResultSet rsD = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+	            		UrgentMaterialCheckOCR umc = new UrgentMaterialCheckOCR();
+	                    umc.setGRN(key.substring(0,10));
+	                    umc.setItemNumber(temp[0]);
+	                    umc.setGRNQuantity(temp[1]);
+	                    umc.setUIDQuantity(temp[2]);
+	                    umc.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
+	                    ResultSet rsD = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
 	                              "where ReceivingNumber='"+key.substring(0,10)+"'");
-	                      if (rsD.next()) {
-	                          umc.setRDFinishTime(rsD.getString("CreateDate").substring(0,16));//收货时间
-	                      }else {
-	                          umc.setRDFinishTime("");
-	                      }
-	                      ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
-	                              " where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
-	                      if(rsB.next()) {
-	                          umc.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
-	                      }else {
-	                          //根据工厂 物料 取工单开始日期
-	                          double totalInventory = 0.0;
-	                          double leftInventory = 0.0;
-	                          String soStartDate = "NA";
-	                          String sql = "select inventory,needQty,gotQty,soStartDate " +
-	                          " from NotFinishSO where plant='"+temp[4]+"' and bom='"+temp[0]+"' order by soStartDate ";
-	                          ResultSet rs31  = grnewdbDB.executeQuery(sql);
-	                          if(rs31.next()) {
-	                              totalInventory = rs31.getDouble("inventory");
-	                          }
-	                          ResultSet rs32  = grnewdbDB.executeQuery(sql);
-	                          while(rs32.next()) {
-	                              totalInventory = totalInventory - (rs32.getDouble("needQty") - rs32.getDouble("gotQty"));
-	                              if(totalInventory < 0.0) {
-	                                  soStartDate = rs32.getString("soStartDate");
-	                                  break;
-	                              }
-	                          }
-	                          umc.setProductionTime(soStartDate);
-	                      }
-	                      if(!"NA".equals(umc.getProductionTime()) ){
+	                    if (rsD.next()) {
+	                        umc.setRDFinishTime(rsD.getString("CreateDate").substring(0,16));//收货时间
+	                    }else {
+	                        umc.setRDFinishTime("");
+	                    }
+
+	                    ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
+
+						/*
+						    ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+								" where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
+						*/
+
+						if(rsB.next()) {
+	                        umc.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
+	                    }else {
+	                        //根据工厂 物料 取工单开始日期
+	                        double totalInventory = 0.0;
+	                        double leftInventory = 0.0;
+	                        String soStartDate = "NA";
+	                        String sql = "select inventory,needQty,gotQty,soStartDate " +
+	                        " from NotFinishSO where plant='"+temp[4]+"' and bom='"+temp[0]+"' order by soStartDate ";
+	                        ResultSet rs31  = grnewdbDB.executeQuery(sql);
+	                        if(rs31.next()) {
+	                            totalInventory = rs31.getDouble("inventory");
+	                        }
+	                        ResultSet rs32  = grnewdbDB.executeQuery(sql);
+	                        while(rs32.next()) {
+	                            totalInventory = totalInventory - (rs32.getDouble("needQty") - rs32.getDouble("gotQty"));
+	                            if(totalInventory < 0.0) {
+	                                soStartDate = rs32.getString("soStartDate");
+	                                break;
+	                            }
+	                        }
+	                        umc.setProductionTime(soStartDate);
+	                    }
+	                    if(!"NA".equals(umc.getProductionTime()) ){
 	  						if(umc.getProductionTime().compareTo(nowDay) <= 0) {
 	  							umc.setType("A");
 	  						}else if(umc.getProductionTime().compareTo(nowDayAdd2) <= 0) {
@@ -1153,43 +1179,43 @@ public class AutoAllDashBoard {
 	  							umc.setType("C");
 	  						}
 	  					}
-	                      umc.setUID(temp[3].replaceAll("'", "").substring(0,21));
-	                      umc.setPlant(temp[4]);
-	                      umc.setAuditDataTime(auditDataTime);
-	                      //计算OCR 检验等待时间
-	                      if (!"".equals(auditDataTime)&&!"null".equalsIgnoreCase(auditDataTime)) {
-	                          //System.out.println("IQCGETTIME---"+IQCGetTime);
-	                          if (auditDataTime.substring(11).compareTo("21:00")>0) {
-	                              auditDataTime = auditDataTime.substring(0, 10) + " 21:00";
-	                          }
-	                          if (auditDataTime.substring(11).compareTo("08:00")<0) {
-	                              auditDataTime = auditDataTime.substring(0, 10) + " 08:00";
-	                          }
+	                    umc.setUID(temp[3].replaceAll("'", "").substring(0,21));
+	                    umc.setPlant(temp[4]);
+	                    umc.setAuditDataTime(auditDataTime);
+	                    //计算OCR 检验等待时间
+	                    if (!"".equals(auditDataTime)&&!"null".equalsIgnoreCase(auditDataTime)) {
+	                    	//System.out.println("IQCGETTIME---"+IQCGetTime);
+	                        if (auditDataTime.substring(11).compareTo("21:00")>0) {
+	                            auditDataTime = auditDataTime.substring(0, 10) + " 21:00";
+	                        }
+	                        if (auditDataTime.substring(11).compareTo("08:00")<0) {
+	                            auditDataTime = auditDataTime.substring(0, 10) + " 08:00";
+	                        }
 	                      
-	                          if(nowDayTime.substring(11).compareTo("21:00") > 0) {
-	                              nowDayTime = nowDayTime.substring(0, 10) + " 21:00";
-	                          }
-	                          if(nowDayTime.substring(11).compareTo("08:00") < 0) {
-	                              nowDayTime = nowDayTime.substring(0, 10) + " 08:00";
-	                          }
-	                          
-	                          if(auditDataTime.compareTo(nowDayTime) > 0) {
-	                              umc.setOCRCheckWaitTime("");
-	                          }else {
-	                              int day = DateUtils.diffDays(df.parse(nowDayTime.substring(0, 10)), df.parse(auditDataTime.substring(0, 10)) );
-	                              int hour = day*13 + Integer.parseInt(nowDayTime.substring(11, 13)) - Integer.parseInt(auditDataTime.substring(11, 13));
-	                              int min = Integer.parseInt(nowDayTime.substring(14, 16)) - Integer.parseInt(auditDataTime.substring(14, 16));
-	                              if(min < 0) {
-	                                  min = 60 + min;
-	                                  hour = hour - 1;
-	                              }
-	                              umc.setOCRCheckWaitTime(hour+"小时"+min+"分钟");
-	                          }
-	                      }else {
-	                          umc.setOCRCheckWaitTime("");
-	                      } 
-	                      //umCheckOCRService.saveUrgentMaterialCheckOCR(umc);
-	                  }
+	                        if(nowDayTime.substring(11).compareTo("21:00") > 0) {
+	                            nowDayTime = nowDayTime.substring(0, 10) + " 21:00";
+	                        }
+	                        if(nowDayTime.substring(11).compareTo("08:00") < 0) {
+	                            nowDayTime = nowDayTime.substring(0, 10) + " 08:00";
+	                        }
+
+	                        if(auditDataTime.compareTo(nowDayTime) > 0) {
+	                            umc.setOCRCheckWaitTime("");
+	                        }else {
+	                            int day = DateUtils.diffDays(df.parse(nowDayTime.substring(0, 10)), df.parse(auditDataTime.substring(0, 10)) );
+	                            int hour = day*13 + Integer.parseInt(nowDayTime.substring(11, 13)) - Integer.parseInt(auditDataTime.substring(11, 13));
+	                            int min = Integer.parseInt(nowDayTime.substring(14, 16)) - Integer.parseInt(auditDataTime.substring(14, 16));
+	                            if(min < 0) {
+	                                min = 60 + min;
+	                                hour = hour - 1;
+	                            }
+	                            umc.setOCRCheckWaitTime(hour+"小时"+min+"分钟");
+	                        }
+	                    }else {
+	                        umc.setOCRCheckWaitTime("");
+	                    }
+	                    //umCheckOCRService.saveUrgentMaterialCheckOCR(umc);
+	                }
 	            }
 	        }
 	        //
@@ -1248,9 +1274,15 @@ public class AutoAllDashBoard {
 	                trw.setItemNumber(temp[0]);
 	                trw.setGRNQuantity(temp[1]);               
 	                trw.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-	                ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
-	                        " where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
-	                if(rsB.next()) {
+
+					ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
+
+					/*
+						ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+							" where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
+					*/
+
+					if(rsB.next()) {
 	                    trw.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
 	                }else {
 	                    //根据工厂 物料 取工单开始日期
@@ -1370,9 +1402,15 @@ public class AutoAllDashBoard {
 	                trw.setItemNumber(temp[0]);
 	                trw.setGRNQuantity(temp[1]);
 	                trw.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-	                ResultSet rsB = conMes.executeQuery("select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
-	                        "where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
-	                if(rsB.next()) {
+
+					ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
+
+					/*
+						ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+							" where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
+					*/
+
+					if(rsB.next()) {
 	                    trw.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
 	                }else {
 	                    //根据工厂 物料 取工单开始日期
@@ -1500,9 +1538,15 @@ public class AutoAllDashBoard {
 	                trwb.setItemNumber(temp[0]);
 	                trwb.setGRNQuantity(temp[1]);
 	                trwb.setReceivingLocation(rsA.getString("StockLocation"));//收货库位         
-	                ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
-	                        " where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
-	                if(rsB.next()) {
+
+					ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
+
+					/*
+						ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+							" where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
+					*/
+
+					if(rsB.next()) {
 	                    trwb.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
 	                }else {
 	                    //根据工厂 物料 取工单开始日期
@@ -1622,9 +1666,15 @@ public class AutoAllDashBoard {
 	                trwb.setItemNumber(temp[0]);
 	                trwb.setGRNQuantity(temp[1]);
 	                trwb.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-	                ResultSet rsB = conMes.executeQuery("select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
-	                        "where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
-	                if(rsB.next()) {
+
+					ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
+
+					/*
+						ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+							" where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
+					*/
+
+					if(rsB.next()) {
 	                    trwb.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
 	                }else {
 	                    //根据工厂 物料 取工单开始日期

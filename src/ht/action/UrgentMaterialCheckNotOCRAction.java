@@ -1,23 +1,17 @@
 package ht.action;
 
-import java.sql.ResultSet;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
 import ht.biz.IUrgentMaterialCheckNotOCRService;
 import ht.entity.UrgentMaterialCheckNotOCR;
 import ht.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
+
+import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 /**
@@ -100,7 +94,7 @@ public class UrgentMaterialCheckNotOCRAction extends ActionSupport{
     
     public void doSaveRecords() throws Exception {
         ConVPS vpsDB = new ConVPS();
-        ConAegis aegisDB = new ConAegis();
+        ConMes conMes = new ConMes();
         ConDashBoard grnewdbDB = new ConDashBoard();
         //
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -147,10 +141,10 @@ public class UrgentMaterialCheckNotOCRAction extends ActionSupport{
                 rsMap.put(grn+pn, dou);
             }
         }
-        //System.out.println("vendorrid size:"+rsMap.size());
+
         for(String key : rsMap.keySet()) {
             String[] temp = rsMap.get(key);
-            ResultSet rsA = aegisDB.executeQuery(" select top 1 FRB.Name, II.Identifier, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+            ResultSet rsA = conMes.executeQuery(" select top 1 FRB.Name, II.Identifier, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
             		" from ItemInventories II " +
                     " left join ItemTypes IT on IT.ID = II.ItemTypeID " +
                     " left join FactoryResourceBases FRB on FRB.ID = II.StockResourceID " +
@@ -161,7 +155,7 @@ public class UrgentMaterialCheckNotOCRAction extends ActionSupport{
                 UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
                 umcn.setGRN(key.substring(0,10));
                 umcn.setItemNumber(temp[0]);
-                ResultSet rsC = aegisDB.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+                ResultSet rsC = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
                         "where ReceivingNumber='"+key.substring(0,10)+"'");
                 if (rsC.next()) {
                     umcn.setRDFinishTime(rsC.getString("CreateDate").substring(0,16));//收货时间
@@ -170,7 +164,7 @@ public class UrgentMaterialCheckNotOCRAction extends ActionSupport{
                 }
                 //System.out.println(temp[3]+","+rsA.getString("Name"));
                 if(rsA.getString("Name").contains("QM")) {
-                	ResultSet rsD = aegisDB.executeQuery("select II.Identifier, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime', SL.Identifier " +
+                	ResultSet rsD = conMes.executeQuery("select II.Identifier, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime', SL.Identifier " +
                 			" from ItemInventories II" +
                 			" left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID" +
                 			" left join StockLocations SL on SL.ID = IIH.StockLocationID" +
@@ -444,7 +438,7 @@ public class UrgentMaterialCheckNotOCRAction extends ActionSupport{
         //System.out.println("pcbvendorrid size:"+rsMap.size());
         for(String key : rsMap.keySet()) {
             String[] temp = rsMap.get(key);
-            ResultSet rsA = aegisDB.executeQuery(" select top 1 FRB.Name, II.Identifier, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+            ResultSet rsA = conMes.executeQuery(" select top 1 FRB.Name, II.Identifier, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
             		" from ItemInventories II " +
                     " left join ItemTypes IT on IT.ID = II.ItemTypeID " +
                     " left join FactoryResourceBases FRB on FRB.ID = II.StockResourceID " +
@@ -455,7 +449,7 @@ public class UrgentMaterialCheckNotOCRAction extends ActionSupport{
                 UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
                 umcn.setGRN(key.substring(0,10));
                 umcn.setItemNumber(temp[0]);
-                ResultSet rsC = aegisDB.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+                ResultSet rsC = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
                         "where ReceivingNumber='"+key.substring(0,10)+"'");
                 if (rsC.next()) {
                     umcn.setRDFinishTime(rsC.getString("CreateDate").substring(0,16));//收货时间
@@ -464,7 +458,7 @@ public class UrgentMaterialCheckNotOCRAction extends ActionSupport{
                 }
                 //System.out.println(temp[3]+","+rsA.getString("Name"));
                 if(rsA.getString("Name").contains("QM")) {
-                	ResultSet rsD = aegisDB.executeQuery("select II.Identifier, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime', SL.Identifier " +
+                	ResultSet rsD = conMes.executeQuery("select II.Identifier, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime', SL.Identifier " +
                 			" from ItemInventories II" +
                 			" left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID" +
                 			" left join StockLocations SL on SL.ID = IIH.StockLocationID" +
@@ -707,7 +701,7 @@ public class UrgentMaterialCheckNotOCRAction extends ActionSupport{
         request.put("urgentMaterialCheckNotOCRList", list); 
         //
         vpsDB.close();
-        aegisDB.close();
+        conMes.close();
         grnewdbDB.close();
     }
     

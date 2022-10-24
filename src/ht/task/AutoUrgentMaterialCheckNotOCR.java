@@ -2,11 +2,7 @@ package ht.task;
 
 import ht.biz.IUrgentMaterialCheckNotOCRService;
 import ht.entity.UrgentMaterialCheckNotOCR;
-import ht.util.ConAegis;
-import ht.util.ConDashBoard;
-import ht.util.ConVPS;
-import ht.util.DateUtils;
-import ht.util.SAPService;
+import ht.util.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,10 +36,10 @@ public class AutoUrgentMaterialCheckNotOCR {
 	public void execute() throws Exception {
 		commonsLog.info("start...");
 		try {
+			ConMes conMes = new ConMes();
+			Connection connMes = conMes.con;
 	    	ConVPS vpsDB = new ConVPS();
 	    	Connection connVPS = vpsDB.con;
-	    	ConAegis aegisDB = new ConAegis();
-	    	Connection connAegis = aegisDB.con;
 	    	ConDashBoard grnewdbDB = new ConDashBoard();
 	    	Connection connDB = grnewdbDB.con;
 	    	SAPService sap = new SAPService();
@@ -114,26 +110,26 @@ public class AutoUrgentMaterialCheckNotOCR {
 				if(rs.next()) {
 					seq = rs.getInt("maxseq")+1;
 				}
-		        PreparedStatement pstmtA1 = connAegis.prepareStatement("select II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+		        PreparedStatement pstmtA1 = connMes.prepareStatement("select II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 	            		" from ItemInventories II " +
 	                    " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
 	                    " left join StockLocations SL on SL.ID = IIH.StockLocationID" +
 	                    " where II.Identifier = ? and SL.Identifier is not null " +
 	            		" order by IIH.TimePosted_BaseDateTimeUTC desc ");
-		        PreparedStatement pstmtA2 = connAegis.prepareStatement("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+		        PreparedStatement pstmtA2 = connMes.prepareStatement("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
 	                    "where ReceivingNumber=?");
-		        PreparedStatement pstmtA3 = connAegis.prepareStatement("select RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+		        PreparedStatement pstmtA3 = connMes.prepareStatement("select RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
 	                    " where PartNumber = ? and convert(varchar(10),RequireTime,23) =? order by RequireTime ");
-		        PreparedStatement pstmtA4 = connAegis.prepareStatement("select II.Identifier, II.StockLocation " +
+		        PreparedStatement pstmtA4 = connMes.prepareStatement("select II.Identifier, II.StockLocation " +
 	        			" from ItemInventories II " +
 	        			" where (II.StockLocation like'%QM%') and II.Identifier = ? ");
-		        PreparedStatement pstmtA5 = connAegis.prepareStatement("select II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+		        PreparedStatement pstmtA5 = connMes.prepareStatement("select II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 			    		" from ItemInventories II " +
 			            " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
 			            " left join StockLocations SL on SL.ID = IIH.StockLocationID" +
 			            " where (SL.Identifier like'%IQ%' ) and II.Identifier = ? " +
 			    		" order by IIH.TimePosted_BaseDateTimeUTC desc ");
-		        PreparedStatement pstmtA6 = connAegis.prepareStatement("select II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+		        PreparedStatement pstmtA6 = connMes.prepareStatement("select II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 			    		" from ItemInventories II " +
 			            " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
 			            " left join StockLocations SL on SL.ID = IIH.StockLocationID" +
@@ -779,7 +775,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 			}
 	        //
 	        vpsDB.close();
-	        aegisDB.close();
+	        conMes.close();
 	        grnewdbDB.close();
 		} catch (Exception e) {
 			commonsLog.error("Exception:", e);

@@ -4,13 +4,9 @@ import ht.biz.IUrgentMaterialCheckOCRService;
 import ht.dao.INotFinishSODao;
 import ht.entity.NotFinishSO;
 import ht.entity.UrgentMaterialCheckOCR;
-import ht.util.ConAegis;
-import ht.util.ConDashBoard;
-import ht.util.ConOCR;
-import ht.util.ConVPS;
-import ht.util.DateUtils;
-import ht.util.SAPService;
+import ht.util.*;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -41,8 +37,8 @@ public class CopyOfAutoUrgentMaterialCheckOCR {
 		System.out.println("start...AutoUrgentMaterialCheckOCR "+new Date());
 		
 		try {
+			ConMes conMes = new ConMes();
 			ConVPS vpsDB = new ConVPS();
-	        ConAegis aegisDB = new ConAegis();
 	        ConDashBoard grnewdbDB = new ConDashBoard();
 	        ConOCR ocrDB = new ConOCR();
 	        //
@@ -130,7 +126,7 @@ public class CopyOfAutoUrgentMaterialCheckOCR {
 	        System.out.println("AutoUrgentMaterialCheckOCR vendorrid size:"+rsMap.size());
 	        for(String key : rsMap.keySet()) {
 	            String[] temp = rsMap.get(key);
-	            ResultSet rsA = aegisDB.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+	            ResultSet rsA = conMes.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 	            		" from ItemInventories II " +
 	                    " left join ItemTypes IT on IT.ID = II.ItemTypeID " +
 	                    " left join FactoryResourceBases FRB on FRB.ID = II.StockResourceID " +
@@ -147,16 +143,22 @@ public class CopyOfAutoUrgentMaterialCheckOCR {
 	                    umc.setGRNQuantity(temp[1]);
 	                    umc.setUIDQuantity(temp[2]);
 	                    umc.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-	                    ResultSet rsD = aegisDB.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+	                    ResultSet rsD = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
 	                            "where ReceivingNumber='"+key.substring(0,10)+"'");
 	                    if (rsD.next()) {
 	                        umc.setRDFinishTime(rsD.getString("CreateDate").substring(0,16));//收货时间
 	                    }else {
 	                        umc.setRDFinishTime("");
 	                    }
-	                    ResultSet rsB = aegisDB.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
-	                            " where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
-	                    if(rsB.next()) {
+
+						ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
+
+						/*
+							ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+								" where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
+						*/
+
+						if(rsB.next()) {
 	                        umc.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
 	                    }else {
 	                        //根据工厂 物料 取工单开始日期
@@ -266,7 +268,7 @@ public class CopyOfAutoUrgentMaterialCheckOCR {
 	        System.out.println("AutoUrgentMaterialCheckOCR pcbvendorrid size:"+rsMap.size());
 	        for(String key : rsMap.keySet()) {
 	            String[] temp = rsMap.get(key);
-	            ResultSet rsA = aegisDB.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+	            ResultSet rsA = conMes.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 	            		" from ItemInventories II " +
 	                    " left join ItemTypes IT on IT.ID = II.ItemTypeID " +
 	                    " left join FactoryResourceBases FRB on FRB.ID = II.StockResourceID " +
@@ -283,16 +285,22 @@ public class CopyOfAutoUrgentMaterialCheckOCR {
 	                      umc.setGRNQuantity(temp[1]);
 	                      umc.setUIDQuantity(temp[2]);
 	                      umc.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-	                      ResultSet rsD = aegisDB.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+	                      ResultSet rsD = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
 	                              "where ReceivingNumber='"+key.substring(0,10)+"'");
 	                      if (rsD.next()) {
 	                          umc.setRDFinishTime(rsD.getString("CreateDate").substring(0,16));//收货时间
 	                      }else {
 	                          umc.setRDFinishTime("");
 	                      }
-	                      ResultSet rsB = aegisDB.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
-	                              " where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
-	                      if(rsB.next()) {
+
+						ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
+
+						/*
+							ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+								" where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
+						*/
+
+						if(rsB.next()) {
 	                          umc.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
 	                      }else {
 	                          //根据工厂 物料 取工单开始日期
@@ -372,7 +380,7 @@ public class CopyOfAutoUrgentMaterialCheckOCR {
 			}
 			//
 	        vpsDB.close();
-	        aegisDB.close();
+	        conMes.close();
 	        grnewdbDB.close();
 	        ocrDB.close();
 		} catch (Exception e) {

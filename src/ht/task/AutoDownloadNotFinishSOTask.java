@@ -3,14 +3,13 @@ package ht.task;
 import ht.dao.INotFinishSODao;
 import ht.entity.NotFinishSO;
 import ht.util.SAPService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 从SAP下载

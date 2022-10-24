@@ -4,11 +4,7 @@ import ht.biz.IUrgentMaterialCheckNotOCRService;
 import ht.dao.INotFinishSODao;
 import ht.entity.NotFinishSO;
 import ht.entity.UrgentMaterialCheckNotOCR;
-import ht.util.ConAegis;
-import ht.util.ConDashBoard;
-import ht.util.ConVPS;
-import ht.util.DateUtils;
-import ht.util.SAPService;
+import ht.util.*;
 
 import java.sql.ResultSet;
 import java.text.DateFormat;
@@ -41,8 +37,8 @@ public class Copy_2_of_AutoUrgentMaterialCheckNotOCR {
 		System.out.println("start...AutoUrgentMaterialCheckNotOCR "+new Date());
 		
 		try {
+			ConMes conMes = new ConMes();
 			ConVPS vpsDB = new ConVPS();
-	        ConAegis aegisDB = new ConAegis();
 	        ConDashBoard grnewdbDB = new ConDashBoard();
 	        //
 	        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -132,29 +128,37 @@ public class Copy_2_of_AutoUrgentMaterialCheckNotOCR {
 	        System.out.println("vendorrid size:"+rsMap.size());
 	        for(String key : rsMap.keySet()) {
 	            String[] temp = rsMap.get(key);
-	            //System.out.println(temp[3]);
-	            ResultSet rsA = aegisDB.executeQuery(" select top 1 II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+				ResultSet rsA = conMes.executeQuery(SqlStatements.findLatestTransInfo(temp[3])); // 131 DB Modified by GuoZhao Ding
+
+				/*
+	            	ResultSet rsA = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 	            		" from ItemInventories II " +
 	                    " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
 	                    " left join StockLocations SL on SL.ID = IIH.StockLocationID" +
 	                    " where SL.Identifier is not null and (SL.Identifier like'%IQ%') and II.Identifier in ("+temp[3]+") " +
 	            		" order by IIH.TimePosted_BaseDateTimeUTC desc ");
-	            if(rsA.next()){ //有IQ库位，但此UID，还有QM在后，表示已归还
+	            */
+
+				if(rsA.next()){ //有IQ库位，但此UID，还有QM在后，表示已归还
 	            	String uid = rsA.getString("Identifier");
-	            	//System.out.println("Identifier:"+uid);
-	            	ResultSet rsA2 = aegisDB.executeQuery(" select top 1 II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+					ResultSet rsA2 = conMes.executeQuery(SqlStatements.findLatestTransInfo1(uid)); // 131 DB modified by GuoZhao Ding
+
+	            	/*
+	            		ResultSet rsA2 = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 		            		" from ItemInventories II " +
 		                    " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
 		                    " left join StockLocations SL on SL.ID = IIH.StockLocationID" +
 		                    " where II.Identifier = '"+uid+"' and SL.Identifier is not null " +
 		            		" order by IIH.TimePosted_BaseDateTimeUTC desc ");
-	            	if(rsA2.next() && !rsA2.getString("historyStock").contains("IQ")){
+	            	*/
+
+					if(rsA2.next() && !rsA2.getString("historyStock").contains("IQ")){
 	            		//有IQ库位，但此UID，还有QM在后，表示已归还
 	            	}else{
 	            		UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
 		                umcn.setGRN(temp[5]);
 		                umcn.setItemNumber(temp[0]);
-		                ResultSet rsC = aegisDB.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+		                ResultSet rsC = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
 		                        "where ReceivingNumber='"+temp[5]+"'");
 		                if (rsC.next()) {
 		                    umcn.setRDFinishTime(rsC.getString("CreateDate").substring(0,16));//收货时间
@@ -162,11 +166,17 @@ public class Copy_2_of_AutoUrgentMaterialCheckNotOCR {
 		                    umcn.setRDFinishTime("");
 		                }
 		                umcn.setIQCGetTime(rsA.getString("localtime").substring(0,16));//IQC取样时间
-	                	//
+	                	//f
 	                    umcn.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-	                    ResultSet rsB = aegisDB.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
-	                            " where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
-	                    if(rsB.next()) {
+
+						ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
+
+						/*
+							ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+								" where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
+						*/
+
+						if(rsB.next()) {
 	                        umcn.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
 	                    }else {
 	                        //根据工厂 物料 取工单开始日期
@@ -241,15 +251,20 @@ public class Copy_2_of_AutoUrgentMaterialCheckNotOCR {
 	                    //umCheckNotOCRService.saveUrgentMaterialCheckNotOCR(umcn);
 	            	}
 	            }else {
-	            	rsA = aegisDB.executeQuery(" select top 1 II.Identifier, II.StockLocation " +
+					rsA = conMes.executeQuery(SqlStatements.findUidStock(temp[3].replaceAll("'", "").substring(0,21))); // 131 DB modified by GuoZhao Ding
+
+	            	/*
+	            		rsA = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation " +
 	            			" from ItemInventories II " +
 	            			" where (II.StockLocation like'%QM%') and II.Identifier = '"+temp[3].replaceAll("'", "").substring(0,21)+"' " +
 		            		" ");
-	            	if(rsA.next()) {
+	            	*/
+
+					if(rsA.next()) {
 	            		UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
 		                umcn.setGRN(temp[5]);
 		                umcn.setItemNumber(temp[0]);
-		                ResultSet rsC = aegisDB.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+		                ResultSet rsC = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
 		                        "where ReceivingNumber='"+temp[5]+"'");
 		                if (rsC.next()) {
 		                    umcn.setRDFinishTime(rsC.getString("CreateDate").substring(0,16));//收货时间
@@ -260,9 +275,15 @@ public class Copy_2_of_AutoUrgentMaterialCheckNotOCR {
 		            	umcn.setIQCGetTime("");
 	                    //
 	                    umcn.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-	                    ResultSet rsB = aegisDB.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
-	                            " where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
-	                    if(rsB.next()) {
+
+						ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
+
+						/*
+							ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+								" where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
+						*/
+
+						if(rsB.next()) {
 	                        umcn.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
 	                    }else {
 	                        //根据工厂 物料 取工单开始日期
@@ -378,30 +399,38 @@ public class Copy_2_of_AutoUrgentMaterialCheckNotOCR {
 	        System.out.println("pcbvendorrid size:"+rsMap.size());
 	        for(String key : rsMap.keySet()) {
 	            String[] temp = rsMap.get(key);
-	            //System.out.println(temp[3]);
-	            ResultSet rsA = aegisDB.executeQuery(" select top 1 II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+				ResultSet rsA = conMes.executeQuery(SqlStatements.findLatestTransInfo(temp[3])); // 131 DB Modified by GuoZhao Ding
+
+				/*
+	            	ResultSet rsA = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 	            		" from ItemInventories II " +
 	                    " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
 	                    " left join StockLocations SL on SL.ID = IIH.StockLocationID" +
 	                    " where SL.Identifier is not null and (SL.Identifier like'%IQ%') and II.Identifier in ("+temp[3]+") " +
 	            		" order by IIH.TimePosted_BaseDateTimeUTC desc ");
-	            if(rsA.next()){ //有IQ库位，但此UID，还有QM在后，表示已归还
+	            */
+
+				if(rsA.next()){ //有IQ库位，但此UID，还有QM在后，表示已归还
 	            	String uid = rsA.getString("Identifier");
-	            	//System.out.println("Identifier:"+uid);
-	            	ResultSet rsA2 = aegisDB.executeQuery(" select top 1 II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+					ResultSet rsA2 = conMes.executeQuery(SqlStatements.findLatestTransInfo1(uid)); // 131 DB modified by GuoZhao Ding
+
+	            	/*
+	            		ResultSet rsA2 = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 		            		" from ItemInventories II " +
 		                    " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
 		                    " left join StockLocations SL on SL.ID = IIH.StockLocationID" +
-		                    " where II.Identifier = '"+uid+"' and SL.Identifier is not null  " +
+		                    " where II.Identifier = '"+uid+"' and SL.Identifier is not null " +
 		            		" order by IIH.TimePosted_BaseDateTimeUTC desc ");
-	            	if(rsA2.next() && !rsA2.getString("historyStock").contains("IQ")){
+	            	*/
+
+					if(rsA2.next() && !rsA2.getString("historyStock").contains("IQ")){
 	            		//有IQ库位，但此UID，还有QM在后，表示已归还
 	            		
 	            	}else{
 	            		UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
 		                umcn.setGRN(temp[5]);
 		                umcn.setItemNumber(temp[0]);
-		                ResultSet rsC = aegisDB.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+		                ResultSet rsC = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
 		                        "where ReceivingNumber='"+temp[5]+"'");
 		                if (rsC.next()) {
 		                    umcn.setRDFinishTime(rsC.getString("CreateDate").substring(0,16));//收货时间
@@ -411,9 +440,15 @@ public class Copy_2_of_AutoUrgentMaterialCheckNotOCR {
 		                umcn.setIQCGetTime(rsA.getString("localtime").substring(0,16));//IQC取样时间
 	                	//
 	                    umcn.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-	                    ResultSet rsB = aegisDB.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
-	                            " where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
-	                    if(rsB.next()) {
+
+						ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
+
+						/*
+							ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+								" where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
+						*/
+
+						if(rsB.next()) {
 	                        umcn.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
 	                    }else {
 	                        //根据工厂 物料 取工单开始日期
@@ -488,15 +523,20 @@ public class Copy_2_of_AutoUrgentMaterialCheckNotOCR {
 	                    //umCheckNotOCRService.saveUrgentMaterialCheckNotOCR(umcn);
 	            	}
 	            }else {
-	            	rsA = aegisDB.executeQuery(" select top 1 II.Identifier, II.StockLocation  " +
+					rsA = conMes.executeQuery(SqlStatements.findUidStock(temp[3].replaceAll("'", "").substring(0,21))); // 131 DB modified by GuoZhao Ding
+
+	            	/*
+	            		rsA = conMes.executeQuery(" select top 1 II.Identifier, II.StockLocation " +
 	            			" from ItemInventories II " +
 	            			" where (II.StockLocation like'%QM%') and II.Identifier = '"+temp[3].replaceAll("'", "").substring(0,21)+"' " +
-		            		"  ");
-	            	if(rsA.next()) {
+		            		" ");
+	            	*/
+
+					if(rsA.next()) {
 	            		UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
 		                umcn.setGRN(temp[5]);
 		                umcn.setItemNumber(temp[0]);
-		                ResultSet rsC = aegisDB.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+		                ResultSet rsC = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
 		                        "where ReceivingNumber='"+temp[5]+"'");
 		                if (rsC.next()) {
 		                    umcn.setRDFinishTime(rsC.getString("CreateDate").substring(0,16));//收货时间
@@ -507,9 +547,15 @@ public class Copy_2_of_AutoUrgentMaterialCheckNotOCR {
 		            	umcn.setIQCGetTime("");
 	                    //
 	                    umcn.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-	                    ResultSet rsB = aegisDB.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
-	                            " where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
-	                    if(rsB.next()) {
+
+						ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
+
+						/*
+							ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+								" where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
+						*/
+
+						if(rsB.next()) {
 	                        umcn.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
 	                    }else {
 	                        //根据工厂 物料 取工单开始日期
@@ -595,7 +641,7 @@ public class Copy_2_of_AutoUrgentMaterialCheckNotOCR {
 			}
 	        //
 	        vpsDB.close();
-	        aegisDB.close();
+	        conMes.close();
 	        grnewdbDB.close();
 		} catch (Exception e) {
 			e.printStackTrace();

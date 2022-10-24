@@ -1,45 +1,22 @@
 package ht.task;
 
-import ht.dao.IToReceiveCheckDao;
-import ht.dao.IToReceiveWarehouseBDao;
-import ht.dao.IToReceiveWarehouseDao;
-import ht.dao.IUrgentMaterialCheckNotOCRDao;
-import ht.dao.IUrgentMaterialCheckOCRDao;
-import ht.entity.ToReceiveCheck;
-import ht.entity.ToReceiveWarehouse;
-import ht.entity.ToReceiveWarehouseB;
-import ht.entity.UrgentMaterialCheckNotOCR;
-import ht.entity.UrgentMaterialCheckOCR;
-import ht.mapper.ToReceiveCheckMapper;
-import ht.mapper.ToReceiveWarehouseBMapper;
-import ht.mapper.ToReceiveWarehouseMapper;
-import ht.mapper.UrgentMaterialCheckNotOCRMapper;
-import ht.mapper.UrgentMaterialCheckOCRMapper;
-import ht.util.ConAegis;
+import ht.dao.*;
+import ht.entity.*;
+import ht.mapper.*;
+import ht.util.ConMes;
 import ht.util.EmailcontrolByAdmin;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.CellRangeAddress;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.CellRangeAddress;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.*;
 
 
 /**
@@ -102,8 +79,8 @@ public class AutoEmailDashBoardReport {
     
     
     public String generateExcel(ArrayList list) throws Exception {
-    	
-    	ConAegis aegisDB = new ConAegis();
+
+        ConMes conMes = new ConMes();
     	
         Calendar c = Calendar.getInstance();     
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -4724,7 +4701,7 @@ public class AutoEmailDashBoardReport {
             e.printStackTrace();
         }
         
-        aegisDB.close();
+        conMes.close();
         
         return todayDay;
     

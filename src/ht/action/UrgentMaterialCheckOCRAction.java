@@ -1,24 +1,17 @@
 package ht.action;
 
+import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
 import ht.biz.IUrgentMaterialCheckOCRService;
 import ht.entity.UrgentMaterialCheckOCR;
 import ht.util.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ActionSupport;
+import java.util.*;
 
 /**
  *
@@ -99,8 +92,8 @@ public class UrgentMaterialCheckOCRAction extends ActionSupport{
     }
     
     public void doSaveRecords() throws Exception {
+        ConMes conMes = new ConMes();
         ConVPS vpsDB = new ConVPS();
-        ConAegis aegisDB = new ConAegis();
         ConDashBoard grnewdbDB = new ConDashBoard();
         ConOCR ocrDB = new ConOCR();
         //
@@ -151,7 +144,7 @@ public class UrgentMaterialCheckOCRAction extends ActionSupport{
         //System.out.println("vendorrid size:"+rsMap.size());
         for(String key : rsMap.keySet()) {
             String[] temp = rsMap.get(key);
-            ResultSet rsA = aegisDB.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+            ResultSet rsA = conMes.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
             		" from ItemInventories II " +
                     " left join ItemTypes IT on IT.ID = II.ItemTypeID " +
                     " left join FactoryResourceBases FRB on FRB.ID = II.StockResourceID " +
@@ -168,7 +161,7 @@ public class UrgentMaterialCheckOCRAction extends ActionSupport{
                     umc.setGRNQuantity(temp[1]);
                     umc.setUIDQuantity(temp[2]);
                     umc.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-                    ResultSet rsD = aegisDB.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+                    ResultSet rsD = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
                             "where ReceivingNumber='"+key.substring(0,10)+"'");
                     if (rsD.next()) {
                         umc.setRDFinishTime(rsD.getString("CreateDate").substring(0,16));//收货时间
@@ -287,7 +280,7 @@ public class UrgentMaterialCheckOCRAction extends ActionSupport{
         //System.out.println("pcbvendorrid size:"+rsMap.size());
         for(String key : rsMap.keySet()) {
             String[] temp = rsMap.get(key);
-            ResultSet rsA = aegisDB.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+            ResultSet rsA = conMes.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
             		" from ItemInventories II " +
                     " left join ItemTypes IT on IT.ID = II.ItemTypeID " +
                     " left join FactoryResourceBases FRB on FRB.ID = II.StockResourceID " +
@@ -298,19 +291,19 @@ public class UrgentMaterialCheckOCRAction extends ActionSupport{
                 String auditDataTime = rsA.getString("localtime").substring(0,16);
             	ResultSet ocrRs = ocrDB.executeQuery("select UID from LabelMsg where UID in ("+temp[3]+")");
             	if(!ocrRs.next()){
-            		  UrgentMaterialCheckOCR umc = new UrgentMaterialCheckOCR();
-                      umc.setGRN(key.substring(0,10));
-                      umc.setItemNumber(temp[0]);
-                      umc.setGRNQuantity(temp[1]);
-                      umc.setUIDQuantity(temp[2]);
-                      umc.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-                      ResultSet rsD = aegisDB.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
-                              "where ReceivingNumber='"+key.substring(0,10)+"'");
-                      if (rsD.next()) {
-                          umc.setRDFinishTime(rsD.getString("CreateDate").substring(0,16));//收货时间
-                      }else {
-                          umc.setRDFinishTime("");
-                      }
+            		UrgentMaterialCheckOCR umc = new UrgentMaterialCheckOCR();
+                    umc.setGRN(key.substring(0,10));
+                    umc.setItemNumber(temp[0]);
+                    umc.setGRNQuantity(temp[1]);
+                    umc.setUIDQuantity(temp[2]);
+                    umc.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
+                    ResultSet rsD = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+                            "where ReceivingNumber='"+key.substring(0,10)+"'");
+                    if (rsD.next()) {
+                        umc.setRDFinishTime(rsD.getString("CreateDate").substring(0,16));//收货时间
+                    }else {
+                        umc.setRDFinishTime("");
+                    }
 
                     ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
 
@@ -320,68 +313,68 @@ public class UrgentMaterialCheckOCRAction extends ActionSupport{
 					*/
 
                     if(rsB.next()) {
-                          umc.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
-                      }else {
-                          //根据工厂 物料 取工单开始日期
-                          double totalInventory = 0.0;
-                          double leftInventory = 0.0;
-                          String soStartDate = "NA";
-                          String sql = "select inventory,needQty,gotQty,soStartDate " +
-                          " from NotFinishSO where plant='"+temp[4]+"' and bom='"+temp[0]+"' order by soStartDate ";
-                          ResultSet rs31  = grnewdbDB.executeQuery(sql);
-                          if(rs31.next()) {
-                              totalInventory = rs31.getDouble("inventory");
-                          }
-                          ResultSet rs32  = grnewdbDB.executeQuery(sql);
-                          while(rs32.next()) {
-                              totalInventory = totalInventory - (rs32.getDouble("needQty") - rs32.getDouble("gotQty"));
-                              if(totalInventory < 0.0) {
-                                  soStartDate = rs32.getString("soStartDate");
-                                  break;
-                              }
-                          }
-                          umc.setProductionTime(soStartDate);
-                      }
-                      umc.setUID(temp[3].replaceAll("'", "").substring(0,21));
-                      umc.setPlant(temp[4]);
-                      umc.setAuditDataTime(auditDataTime);
-                      //计算OCR 检验等待时间
-                      if (!"".equals(auditDataTime)&&!"null".equalsIgnoreCase(auditDataTime)) {
-                          //System.out.println("IQCGETTIME---"+IQCGetTime);
-                          if (auditDataTime.substring(11).compareTo("21:00")>0) {
-                              auditDataTime = auditDataTime.substring(0, 10) + " 21:00";
-                          }
-                          if (auditDataTime.substring(11).compareTo("08:00")<0) {
-                              auditDataTime = auditDataTime.substring(0, 10) + " 08:00";
-                          }
+                        umc.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
+                    }else {
+                        //根据工厂 物料 取工单开始日期
+                        double totalInventory = 0.0;
+                        double leftInventory = 0.0;
+                        String soStartDate = "NA";
+                        String sql = "select inventory,needQty,gotQty,soStartDate " +
+                        " from NotFinishSO where plant='"+temp[4]+"' and bom='"+temp[0]+"' order by soStartDate ";
+                        ResultSet rs31  = grnewdbDB.executeQuery(sql);
+                        if(rs31.next()) {
+                            totalInventory = rs31.getDouble("inventory");
+                        }
+                        ResultSet rs32  = grnewdbDB.executeQuery(sql);
+                        while(rs32.next()) {
+                            totalInventory = totalInventory - (rs32.getDouble("needQty") - rs32.getDouble("gotQty"));
+                            if(totalInventory < 0.0) {
+                                soStartDate = rs32.getString("soStartDate");
+                                break;
+                            }
+                        }
+                        umc.setProductionTime(soStartDate);
+                    }
+                    umc.setUID(temp[3].replaceAll("'", "").substring(0,21));
+                    umc.setPlant(temp[4]);
+                    umc.setAuditDataTime(auditDataTime);
+                    //计算OCR 检验等待时间
+                    if (!"".equals(auditDataTime)&&!"null".equalsIgnoreCase(auditDataTime)) {
+                        //System.out.println("IQCGETTIME---"+IQCGetTime);
+                        if (auditDataTime.substring(11).compareTo("21:00")>0) {
+                            auditDataTime = auditDataTime.substring(0, 10) + " 21:00";
+                        }
+                        if (auditDataTime.substring(11).compareTo("08:00")<0) {
+                            auditDataTime = auditDataTime.substring(0, 10) + " 08:00";
+                        }
                       
-                          if(nowDayTime.substring(11).compareTo("21:00") > 0) {
-                              nowDayTime = nowDayTime.substring(0, 10) + " 21:00";
-                          }
-                          if(nowDayTime.substring(11).compareTo("08:00") < 0) {
-                              nowDayTime = nowDayTime.substring(0, 10) + " 08:00";
-                          }
-                          
-                          if(auditDataTime.compareTo(nowDayTime) > 0) {
-                              umc.setOCRCheckWaitTime("");
-                          }else {
-                              int day = DateUtils.diffDays(df.parse(nowDayTime.substring(0, 10)), df.parse(auditDataTime.substring(0, 10)) );
-                              int hour = day*13 + Integer.parseInt(nowDayTime.substring(11, 13)) - Integer.parseInt(auditDataTime.substring(11, 13));
-                              int min = Integer.parseInt(nowDayTime.substring(14, 16)) - Integer.parseInt(auditDataTime.substring(14, 16));
-                              if(min < 0) {
-                                  min = 60 + min;
-                                  hour = hour - 1;
-                              }
-                              umc.setOCRCheckWaitTime(hour+"小时"+min+"分钟");
-                          }
-                      }else {
-                          umc.setOCRCheckWaitTime("");
-                      } 
-                      //umCheckOCRService.saveUrgentMaterialCheckOCR(umc);
-                      if(!"NA".equals(umc.getProductionTime())) {
-                      	list.add(umc);
+                        if(nowDayTime.substring(11).compareTo("21:00") > 0) {
+                            nowDayTime = nowDayTime.substring(0, 10) + " 21:00";
+                        }
+                        if(nowDayTime.substring(11).compareTo("08:00") < 0) {
+                            nowDayTime = nowDayTime.substring(0, 10) + " 08:00";
+                        }
+
+                        if(auditDataTime.compareTo(nowDayTime) > 0) {
+                            umc.setOCRCheckWaitTime("");
+                        }else {
+                            int day = DateUtils.diffDays(df.parse(nowDayTime.substring(0, 10)), df.parse(auditDataTime.substring(0, 10)) );
+                            int hour = day*13 + Integer.parseInt(nowDayTime.substring(11, 13)) - Integer.parseInt(auditDataTime.substring(11, 13));
+                            int min = Integer.parseInt(nowDayTime.substring(14, 16)) - Integer.parseInt(auditDataTime.substring(14, 16));
+                            if(min < 0) {
+                                min = 60 + min;
+                                hour = hour - 1;
+                            }
+                            umc.setOCRCheckWaitTime(hour+"小时"+min+"分钟");
+                        }
+                    }else {
+                        umc.setOCRCheckWaitTime("");
+                    }
+                    //umCheckOCRService.saveUrgentMaterialCheckOCR(umc);
+                    if(!"NA".equals(umc.getProductionTime())) {
+                    	list.add(umc);
       				}
-                  }
+            	}
             }
         }
         //排序
@@ -390,7 +383,7 @@ public class UrgentMaterialCheckOCRAction extends ActionSupport{
         request.put("urgentMaterialCheckOCRList", list);
         
         vpsDB.close();
-        aegisDB.close();
+        conMes.close();
         grnewdbDB.close();
         ocrDB.close();
     }

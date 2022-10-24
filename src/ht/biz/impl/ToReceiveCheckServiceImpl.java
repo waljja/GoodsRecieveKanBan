@@ -1,16 +1,10 @@
 package ht.biz.impl;
 
+import com.fr.third.org.apache.poi.hssf.usermodel.HSSFCell;
 import ht.biz.IToReceiveCheckService;
 import ht.dao.IToReceiveCheckDao;
 import ht.entity.ToReceiveCheck;
 import ht.mapper.ToReceiveCheckMapper;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.util.LinkedHashMap;
-import java.util.List;
-
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFFont;
@@ -18,7 +12,11 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.fr.third.org.apache.poi.hssf.usermodel.HSSFCell;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 
 @Component("trCheckService")
