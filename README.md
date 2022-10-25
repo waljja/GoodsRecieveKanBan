@@ -1,2 +1,2 @@
 # 收货看板
-## Spring Struts2
+## Spring + Struts2
