@@ -108,11 +108,22 @@ public class AutoUrgentMaterialCheckOCR {
 				List<UrgentMaterialCheckOCR> list = new ArrayList<UrgentMaterialCheckOCR>();
 				int seq = 1;
 				ResultSet rs = grnewdbDB.executeQuery("select max(Sequence) as maxseq from UrgentMaterialCheckOCR where Sequence is not null");
+
 				if(rs.next()) {
 					seq = rs.getInt("maxseq")+1;
 				}
-				PreparedStatement pstmtA1 = connMes.prepareStatement("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+
+				/*
+					PreparedStatement pstmtA1 = connMes.prepareStatement("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
 		                            "where ReceivingNumber=? ");
+				*/
+
+				/*
+				 * 131 DB modified by GuoZhao Ding
+				 * PreparedStatement pstmtA1 = connVPS.prepareStatement("select CreateDate from [imslabel].[dbo].[vendorrid] where GRN = ?"); // vendorrid
+				 * PreparedStatement pstmtA1_ = connVPS.prepareStatement("select CreateDate from [imslabel].[dbo].[pcbvendorrid] where GRN = ?"); // pcbvendorrid
+				*/
+
 				PreparedStatement pstmtA2 = connMes.prepareStatement("select RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
 		                            " where PartNumber = ? and convert(varchar(10),RequireTime,23) =? order by RequireTime ");
 				PreparedStatement pstmtA3 = connMes.prepareStatement("select II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +

@@ -19,7 +19,6 @@ public class NotFinishSOMapper implements RowMapper{
         nfs.setGotQty(rs.getString("gotQty"));
         nfs.setInventory(rs.getString("inventory"));
         nfs.setSoStartDate(rs.getString("soStartDate"));
-        
         return nfs;
     }
 }

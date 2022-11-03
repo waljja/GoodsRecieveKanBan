@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="GROUP_BY_SEVERITY" value="true" />
+  </component>
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
       <artifact name="GRNewDashBoard3:war" />
@@ -7,210 +10,123 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="048470a3-5912-4436-a76b-dd1e8a094a5f" name="默认变更列表" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/applicationContext.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveCheckAction$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveCheckAction$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveCheckAction$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveCheckAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveCheckAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveWarehouseAction$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveWarehouseAction$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveWarehouseAction$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveWarehouseAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveWarehouseAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveWarehouseBAction$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveWarehouseBAction$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveWarehouseBAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveWarehouseBAction.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/UrgentMaterialCheckNotOCRAction$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/UrgentMaterialCheckNotOCRAction$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/UrgentMaterialCheckNotOCRAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/UrgentMaterialCheckNotOCRAction.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/UrgentMaterialCheckOCRAction$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/UrgentMaterialCheckOCRAction$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/UrgentMaterialCheckOCRAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/UrgentMaterialCheckOCRAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/IToReceiveCheckService.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/IToReceiveCheckService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/IToReceiveWarehouseBService.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/IToReceiveWarehouseBService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/IToReceiveWarehouseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/IToReceiveWarehouseService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/IUrgentMaterialCheckNotOCRService.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/IUrgentMaterialCheckNotOCRService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/IUrgentMaterialCheckOCRService.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/IUrgentMaterialCheckOCRService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/impl/ToReceiveCheckServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/impl/ToReceiveCheckServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/impl/ToReceiveWarehouseServiceBImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/impl/ToReceiveWarehouseServiceBImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/impl/ToReceiveWarehouseServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/impl/ToReceiveWarehouseServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/impl/UrgentMaterialCheckNotOCRServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/impl/UrgentMaterialCheckNotOCRServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/impl/UrgentMaterialCheckOCRServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/impl/UrgentMaterialCheckOCRServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/INotFinishSODao.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/INotFinishSODao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/IToReceiveCheckDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/IToReceiveCheckDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/IToReceiveWarehouseBDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/IToReceiveWarehouseBDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/IToReceiveWarehouseDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/IToReceiveWarehouseDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/IUrgentMaterialCheckNotOCRDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/IUrgentMaterialCheckNotOCRDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/IUrgentMaterialCheckOCRDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/IUrgentMaterialCheckOCRDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/JdbcTemplateDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/JdbcTemplateDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/JdbcTemplateSupport$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/JdbcTemplateSupport$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/JdbcTemplateSupport.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/JdbcTemplateSupport.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/NotFinishSODaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/NotFinishSODaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/ToReceiveCheckDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/ToReceiveCheckDaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/ToReceiveWarehouseBDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/ToReceiveWarehouseBDaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/ToReceiveWarehouseDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/ToReceiveWarehouseDaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/UrgentMaterialCheckNotOCRDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/UrgentMaterialCheckNotOCRDaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/UrgentMaterialCheckOCRDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/UrgentMaterialCheckOCRDaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/NotFinishSO.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/NotFinishSO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/ToReceiveCheck.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/ToReceiveCheck.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/ToReceiveWarehouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/ToReceiveWarehouse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/ToReceiveWarehouseB.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/ToReceiveWarehouseB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/UrgentMaterialCheckNotOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/UrgentMaterialCheckNotOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/UrgentMaterialCheckOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/UrgentMaterialCheckOCR.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/NotFinishSOMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/NotFinishSOMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/ToReceiveCheckMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/ToReceiveCheckMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/ToReceiveWarehouseBMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/ToReceiveWarehouseBMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/ToReceiveWarehouseMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/ToReceiveWarehouseMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/UrgentMaterialCheckNotOCRMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/UrgentMaterialCheckNotOCRMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/UrgentMaterialCheckOCRMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/UrgentMaterialCheckOCRMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoAllDashBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoAllDashBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoDownloadNotFinishSOTask.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoDownloadNotFinishSOTask.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoEmailDashBoardReport.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoEmailDashBoardReport.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoAllDashBoard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoEmailDashBoardReport.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveCheck.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveCheck.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveWarehouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveWarehouse.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveWarehouseB.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveWarehouseB.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckNotOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckNotOCR.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoAllDashBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoAllDashBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoToReceiveCheck.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoToReceiveCheck.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoToReceiveWarehouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoToReceiveWarehouse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoToReceiveWarehouseB.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoToReceiveWarehouseB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoUrgentMaterialCheckNotOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoUrgentMaterialCheckNotOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoUrgentMaterialCheckOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoUrgentMaterialCheckOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveCheck.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveCheck.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveWarehouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveWarehouse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveWarehouseB.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveWarehouseB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_2_of_AutoUrgentMaterialCheckNotOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_2_of_AutoUrgentMaterialCheckNotOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_2_of_AutoUrgentMaterialCheckOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_2_of_AutoUrgentMaterialCheckOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_3_of_AutoToReceiveCheck.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_3_of_AutoToReceiveCheck.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConAegis.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConAegis.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConDashBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConDashBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConOCR.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoAllDashBoard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoToReceiveCheck.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoToReceiveWarehouse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoToReceiveWarehouseB.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoUrgentMaterialCheckNotOCR.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/CopyOfAutoUrgentMaterialCheckOCR.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveCheck.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveWarehouse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveWarehouseB.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_2_of_AutoUrgentMaterialCheckNotOCR.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_2_of_AutoUrgentMaterialCheckOCR.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/Copy_3_of_AutoToReceiveCheck.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConVPS.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConVPS.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/CopyOfDBConDashBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/CopyOfDBConDashBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DBConAegis.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DBConAegis.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DBConDashBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DBConDashBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DBConDashBoardTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DBConDashBoardTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DBConOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DBConOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DBConVPS.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DBConVPS.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DateUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DateUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/EmailcontrolByAdmin.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/EmailcontrolByAdmin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/PageModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/PageModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/QueryResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/QueryResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/SAPService.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/SAPService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/SqlStatements.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/SqlStatements.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/TestMonthDay.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/TestMonthDay.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/TestTimePeriod.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/TestTimePeriod.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/jump.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/jump.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/pages/ToReceiveWarehouse_list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/pages/ToReceiveWarehouse_list.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/applicationContext.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/ToReceiveCheckAction$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/ToReceiveCheckAction$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/ToReceiveCheckAction$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/ToReceiveCheckAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/ToReceiveCheckAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/ToReceiveWarehouseAction$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/ToReceiveWarehouseAction$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/ToReceiveWarehouseAction$1.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/ToReceiveWarehouseAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/ToReceiveWarehouseAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/ToReceiveWarehouseBAction$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/ToReceiveWarehouseBAction$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/ToReceiveWarehouseBAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/ToReceiveWarehouseBAction.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/UrgentMaterialCheckNotOCRAction$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/UrgentMaterialCheckNotOCRAction$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/UrgentMaterialCheckNotOCRAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/UrgentMaterialCheckNotOCRAction.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/UrgentMaterialCheckOCRAction$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/UrgentMaterialCheckOCRAction$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/UrgentMaterialCheckOCRAction.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/action/UrgentMaterialCheckOCRAction.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/IToReceiveCheckService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/IToReceiveCheckService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/IToReceiveWarehouseBService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/IToReceiveWarehouseBService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/IToReceiveWarehouseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/IToReceiveWarehouseService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/IUrgentMaterialCheckNotOCRService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/IUrgentMaterialCheckNotOCRService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/IUrgentMaterialCheckOCRService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/IUrgentMaterialCheckOCRService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/impl/ToReceiveCheckServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/impl/ToReceiveCheckServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/impl/ToReceiveWarehouseServiceBImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/impl/ToReceiveWarehouseServiceBImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/impl/ToReceiveWarehouseServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/impl/ToReceiveWarehouseServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/impl/UrgentMaterialCheckNotOCRServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/impl/UrgentMaterialCheckNotOCRServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/impl/UrgentMaterialCheckOCRServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/biz/impl/UrgentMaterialCheckOCRServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/INotFinishSODao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/INotFinishSODao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/IToReceiveCheckDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/IToReceiveCheckDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/IToReceiveWarehouseBDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/IToReceiveWarehouseBDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/IToReceiveWarehouseDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/IToReceiveWarehouseDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/IUrgentMaterialCheckNotOCRDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/IUrgentMaterialCheckNotOCRDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/IUrgentMaterialCheckOCRDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/IUrgentMaterialCheckOCRDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/JdbcTemplateDao.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/JdbcTemplateDao.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/impl/JdbcTemplateSupport$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/impl/JdbcTemplateSupport$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/impl/JdbcTemplateSupport.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/impl/JdbcTemplateSupport.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/impl/NotFinishSODaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/impl/NotFinishSODaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/impl/ToReceiveCheckDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/impl/ToReceiveCheckDaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/impl/ToReceiveWarehouseBDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/impl/ToReceiveWarehouseBDaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/impl/ToReceiveWarehouseDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/impl/ToReceiveWarehouseDaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/impl/UrgentMaterialCheckNotOCRDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/impl/UrgentMaterialCheckNotOCRDaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/impl/UrgentMaterialCheckOCRDaoImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/dao/impl/UrgentMaterialCheckOCRDaoImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/entity/NotFinishSO.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/entity/NotFinishSO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/entity/ToReceiveCheck.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/entity/ToReceiveCheck.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/entity/ToReceiveWarehouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/entity/ToReceiveWarehouse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/entity/ToReceiveWarehouseB.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/entity/ToReceiveWarehouseB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/entity/UrgentMaterialCheckNotOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/entity/UrgentMaterialCheckNotOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/entity/UrgentMaterialCheckOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/entity/UrgentMaterialCheckOCR.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/mapper/NotFinishSOMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/mapper/NotFinishSOMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/mapper/ToReceiveCheckMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/mapper/ToReceiveCheckMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/mapper/ToReceiveWarehouseBMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/mapper/ToReceiveWarehouseBMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/mapper/ToReceiveWarehouseMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/mapper/ToReceiveWarehouseMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/mapper/UrgentMaterialCheckNotOCRMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/mapper/UrgentMaterialCheckNotOCRMapper.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/mapper/UrgentMaterialCheckOCRMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/mapper/UrgentMaterialCheckOCRMapper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoAllDashBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoAllDashBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoDownloadNotFinishSOTask.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoDownloadNotFinishSOTask.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoEmailDashBoardReport.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoEmailDashBoardReport.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoAllDashBoard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoEmailDashBoardReport.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoToReceiveCheck.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoToReceiveCheck.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoToReceiveWarehouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoToReceiveWarehouse.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoToReceiveWarehouseB.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoToReceiveWarehouseB.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckNotOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckNotOCR.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoAllDashBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoAllDashBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoToReceiveCheck.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoToReceiveCheck.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoToReceiveWarehouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoToReceiveWarehouse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoToReceiveWarehouseB.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoToReceiveWarehouseB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoUrgentMaterialCheckNotOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoUrgentMaterialCheckNotOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoUrgentMaterialCheckOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoUrgentMaterialCheckOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveCheck.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveCheck.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveWarehouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveWarehouse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveWarehouseB.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveWarehouseB.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_2_of_AutoUrgentMaterialCheckNotOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_2_of_AutoUrgentMaterialCheckNotOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_2_of_AutoUrgentMaterialCheckOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_2_of_AutoUrgentMaterialCheckOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_3_of_AutoToReceiveCheck.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_3_of_AutoToReceiveCheck.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/ConAegis.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/ConAegis.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/ConDashBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/ConDashBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/ConOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/ConOCR.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoAllDashBoard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoToReceiveCheck.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoToReceiveWarehouse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoToReceiveWarehouseB.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoUrgentMaterialCheckNotOCR.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/CopyOfAutoUrgentMaterialCheckOCR.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveCheck.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveWarehouse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_2_of_AutoToReceiveWarehouseB.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_2_of_AutoUrgentMaterialCheckNotOCR.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_2_of_AutoUrgentMaterialCheckOCR.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/task/Copy_3_of_AutoToReceiveCheck.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/ConVPS.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/ConVPS.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/CopyOfDBConDashBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/CopyOfDBConDashBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/DBConAegis.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/DBConAegis.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/DBConDashBoard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/DBConDashBoard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/DBConDashBoardTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/DBConDashBoardTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/DBConOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/DBConOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/DBConVPS.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/DBConVPS.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/DateUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/DateUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/EmailcontrolByAdmin.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/EmailcontrolByAdmin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/PageModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/PageModel.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/QueryResult.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/QueryResult.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/SAPService.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/SAPService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/SqlStatements.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/SqlStatements.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/TestMonthDay.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/TestMonthDay.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/TestTimePeriod.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/classes/ht/util/TestTimePeriod.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/jump.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/jump.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/pages/ToReceiveWarehouse_list.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war/pages/ToReceiveWarehouse_list.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/action/ToReceiveCheckAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/action/ToReceiveCheckAction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/action/ToReceiveWarehouseAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/action/ToReceiveWarehouseAction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/action/ToReceiveWarehouseBAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/action/ToReceiveWarehouseBAction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/action/UrgentMaterialCheckNotOCRAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/action/UrgentMaterialCheckNotOCRAction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/action/UrgentMaterialCheckOCRAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/action/UrgentMaterialCheckOCRAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/biz/impl/ToReceiveCheckServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/biz/impl/ToReceiveCheckServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoAllDashBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoAllDashBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoDownloadNotFinishSOTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoDownloadNotFinishSOTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoEmailDashBoardReport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoEmailDashBoardReport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/biz/impl/ToReceiveWarehouseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/biz/impl/ToReceiveWarehouseServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/dao/IToReceiveWarehouseDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/dao/IToReceiveWarehouseDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/dao/JdbcTemplateDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/dao/JdbcTemplateDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/dao/impl/JdbcTemplateSupport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/dao/impl/JdbcTemplateSupport.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/dao/impl/ToReceiveWarehouseDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/dao/impl/ToReceiveWarehouseDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/entity/NotFinishSO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/entity/NotFinishSO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mapper/NotFinishSOMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/mapper/NotFinishSOMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mapper/ToReceiveCheckMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/mapper/ToReceiveCheckMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mapper/ToReceiveWarehouseBMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/mapper/ToReceiveWarehouseBMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mapper/ToReceiveWarehouseMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/mapper/ToReceiveWarehouseMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mapper/UrgentMaterialCheckNotOCRMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/mapper/UrgentMaterialCheckNotOCRMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mapper/UrgentMaterialCheckOCRMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/mapper/UrgentMaterialCheckOCRMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoAllDashBoard.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoEmailDashBoardReport.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/task/AutoToReceiveCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoToReceiveCheck.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouseB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouseB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckNotOCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckNotOCR.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckOCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckOCR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/CopyOfAutoAllDashBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/CopyOfAutoAllDashBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/CopyOfAutoToReceiveCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/CopyOfAutoToReceiveCheck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/CopyOfAutoToReceiveWarehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/CopyOfAutoToReceiveWarehouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/CopyOfAutoToReceiveWarehouseB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/CopyOfAutoToReceiveWarehouseB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/CopyOfAutoUrgentMaterialCheckNotOCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/CopyOfAutoUrgentMaterialCheckNotOCR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/CopyOfAutoUrgentMaterialCheckOCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/CopyOfAutoUrgentMaterialCheckOCR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/Copy_2_of_AutoToReceiveCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/Copy_2_of_AutoToReceiveCheck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/Copy_2_of_AutoToReceiveWarehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/Copy_2_of_AutoToReceiveWarehouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/Copy_2_of_AutoToReceiveWarehouseB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/Copy_2_of_AutoToReceiveWarehouseB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/Copy_2_of_AutoUrgentMaterialCheckNotOCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/Copy_2_of_AutoUrgentMaterialCheckNotOCR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/Copy_2_of_AutoUrgentMaterialCheckOCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/Copy_2_of_AutoUrgentMaterialCheckOCR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/Copy_3_of_AutoToReceiveCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/Copy_3_of_AutoToReceiveCheck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/util/ConDashBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/util/ConDashBoard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/CopyOfAutoAllDashBoard.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/CopyOfAutoToReceiveCheck.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/CopyOfAutoToReceiveWarehouse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/CopyOfAutoToReceiveWarehouseB.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/CopyOfAutoUrgentMaterialCheckNotOCR.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/CopyOfAutoUrgentMaterialCheckOCR.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/Copy_2_of_AutoToReceiveCheck.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/Copy_2_of_AutoToReceiveWarehouse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/Copy_2_of_AutoToReceiveWarehouseB.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/Copy_2_of_AutoUrgentMaterialCheckNotOCR.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/Copy_2_of_AutoUrgentMaterialCheckOCR.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/Copy_3_of_AutoToReceiveCheck.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/util/ConVPS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/util/ConVPS.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/util/SqlStatements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/util/SqlStatements.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -253,6 +169,9 @@
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
+  </component>
   <component name="ProjectId" id="2G4WcMMiEtuN0ZKXvsYQ2shX24b" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -260,28 +179,28 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="sqlserver" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/GRNewDashBoard3/src/ht/task/AutoAllDashBoard.java" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/GRNewDashBoard3" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="项目" />
+    <property name="project.structure.last.edited" value="工件" />
     <property name="project.structure.proportion" value="0.15487422" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="two.files.diff.last.used.file" value="$USER_HOME$/Desktop/GRNewDashBoard3/src/ht/task/AutoAllDashBoard.java" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -413,6 +332,21 @@
       <workItem from="1666231861403" duration="635000" />
       <workItem from="1666245413281" duration="18336000" />
       <workItem from="1666399346869" duration="15072000" />
+      <workItem from="1666580901976" duration="8436000" />
+      <workItem from="1666677512241" duration="359000" />
+      <workItem from="1666767812506" duration="1977000" />
+      <workItem from="1666774150267" duration="19283000" />
+      <workItem from="1666854220144" duration="21795000" />
+      <workItem from="1667012574143" duration="49000" />
+      <workItem from="1667185784681" duration="11149000" />
+      <workItem from="1667205479829" duration="8538000" />
+      <workItem from="1667271083011" duration="12844000" />
+      <workItem from="1667359095677" duration="429000" />
+      <workItem from="1667359551714" duration="193000" />
+      <workItem from="1667359769682" duration="9155000" />
+      <workItem from="1667373535228" duration="5973000" />
+      <workItem from="1667434875012" duration="282000" />
+      <workItem from="1667442703817" duration="15604000" />
     </task>
     <task id="LOCAL-00001" summary="收货看板">
       <created>1665854766662</created>
@@ -426,6 +360,53 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="2074decc-a609-4395-8196-0c8ce537fd5e">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="2074decc-a609-4395-8196-0c8ce537fd5e" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />

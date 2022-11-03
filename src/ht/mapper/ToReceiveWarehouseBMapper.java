@@ -25,7 +25,6 @@ public class ToReceiveWarehouseBMapper implements RowMapper {
         item.setSequence(rs.getInt("Sequence"));
         item.setCloseDate(rs.getString("closeDate"));
         item.setCreatedate(rs.getString("createdate"));
-        
         return item;
     }
 }

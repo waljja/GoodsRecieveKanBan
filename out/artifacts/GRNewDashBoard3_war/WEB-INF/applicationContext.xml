@@ -55,16 +55,13 @@
 		<property name="dataSource" ref="jdbctemplateDataSource" />
 	</bean>
 
-
-
 	<!-- 基于注解配置事务JDBC -->
 	<bean id="txManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="jdbctemplateDataSource" />
 	</bean>
 	<tx:annotation-driven transaction-manager="txManager" />
-	
-	
+
 	<!--定时任务：  -->
 	<bean name="autoTask01" class="ht.task.AutoDownloadNotFinishSOTask" />
 	<bean id="startTask01" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -80,9 +77,7 @@
 	  <property name="jobDetail" ref="startTask01"></property>
 	  <property name="cronExpression" value="0 40 7 * * ?"></property> <!--每日21点30分执行-->
 	</bean>
-	
-	
-	
+
 	<!--定时任务： 1.待点收看板 -->
 	<bean name="autoTask101" class="ht.task.AutoToReceiveCheck" />
 	<bean id="startTask101" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
@@ -99,7 +94,7 @@
 	  <property name="cronExpression" value="0 0/15 * ? * 2-7"></property> <!--每10分钟执行一次 "0 14 17 ? * 1-7"   "0 0/15 * ? * 2-7"  -->
 	</bean>
 	
-		<!--定时任务：  2a. 急料检验看板（非OCR）  -->
+	<!--定时任务：  2a. 急料检验看板（非OCR）  -->
 	<bean name="autoTask102" class="ht.task.AutoUrgentMaterialCheckNotOCR" />
 	<bean id="startTask102" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
   		<!-- 要调用的bean -->
@@ -115,7 +110,7 @@
 	  <property name="cronExpression" value="0 0/15 * ? * 2-7"></property> <!--每10分钟执行一次-->
 	</bean>
 
-		<!--定时任务：  2b. 急料检验看板（OCR） -->
+	<!--定时任务：  2b. 急料检验看板（OCR） -->
 	<bean name="autoTask103" class="ht.task.AutoUrgentMaterialCheckOCR" />
 	<bean id="startTask103" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
   		<!-- 要调用的bean -->
@@ -131,7 +126,7 @@
 	  <property name="cronExpression" value="0 0/15 * ? * 2-7"></property> <!--每10分钟执行一次-->
 	</bean>
 
-		<!--定时任务：   3a. 待入主料仓物料看板 -->
+	<!--定时任务：   3a. 待入主料仓物料看板 -->
 	<bean name="autoTask104" class="ht.task.AutoToReceiveWarehouse" />
 	<bean id="startTask104" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
   		<!-- 要调用的bean -->
@@ -147,7 +142,7 @@
 	  <property name="cronExpression" value="0 0/15 * ? * 2-7"></property> <!--每10分钟执行一次-->
 	</bean>
 
-		<!--定时任务： 3b. 待入退貨仓物料看板  -->
+	<!--定时任务： 3b. 待入退貨仓物料看板  -->
 	<bean name="autoTask105" class="ht.task.AutoToReceiveWarehouseB" />
 	<bean id="startTask105" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
   		<!-- 要调用的bean -->

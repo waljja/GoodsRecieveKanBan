@@ -25,7 +25,7 @@ import com.opensymphony.xwork2.ActionContext;
 
 /**
  * 3b
- * @date 2020-9-3
+ * @Date 2020-9-3
  * @author 刘惠明
  * 
  */
@@ -113,13 +113,14 @@ public class AutoToReceiveWarehouseB {
 				}
 				PreparedStatement pstmtA1 = connMes.prepareStatement(" select RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
 	             		" where PartNumber = ? and convert(varchar(10),RequireTime,23) =? order by RequireTime ");
-				
+				// 改成UID_xTend_MaterialTransactionsRHDCDW表
 		        PreparedStatement pstmtA2 = connMes.prepareStatement("select II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 			    		" from ItemInventories II " +
 			            " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
 			            " left join StockLocations SL on SL.ID = IIH.StockLocationID" +
 			            " where SL.Identifier is not null and (SL.Identifier like'%RT%') and II.Identifier = ? " +
 			    		" order by IIH.TimePosted_BaseDateTimeUTC desc ");
+				// 改成UID_xTend_MaterialTransactionsRHDCDW表
 		        PreparedStatement pstmtA3 = connMes.prepareStatement("select II.Identifier, II.StockLocation " +
 	        			" from ItemInventories II " +
 	        			" where II.Identifier = ? ");

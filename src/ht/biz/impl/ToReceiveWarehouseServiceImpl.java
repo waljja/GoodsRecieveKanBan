@@ -8,6 +8,14 @@ import ht.biz.IToReceiveWarehouseService;
 import ht.dao.IToReceiveWarehouseDao;
 import ht.entity.ToReceiveWarehouse;
 
+/**
+ * 插入看板数据（代入主料仓看板）
+ * @author 刘惠明
+ * @createDate 2020-9-3
+ * @updateUser 丁国钊
+ * @updateDate 2022-11-3
+ * @updateRemark 增加注释
+ */
 @Component("trWarehouseService")
 public class ToReceiveWarehouseServiceImpl implements IToReceiveWarehouseService{
     @Autowired
@@ -18,7 +26,13 @@ public class ToReceiveWarehouseServiceImpl implements IToReceiveWarehouseService
         		" and Sequence = (select max(Sequence) from ToReceiveWarehouse) and ReturnWarehouseTime ='' order by Type, GRN ");
         return list;
     }
-    
+
+	/**
+	 * @description 把获取到的看板数据插入看板数据库
+	 * @param list
+	 * @throws Exception
+	 */
+	@Override
     public void saveToReceiveWarehouse(List<ToReceiveWarehouse> list) throws Exception {
     	StringBuilder sbSql = new StringBuilder();
 		String[] arraySql = new String[list.size()];
@@ -35,10 +49,12 @@ public class ToReceiveWarehouseServiceImpl implements IToReceiveWarehouseService
 			sbSql.setLength(0);
 		}
 		if(i>0){
+			// 批量插入数据
 			trWarehouseDao.batchExecute(arraySql);
 		}
     }
-    
+
+	@Override
     public void deleteAllToReceiveWarehouse() throws Exception {
         trWarehouseDao.execute("delete from ToReceiveWarehouse");  
     }

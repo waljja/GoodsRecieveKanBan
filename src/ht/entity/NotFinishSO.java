@@ -74,5 +74,4 @@ public class NotFinishSO {
 	public void setBom(String bom) {
 		this.bom = bom;
 	}
-   
 }

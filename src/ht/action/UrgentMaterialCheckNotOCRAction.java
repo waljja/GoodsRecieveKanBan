@@ -27,8 +27,6 @@ public class UrgentMaterialCheckNotOCRAction extends ActionSupport{
     private IUrgentMaterialCheckNotOCRService umCheckNotOCRService;
     
     public String doList()throws Exception {
-        //doSaveRecords();
-    	//System.out.println("UrgentMaterialCheckNotOCRAction refresh time: "+ new Date());
         List<UrgentMaterialCheckNotOCR> list = umCheckNotOCRService.findAllUrgentMaterialCheckNotOCR();    
         if (list!=null&&list.size()>0) {
             Map request = (Map) ActionContext.getContext().get("request");
@@ -155,8 +153,20 @@ public class UrgentMaterialCheckNotOCRAction extends ActionSupport{
                 UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
                 umcn.setGRN(key.substring(0,10));
                 umcn.setItemNumber(temp[0]);
-                ResultSet rsC = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+
+                // 131 DB modified by GuoZhao Ding（暂时不使用xTend_MaterialReceived表，因为该表数据来源于VPS）
+                ResultSet rsC = vpsDB.executeQuery(SqlStatements.findGRDate_v(key.substring(0,10))); // 先查vendorrid表
+
+                if (!rsC.next()) { // 如果vendorrid表查不到，查pcbvendorrid表
+                    rsC = vpsDB.executeQuery(SqlStatements.findGRDate_PV(key.substring(0,10)));
+                }
+                // 131 DB modified by GuoZhao Ding（暂时不使用xTend_MaterialReceived表，因为该表数据来源于VPS）
+
+                /*
+                    ResultSet rsC = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
                         "where ReceivingNumber='"+key.substring(0,10)+"'");
+                */
+
                 if (rsC.next()) {
                     umcn.setRDFinishTime(rsC.getString("CreateDate").substring(0,16));//收货时间
                 }else {
@@ -435,7 +445,6 @@ public class UrgentMaterialCheckNotOCRAction extends ActionSupport{
                 rsMap.put(grn+pn, dou);
             }
         }
-        //System.out.println("pcbvendorrid size:"+rsMap.size());
         for(String key : rsMap.keySet()) {
             String[] temp = rsMap.get(key);
             ResultSet rsA = conMes.executeQuery(" select top 1 FRB.Name, II.Identifier, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
@@ -449,14 +458,24 @@ public class UrgentMaterialCheckNotOCRAction extends ActionSupport{
                 UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
                 umcn.setGRN(key.substring(0,10));
                 umcn.setItemNumber(temp[0]);
-                ResultSet rsC = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+                // 131 DB modified by GuoZhao Ding（暂时不使用xTend_MaterialReceived表，因为该表数据来源于VPS）
+                // 先查vendorrid表
+                ResultSet rsC = vpsDB.executeQuery(SqlStatements.findGRDate_v(key.substring(0,10)));
+                // 如果vendorrid表查不到，查pcbvendorrid表
+                if (!rsC.next()) {
+                    rsC = vpsDB.executeQuery(SqlStatements.findGRDate_PV(key.substring(0,10)));
+                }
+                // 131 DB modified by GuoZhao Ding（暂时不使用xTend_MaterialReceived表，因为该表数据来源于VPS）
+                /*
+                    ResultSet rsC = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
                         "where ReceivingNumber='"+key.substring(0,10)+"'");
+                */
                 if (rsC.next()) {
-                    umcn.setRDFinishTime(rsC.getString("CreateDate").substring(0,16));//收货时间
+                    //收货时间
+                    umcn.setRDFinishTime(rsC.getString("CreateDate").substring(0,16));
                 }else {
                     umcn.setRDFinishTime("");
                 }
-                //System.out.println(temp[3]+","+rsA.getString("Name"));
                 if(rsA.getString("Name").contains("QM")) {
                 	ResultSet rsD = conMes.executeQuery("select II.Identifier, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime', SL.Identifier " +
                 			" from ItemInventories II" +
@@ -464,22 +483,20 @@ public class UrgentMaterialCheckNotOCRAction extends ActionSupport{
                 			" left join StockLocations SL on SL.ID = IIH.StockLocationID" +
                 			" where II.Identifier in ("+temp[3]+") and SL.Identifier like '%IQ%' " +
                 			" order by IIH.TimePosted_BaseDateTimeUTC desc ");
-                    if (rsD.next()) {  //如果同一个UID，历史记录有IQ，表示归还了
+                    //如果同一个UID，历史记录有IQ，表示归还了
+                    if (rsD.next()) {
                     	if(rsA.getString("Identifier").equals(rsD.getString("Identifier"))){
-                    		//System.out.println("pcbvendorrid GRN:"+umcn.getGRN());
-                    		//System.out.println(temp[3]+","+rsA.getString("Name"));
                     	}else {
-                    		umcn.setIQCGetTime(rsD.getString("localtime").substring(0,16));//IQC取样时间
-                        	//
-                            umcn.setReceivingLocation(rsD.getString("StockLocation"));//收货库位
-
-                            ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
-
+                            // IQC取样时间
+                    		umcn.setIQCGetTime(rsD.getString("localtime").substring(0,16));
+                            // 收货库位
+                            umcn.setReceivingLocation(rsD.getString("StockLocation"));
+                            // 131 DB modified by GuoZhao Ding
+                            ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay));
                             /*
                                 ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
                                     " where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
                             */
-
                             if(rsB.next()) {
                                 umcn.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
                             }else {
@@ -505,25 +522,21 @@ public class UrgentMaterialCheckNotOCRAction extends ActionSupport{
                             }
                             umcn.setUID(temp[3].replaceAll("'", "").substring(0,21));
                             umcn.setPlant(temp[4]);
-                            
                             //计算IQC检验等待时间
                             String IQCGetTime = umcn.getIQCGetTime();              
                             if (!"".equals(IQCGetTime)&&!"null".equalsIgnoreCase(IQCGetTime)) {
-                                //System.out.println("IQCGETTIME---"+IQCGetTime);
                                 if (IQCGetTime.substring(11).compareTo("21:00")>0) {
                                     IQCGetTime = IQCGetTime.substring(0, 10) + " 21:00";
                                 }
                                 if (IQCGetTime.substring(11).compareTo("08:00")<0) {
                                     IQCGetTime = IQCGetTime.substring(0, 10) + " 08:00";
                                 }
-                            
                                 if(nowDayTime.substring(11).compareTo("21:00") > 0) {
                                     nowDayTime = nowDayTime.substring(0, 10) + " 21:00";
                                 }
                                 if(nowDayTime.substring(11).compareTo("08:00") < 0) {
                                     nowDayTime = nowDayTime.substring(0, 10) + " 08:00";
                                 }
-                                
                                 if(IQCGetTime.compareTo(nowDayTime) > 0) {
                                     umcn.setIQCCheckWaitTime("");
                                 }else {
@@ -545,16 +558,14 @@ public class UrgentMaterialCheckNotOCRAction extends ActionSupport{
                     	}
                     }else {
                         umcn.setIQCGetTime("");
-                        //
-                        umcn.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-
-                        ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay)); // 131 DB modified by GuoZhao Ding
-
+                        // 收货库位
+                        umcn.setReceivingLocation(rsA.getString("StockLocation"));
+                        // 131 DB modified by GuoZhao Ding
+                        ResultSet rsB = conMes.executeQuery(SqlStatements.findEarliestReqTime(temp[0], nowDay));
                         /*
                             ResultSet rsB = conMes.executeQuery(" select top 1 RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
                                 " where PartNumber = '"+temp[0]+"' and convert(varchar(10),RequireTime,23) ='"+nowDay+"' order by RequireTime ");
                         */
-
                         if(rsB.next()) {
                             umcn.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
                         }else {
@@ -580,11 +591,9 @@ public class UrgentMaterialCheckNotOCRAction extends ActionSupport{
                         }
                         umcn.setUID(temp[3].replaceAll("'", "").substring(0,21));
                         umcn.setPlant(temp[4]);
-                        
                         //计算IQC检验等待时间
                         String IQCGetTime = umcn.getIQCGetTime();              
                         if (!"".equals(IQCGetTime)&&!"null".equalsIgnoreCase(IQCGetTime)) {
-                            //System.out.println("IQCGETTIME---"+IQCGetTime);
                             if (IQCGetTime.substring(11).compareTo("21:00")>0) {
                                 IQCGetTime = IQCGetTime.substring(0, 10) + " 21:00";
                             }

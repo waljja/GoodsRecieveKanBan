@@ -41,15 +41,14 @@ public class JdbcTemplateSupport<T> implements JdbcTemplateDao<T>
 		return jdbcTemplate;
 	}
 
+	@Override
 	public QueryResult<T> pagingDataOnSQLServer2008(String tableName, String identify, int pageindex, int maxresult, String condition,
 			LinkedHashMap<String, String> orderby, RowMapper rowMapper){
 		String where = (condition==null||condition==""||"".equals(condition) ? "" : " WHERE " + condition) + "";
 		String order = buildOrderby(orderby);
-
 		String sql = "SELECT TOP " + maxresult + " * FROM " + tableName + ("".equals(where)?" WHERE ":where + " and ") + identify + " not in (SELECT TOP " + maxresult
 				* (pageindex - 1) + " " + identify + " FROM " + tableName + where + order + ") ";				
 		sql += (condition==null||condition==""||"".equals(condition)?"":"and "+condition) + order;
-		//System.out.println("pagingDataOnSQLServer2008:"+sql);
 		String countSql = "SELECT count(*) FROM " + tableName + where;
 		QueryResult<T> qr = new QueryResult<T>();
 		try{
@@ -67,6 +66,7 @@ public class JdbcTemplateSupport<T> implements JdbcTemplateDao<T>
 		}
 	}
 
+	@Override
 	public QueryResult<T> pagingDataOnSQLServer(String tableName, int pageindex, int maxresult, String condition,
 			LinkedHashMap<String, String> orderby, RowMapper rowMapper){
 		String where = (null==condition||condition==""||"".equals(condition) ? "" : "" + condition) + "";
@@ -75,7 +75,6 @@ public class JdbcTemplateSupport<T> implements JdbcTemplateDao<T>
 		sql += "EXCEPT ";
 		sql += "(SELECT TOP " + maxresult*(pageindex - 1) + " * FROM " + tableName + " WHERE " + where + ")";
 		sql += order;
-		//System.out.println("pagingDataOnSQLServer:"+sql);
 		String countSql = "SELECT count(*) FROM " + tableName + " WHERE " + where;
 		QueryResult<T> qr = new QueryResult<T>();
 		try{
@@ -92,7 +91,8 @@ public class JdbcTemplateSupport<T> implements JdbcTemplateDao<T>
 			throw e;
 		}
 	}
-	
+
+	@Override
 	public List<T> listData(String tableName, String condition, LinkedHashMap<String, String> orderby, RowMapper rowMapper){
 		String order = buildOrderby(orderby);
 		String sql = "SELECT * FROM " + tableName;
@@ -103,12 +103,14 @@ public class JdbcTemplateSupport<T> implements JdbcTemplateDao<T>
 		List<T> result = jdbcTemplate.query(sql, rowMapper);
 		return result;
 	}
-	
+
+	@Override
 	public List<T> listData(String sql){		
 		List result = jdbcTemplate.queryForList(sql);
 		return result;
 	}
-	
+
+	@Override
 	public ResultSet listForJdbcCustom(String sql){
 		try {
 			conn = jdbcTemplate.getDataSource().getConnection();
@@ -120,15 +122,18 @@ public class JdbcTemplateSupport<T> implements JdbcTemplateDao<T>
 		}
 		return rs;
 	}
-	
+
+	@Override
 	public void execute(String sql){
 		jdbcTemplate.execute(sql);
 	}
-	
+
+	@Override
 	public Object execute(CallableStatementCreator creator, CallableStatementCallback callback){
 		return jdbcTemplate.execute(creator, callback);
 	}
-	
+
+	@Override
 	public int insertData(String sql) {
 		// TODO Auto-generated method stub
 		final String v_sql = sql;
@@ -141,7 +146,7 @@ public class JdbcTemplateSupport<T> implements JdbcTemplateDao<T>
 		}, keyHolder);
 		return keyHolder.getKey().intValue();
 	}
-	
+
 	protected static String buildOrderby(LinkedHashMap<String, String> orderby) {
 		StringBuffer orderbyql = new StringBuffer("");
 		if (orderby != null && orderby.size() > 0) {
@@ -156,19 +161,27 @@ public class JdbcTemplateSupport<T> implements JdbcTemplateDao<T>
 	
 	public void close(){
 		try {
-			if(rs!=null) rs.close();
-			if(pstm!=null) pstm.close();
-			if(conn!=null) conn.close();
+			if (rs!=null) {
+				rs.close();
+			}
+			if (pstm!=null) {
+				pstm.close();
+			}
+			if (conn!=null) {
+				conn.close();
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	@Override
 	public int[] batchExecute(String[] sql) {
 		return jdbcTemplate.batchUpdate(sql);
 	}
-	
+
+	@Override
 	public List<T> listData(String sql, RowMapper rowMapper){
 		List<T> result = jdbcTemplate.query(sql, rowMapper);
 		return result;

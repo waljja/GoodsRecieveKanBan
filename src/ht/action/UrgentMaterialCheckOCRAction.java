@@ -144,6 +144,10 @@ public class UrgentMaterialCheckOCRAction extends ActionSupport{
         //System.out.println("vendorrid size:"+rsMap.size());
         for(String key : rsMap.keySet()) {
             String[] temp = rsMap.get(key);
+            // 131 DB modified by GuoZhao Ding
+            ResultSet rsA = conMes.executeQuery(SqlStatements.findStockInfo(temp[3]));
+
+           /*
             ResultSet rsA = conMes.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
             		" from ItemInventories II " +
                     " left join ItemTypes IT on IT.ID = II.ItemTypeID " +
@@ -151,6 +155,8 @@ public class UrgentMaterialCheckOCRAction extends ActionSupport{
                     " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
                     " where II.Identifier in ("+temp[3]+") and FRB.Name like '%QM%' " +
                     " order by IIH.TimePosted_BaseDateTimeUTC desc ");
+            */
+
             if(rsA.next()){
                 String auditDataTime = rsA.getString("localtime").substring(0,16);
             	ResultSet ocrRs = ocrDB.executeQuery("select UID from LabelMsg where UID in ("+temp[3]+")");
@@ -161,8 +167,20 @@ public class UrgentMaterialCheckOCRAction extends ActionSupport{
                     umc.setGRNQuantity(temp[1]);
                     umc.setUIDQuantity(temp[2]);
                     umc.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-                    ResultSet rsD = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+
+                    // 131 DB modified by GuoZhao Ding（暂时不使用xTend_MaterialReceived表，因为该表数据来源于VPS）
+                    ResultSet rsD = vpsDB.executeQuery(SqlStatements.findGRDate_v(key.substring(0,10))); // 先查vendorrid表
+
+                    if (!rsD.next()) { // 如果vendorrid表查不到，查pcbvendorrid表
+                        rsD = vpsDB.executeQuery(SqlStatements.findGRDate_PV(key.substring(0,10)));
+                    }
+                    // 131 DB modified by GuoZhao Ding（暂时不使用xTend_MaterialReceived表，因为该表数据来源于VPS）
+
+                    /*
+                        ResultSet rsD = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
                             "where ReceivingNumber='"+key.substring(0,10)+"'");
+                    */
+
                     if (rsD.next()) {
                         umc.setRDFinishTime(rsD.getString("CreateDate").substring(0,16));//收货时间
                     }else {
@@ -277,9 +295,12 @@ public class UrgentMaterialCheckOCRAction extends ActionSupport{
                 rsMap.put(grn+pn, dou);
             }
         }
-        //System.out.println("pcbvendorrid size:"+rsMap.size());
         for(String key : rsMap.keySet()) {
             String[] temp = rsMap.get(key);
+            // 131 DB modified by GuoZhao Ding
+            ResultSet rsA = conMes.executeQuery(SqlStatements.findStockInfo(temp[3]));
+
+            /*
             ResultSet rsA = conMes.executeQuery(" select top 1 FRB.Name, II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
             		" from ItemInventories II " +
                     " left join ItemTypes IT on IT.ID = II.ItemTypeID " +
@@ -287,6 +308,8 @@ public class UrgentMaterialCheckOCRAction extends ActionSupport{
                     " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
                     " where II.Identifier in ("+temp[3]+") and FRB.Name like '%QM%' " +
                     " order by IIH.TimePosted_BaseDateTimeUTC desc");
+            */
+
             if(rsA.next()){
                 String auditDataTime = rsA.getString("localtime").substring(0,16);
             	ResultSet ocrRs = ocrDB.executeQuery("select UID from LabelMsg where UID in ("+temp[3]+")");
@@ -297,8 +320,20 @@ public class UrgentMaterialCheckOCRAction extends ActionSupport{
                     umc.setGRNQuantity(temp[1]);
                     umc.setUIDQuantity(temp[2]);
                     umc.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-                    ResultSet rsD = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+
+                    // 131 DB modified by GuoZhao Ding（暂时不使用xTend_MaterialReceived表，因为该表数据来源于VPS）
+                    ResultSet rsD = vpsDB.executeQuery(SqlStatements.findGRDate_v(key.substring(0,10))); // 先查vendorrid表
+
+                    if (!rsD.next()) { // 如果vendorrid表查不到，查pcbvendorrid表
+                        rsD = vpsDB.executeQuery(SqlStatements.findGRDate_PV(key.substring(0,10)));
+                    }
+                    // 131 DB modified by GuoZhao Ding（暂时不使用xTend_MaterialReceived表，因为该表数据来源于VPS）
+
+                    /*
+                        ResultSet rsD = conMes.executeQuery("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
                             "where ReceivingNumber='"+key.substring(0,10)+"'");
+                    */
+
                     if (rsD.next()) {
                         umc.setRDFinishTime(rsD.getString("CreateDate").substring(0,16));//收货时间
                     }else {

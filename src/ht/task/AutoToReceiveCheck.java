@@ -47,7 +47,7 @@ public class AutoToReceiveCheck {
 			String nowDayTime = df2.format(c.getTime());//当天
 			c.add(Calendar.DATE, -2); // -2 天
 			String nowDay_2 = df.format(c.getTime());
-			//8点-12点     13点-17点    18点-21点
+			// 8点-12点     13点-17点    18点-21点
 			if( (nowDayTime.substring(11).compareTo("08:00") >0 && nowDayTime.substring(11).compareTo("12:00") <=0 ) 
 					|| (nowDayTime.substring(11).compareTo("13:00") >0 && nowDayTime.substring(11).compareTo("17:00") <=0 )
 					|| (nowDayTime.substring(11).compareTo("18:00") >0 && nowDayTime.substring(11).compareTo("21:00") <=0 )  ){
@@ -104,7 +104,7 @@ public class AutoToReceiveCheck {
 				if(rs.next()) {
 					seq = rs.getInt("maxseq")+1;
 				}
-
+				// 131 DB modified by GuoZhao Ding
 				PreparedStatement pstmtA1 = connMes.prepareStatement("select " +
 						"ToStock_Input as stockname" +
 						"from " +
@@ -114,8 +114,7 @@ public class AutoToReceiveCheck {
 						"and" +
 						"(ToStock_Input is NOT NULL" +
 						"or " +
-						"ToStock_Input != '')"); // 131 DB modified by GuoZhao Ding
-
+						"ToStock_Input != '')");
 				/*
 				 * 这段唯一不同的地方是?
 				 PreparedStatement pstmtA1 = connAegis.prepareStatement("select FRB.Name as stockname from ItemInventories II " +
@@ -123,32 +122,33 @@ public class AutoToReceiveCheck {
 						" left join FactoryResourceBases FRB on FRB.ID = II.StockResourceID " +
 						" where II.Identifier = ? and (FRB.Name is not null and FRB.Name <> '') ");
 				*/
-
+				// VN版本是 VN_TransportOrder 和 VN_TransportOrderItem 表
 				PreparedStatement pstmtA3 = connMes.prepareStatement("select RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
 						" where PartNumber = ? and convert(varchar(10),RequireTime,23) =? order by RequireTime ");
 				PreparedStatement pstmtDB1 = connDB.prepareStatement("select inventory,needQty,gotQty,soStartDate " +
 						" from NotFinishSO where plant=? and bom=? order by soStartDate ");
 				PreparedStatement pstmtDB2 = connDB.prepareStatement("select * from ToReceiveCheck where closeDate is not null " +
 							" and GRN=? ");
-				//vendorrid
-				//1.查询2天内VPS所有过账('1100','5000')
+				// vendorrid
+				// 1.查询2天内VPS所有过账('1100','5000')
 				rs = vpsDB.executeQuery("select * from (select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from vendorrid " +
 						" where convert(varchar(10),GRNDATE,23) between '"+nowDay_2+"' and '"+nowDay+"' and printQTY<>0.0 and plent in ('1100','5000')" +
 						 "union  select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from pcbvendorrid " +
 						" where convert(varchar(10),GRNDATE,23) between '"+nowDay_2+"' and '"+nowDay+"' and printQTY<>0.0 and plent in ('1100','5000') )m  order by grn, partNumber"); //and UpAegisDATE is not null
-				//rsMap：存放closedate为null的数 key:grn+pn value:String[] dou(统计对象数组)
+				// rsMap：存放closedate为null的数 key:grn+pn value:String[] dou(统计对象数组)
 				Map<String,String[]> rsMap=new HashMap<String,String[]>();
 				System.out.println("test1:"+new Date());
 				while (rs.next()) {
 					System.out.println("rsMap："+rsMap.size());
 					pstmtDB2.setString(1, rs.getString("grn"));
-					//2.根据vps提供的过账GRN查询看板 closeDate不为null的数据
-					 ResultSet rsFinish  = pstmtDB2.executeQuery();//--------
-					if(!rsFinish.next()) {//GRN 没有关闭
+					// 2.根据vps提供的过账GRN查询看板 closeDate不为null的数据
+					 ResultSet rsFinish  = pstmtDB2.executeQuery();
+					// GRN 没有关闭
+					if(!rsFinish.next()) {
 						String[] dou=new String[8];
 						String grn = rs.getString("grn");
 						String pn = rs.getString("partNumber");
-						//2.1将同rsMap: grn pn 为key,看板对象数组为value,统计uid数量，grn数量
+						// 2.1将同rsMap: grn pn 为key,看板对象数组为value,统计uid数量，grn数量
 						if(rsMap.containsKey(grn+pn)){
 							dou=rsMap.get(grn+pn);
 							dou[0]=rs.getString("partNumber");
@@ -173,7 +173,6 @@ public class AutoToReceiveCheck {
 						}
 					}
 				}
-				
 				System.out.println("test2:"+new Date());
 				commonsLog.info("1 vendorrid size:"+rsMap.size());
 				for(String key : rsMap.keySet()) { 
@@ -260,8 +259,6 @@ public class AutoToReceiveCheck {
 									grnDateTime = grnDateTime.substring(0, 10) + " 08:00";
 								}
 							}
-							
-							
 							if(grnDateTime.compareTo(nowDayTime) > 0) {
 								trc.setWaittime("0.0");
 							}else {
@@ -276,8 +273,6 @@ public class AutoToReceiveCheck {
 									min = min + calFoodTime(grnDateTime, nowDayTime);
 									grn_log = trc.getGRN() + ":grnDateTime:"+grnDateTime +"   nowDayTime:"+nowDayTime +"hour:"+hour+" min:"+min +"1 FoodTime:"+calFoodTime(grnDateTime, nowDayTime);
 						            grnewdbDB.executeUpdate("insert into grn_log(grn,grn_log)values('"+trc.getGRN()+"','"+grn_log+"')");
-						            
-									
 								}else {
 									day = day-1;
 									hour = day*11;
@@ -289,7 +284,6 @@ public class AutoToReceiveCheck {
 									System.out.println(trc.getGRN() + " 2 FoodTime:"+calFoodTime(nowDayTime.substring(0, 10)+" 08:00", nowDayTime));
 									grn_log = trc.getGRN() + ":grnDateTime:"+grnDateTime +"   nowDayTime:"+nowDayTime +"hour:"+hour+" min:"+min+"2 FoodTime:"+calFoodTime(nowDayTime.substring(0, 10)+" 08:00", nowDayTime);
 						            grnewdbDB.executeUpdate("insert into grn_log(grn,grn_log)values('"+trc.getGRN()+"','"+grn_log+"')");
-						            
 								}
 								min = hour * 60 + min;
 								double minToHour = min/60.0;
@@ -312,16 +306,11 @@ public class AutoToReceiveCheck {
 						grnewdbDB.executeUpdate("delete from ToReceiveCheck where closeDate is null and GRN='"+key.substring(0, 10)+"'");
 					}
 				}
-				
-			
-				
 				trCheckService.saveToReceiveCheck(list);
 			}
-			
 			vpsDB.close();
 			conMes.close();
 			grnewdbDB.close();
-			
 		} catch (Exception e) {
 			commonsLog.error("Exception:", e);
 		}
@@ -356,14 +345,12 @@ public class AutoToReceiveCheck {
 		}
 		return min;
 	}
-		public static void main(String[] args) {
-			try {
-				new AutoToReceiveCheck().execute();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	public static void main(String[] args) {
+		try {
+			new AutoToReceiveCheck().execute();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-	
+	}
 }

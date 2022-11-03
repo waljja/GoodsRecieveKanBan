@@ -151,21 +151,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            <% int index = 0; %>
-                            
-                            <s:iterator value="#request.toReceiveWarehouseList" var="d">                                                          
-                                <tr <%if((index++)%2==0){out.print("style=background:#F5F5F5");}else{out.print("class='row1'");} %> onMouseOver="mouseover(this)" onMouseOut="mouseout(this)">                                  
-                                    <td><s:property value='#d.GRN'/></td>
-                                    <td><s:property value='#d.ItemNumber'/></td>
-                                    <td><s:property value='#d.GRNQuantity'/></td>
-                                    <td><s:property value='#d.ReceivingLocation'/></td> 
-                                    <td><s:property value='#d.type'/></td> 
-                                    <td><s:property value='#d.AegisQualify'/></td>
-                                    <td><s:property value='#d.SAPQualify'/></td>
-                                    <td><s:property value='#d.WaitTimeToMainbin'/></td>                                                      
-                                </tr>                                          
-                            </s:iterator>
-                            
+                                <% int index = 0; %>
+
+                                <s:iterator value="#request.toReceiveWarehouseList" var="d">
+                                    <tr <%if((index++)%2==0){out.print("style=background:#F5F5F5");}else{out.print("class='row1'");} %> onMouseOver="mouseover(this)" onMouseOut="mouseout(this)">
+                                        <td><s:property value='#d.GRN'/></td>
+                                        <td><s:property value='#d.ItemNumber'/></td>
+                                        <td><s:property value='#d.GRNQuantity'/></td>
+                                        <td><s:property value='#d.ReceivingLocation'/></td>
+                                        <td><s:property value='#d.type'/></td>
+                                        <td><s:property value='#d.AegisQualify'/></td>
+                                        <td><s:property value='#d.SAPQualify'/></td>
+                                        <td><s:property value='#d.WaitTimeToMainbin'/></td>
+                                    </tr>
+                                </s:iterator>
                             </tbody>
                         </table>
                         </form>

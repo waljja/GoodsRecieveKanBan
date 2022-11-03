@@ -30,7 +30,6 @@ public class UrgentMaterialCheckNotOCRMapper implements RowMapper{
         item.setCloseDate(rs.getString("closeDate"));
         item.setSap321122(rs.getString("sap321122"));
         item.setCreatedate(rs.getString("createdate"));
-        
         return item;
     }
 

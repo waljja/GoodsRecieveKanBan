@@ -121,12 +121,18 @@ public interface JdbcTemplateDao<T> {
 	 * @return
 	 */
 	public int insertData(String sql);
-	
+
 	/**
-	 * 关闭连接方式
+	 * @description jdbc批量SQL执行
+	 * @param sql
 	 */
 	public int[] batchExecute(String[] sql);
-	
+
+	/**
+	 * @description 查询数据
+	 * @param sql
+	 * @param rowMapper
+	 * @return
+	 */
 	public List<T> listData(String sql, RowMapper rowMapper);
-	
 }

@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.RowMapper;
 
 public class ToReceiveCheckMapper implements RowMapper{
     public Object mapRow(ResultSet rs, int arg1) throws SQLException {
-    	
         ToReceiveCheck item = new ToReceiveCheck();
         item.setId(rs.getInt("id"));
         item.setGRN(rs.getString("GRN"));
@@ -27,7 +26,6 @@ public class ToReceiveCheckMapper implements RowMapper{
         item.setSequence(rs.getInt("sequence"));
         item.setCreatedate(rs.getString("createdate"));
         item.setCloseDate(rs.getTimestamp("closeDate"));
-        
         return item;
     }
 }

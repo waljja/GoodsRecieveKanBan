@@ -387,5 +387,4 @@ public class ToReceiveWarehouseBAction extends ActionSupport{
             }
         }); 
     }
-
 }
