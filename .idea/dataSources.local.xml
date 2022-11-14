@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="dataSourceStorageLocal" created-in="IU-211.7442.40">
-    <data-source name="HT_InterfaceExchange@172.31.2.100" uuid="2e686a56-13f3-40d1-bf6b-470a18a3d65f">
-      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MSSQL" exact-version="0" />
-      <secret-storage>master_key</secret-storage>
-      <user-name>Aegis-sa</user-name>
-      <schema-mapping />
-    </data-source>
-  </component>
+  <component name="dataSourceStorageLocal" created-in="IU-211.7442.40" />
 </project>

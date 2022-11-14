@@ -1,22 +1,27 @@
 package ht.entity;
 
-import java.util.Date;
-
 /**
- *
- * 待入仓物料看板
- *
+ * 待入仓物料看板model
+ * @author 刘惠明
+ * @date 2020-9-3
  */
 public class ToReceiveWarehouse {
     private int id;
     private String GRN;
-    private String ItemNumber;/*物料编号*/
-    private String GRNQuantity;  /*GRN数量*/
-    private String ReceivingLocation;/*收货库位*/
-    private String ProductionTime;/*生产需要时间*/
-    private String AegisQualify;/*Aegis-合格*/
-    private String SAPQualify;/* SAP-合格*/
-    private String WaitTimeToMainbin;/*待入主料仓时间*/
+    /** 物料编号 */
+    private String ItemNumber;
+    /** GRN数量 */
+    private String GRNQuantity;
+    /** 收货库位 */
+    private String ReceivingLocation;
+    /** 生产需要时间 */
+    private String ProductionTime;
+    /** Aegis-合格 */
+    private String AegisQualify;
+    /** SAP-合格 */
+    private String SAPQualify;
+    /** 待入主料仓时间 */
+    private String WaitTimeToMainbin;
 	private String ReturnWarehouseTime;
     private String plant;
     private String UID;
@@ -25,7 +30,6 @@ public class ToReceiveWarehouse {
 	private String createdate;
 	private String closeDate;
 
-   
     public int getId() {
         return id;
     }
@@ -122,5 +126,4 @@ public class ToReceiveWarehouse {
 	public void setReturnWarehouseTime(String returnWarehouseTime) {
 		ReturnWarehouseTime = returnWarehouseTime;
 	}
-    
 }

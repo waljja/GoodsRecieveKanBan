@@ -1,24 +1,31 @@
 package ht.biz.impl;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import ht.biz.IUrgentMaterialCheckOCRService;
 import ht.dao.IUrgentMaterialCheckOCRDao;
 import ht.entity.UrgentMaterialCheckOCR;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 
 @Component("umCheckOCRService")
 public class UrgentMaterialCheckOCRServiceImpl implements IUrgentMaterialCheckOCRService{
     @Autowired
     private IUrgentMaterialCheckOCRDao umCheckOCRDao;
-    
+
+	/**
+	 * 加了 "D" 类型
+	 * @return
+	 */
+	@Override
     public List<UrgentMaterialCheckOCR> findAllUrgentMaterialCheckOCR() {
-        List<UrgentMaterialCheckOCR> list = umCheckOCRDao.listData("select * from UrgentMaterialCheckOCR where Type in ('A','B','C') " +
+        List<UrgentMaterialCheckOCR> list = umCheckOCRDao.listData("select * from UrgentMaterialCheckOCR where Type in ('A','B','C','D') " +
         		" and Sequence = (select max(Sequence) from UrgentMaterialCheckOCR) and closeDate is null order by Type, GRN ");
         return list;
     }
-    
+
+    @Override
     public void saveUrgentMaterialCheckOCR(List<UrgentMaterialCheckOCR> list) throws Exception {
     	StringBuilder sbSql = new StringBuilder();
 		String[] arraySql = new String[list.size()];
@@ -43,7 +50,8 @@ public class UrgentMaterialCheckOCRServiceImpl implements IUrgentMaterialCheckOC
 			umCheckOCRDao.batchExecute(arraySql);
 		}
     }
-    
+
+    @Override
     public void deleteAllUrgentMaterialCheckOCR() throws Exception {
         umCheckOCRDao.execute("delete from UrgentMaterialCheckOCR");
     }

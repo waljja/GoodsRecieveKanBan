@@ -61,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <table width="60%" border="0" cellspacing="0" cellpadding="0">
       <br><br><br>
 	  <tr>
-	    <td colspan="2"><div align="center"><span style="font-size:30px">鸿通 MES 2.0</span></div></td>
+	    <td colspan="2"><div align="center"><span style="font-size:30px">鸿通 MES 2.0 收货看板</span></div></td>
 	  </tr>
 	
 	  <tr>

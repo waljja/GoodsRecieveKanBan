@@ -30,7 +30,9 @@ public class AutoToReceiveWarehouse {
 	private static Log commonsLog = LogFactory.getLog(AutoToReceiveWarehouse.class);
 
 	/**
-	 * @description 获取看板数据
+	 * 查询看板所需数据，存入看板表（33 DB GRNewDashBoard3）
+	 * VPS两个数据源vendorrid、pcbvendorrid
+	 * 收货库位及IQC归还时间来源为Aegis，其余来自VPS
 	 */
 	public void execute() throws Exception {
 		commonsLog.info("start...");
@@ -56,14 +58,14 @@ public class AutoToReceiveWarehouse {
 	        // 当前年月份及小时、分钟数
 	        String nowDayTime = df2.format(c.getTime());
 	        // 当前小时、分钟数
-	        String currentHM = nowDayTime.substring(11);
+	        String currentHourMin = nowDayTime.substring(11);
 			// 当期时间 -2 天
 	        c.add(Calendar.DATE, -2);
 	        String nowDay_2 = df.format(c.getTime());
-			// 所有计时为上班时间 8:00-12:00、13:00-17:00、18:00-21:00，其他时间进行数据获取
-	        Boolean isWorkingTime = (currentHM.compareTo("08:00") >0 && currentHM.compareTo("12:00") <=0 )
-					|| (currentHM.compareTo("13:00") >0 && currentHM.compareTo("17:00") <=0 )
-					|| (currentHM.compareTo("18:00") >0 && currentHM.compareTo("21:00") <=0 ) ;
+			// 所有计时为上班时间 8:00-12:00、13:00-17:00、18:00-21:00，其他时间不进行数据获取及看板数据更新
+	        Boolean isWorkingTime = (currentHourMin.compareTo("08:00") >0 && currentHourMin.compareTo("12:00") <=0 )
+					|| (currentHourMin.compareTo("13:00") >0 && currentHourMin.compareTo("17:00") <=0 )
+					|| (currentHourMin.compareTo("18:00") >0 && currentHourMin.compareTo("21:00") <=0 ) ;
 			// 在工作时间内，进行数据获取
 			if(isWorkingTime){
 				// 查询不同时间段的数据
@@ -117,8 +119,9 @@ public class AutoToReceiveWarehouse {
 					pstmt.setString(1, nowDayAdd4);
 					rsDay = pstmt.executeQuery();
 				}
+				// 待入仓物料看板实体 集合
 				List<ToReceiveWarehouse> list = new ArrayList<ToReceiveWarehouse>();
-				// 查询最大序号
+				// 每次看板数据更新时 序列+1
 				int seq = 1;
 				ResultSet rs = grnewdbDB.executeQuery("select max(Sequence) as maxseq from ToReceiveWarehouse where Sequence is not null");
 				if(rs.next()) {
@@ -131,14 +134,14 @@ public class AutoToReceiveWarehouse {
 				 * 原先为xTend_MissingMaterials表
 				 * 改成TO_TransportOrder表和TO_TransportOrderItem表
 				 * 131 DB modified by GuoZhao Ding
-				 */
-				PreparedStatement pstmtA1 = connMes.prepareStatement(" select a.CreateTime as RequireTime from [dbo].[TO_TransportOrder] a ,  " +
-						"[dbo].[TO_TransportOrderItem] b where a.ID = b.TransportOrderID and b.Status = 'MissingPart' and b.PartNumber = ? " +
-						"and a.LLDHDate= ? order by CreateTime ");
+				*/
 				/*
 				PreparedStatement pstmtA1 = connMes.prepareStatement(" select RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
 	             		" where PartNumber = ? and convert(varchar(10),RequireTime,23) =? order by RequireTime ");
 				*/
+				PreparedStatement pstmtA1 = connMes.prepareStatement(" select a.CreateTime as RequireTime from [dbo].[TO_TransportOrder] a ,  " +
+						"[dbo].[TO_TransportOrderItem] b where a.ID = b.TransportOrderID and b.Status = 'MissingPart' and b.PartNumber = ? " +
+						"and a.LLDHDate= ? order by CreateTime ");
 				/*
 				 * 条件为UID、仓位（RH和CU）
 				 * 按时间排序
@@ -146,6 +149,14 @@ public class AutoToReceiveWarehouse {
 				 * 改成UID_xTend_MaterialTransactionsRHDCDW表
 				 * 131 DB modified by GuoZhao Ding
 				*/
+		        /*
+		        PreparedStatement pstmtA2 = connMes.prepareStatement("select II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+			    		" from ItemInventories II " +
+			            " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
+			            " left join StockLocations SL on SL.ID = IIH.StockLocationID" +
+			            " where SL.Identifier is not null and (SL.Identifier like'%RH%' or SL.Identifier like'%CU%') and II.Identifier = ? " +
+			    		" order by IIH.TimePosted_BaseDateTimeUTC desc ");
+			    */
 				PreparedStatement pstmtA2 = connMes.prepareStatement("select UID, ToStock_Input as StockLocation, TransactionTime AS 'localtime'  " +
 						"from  " +
 						"[dbo].[UID_xTend_MaterialTransactionsRHDCDW] UXM   " +
@@ -157,20 +168,17 @@ public class AutoToReceiveWarehouse {
 						"(ToStock_Input like'%RH%' or ToStock_Input like'%CU%')  " +
 						"order by  " +
 						"TransactionTime desc");
-		        /*
-		        PreparedStatement pstmtA2 = connMes.prepareStatement("select II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
-			    		" from ItemInventories II " +
-			            " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
-			            " left join StockLocations SL on SL.ID = IIH.StockLocationID" +
-			            " where SL.Identifier is not null and (SL.Identifier like'%RH%' or SL.Identifier like'%CU%') and II.Identifier = ? " +
-			    		" order by IIH.TimePosted_BaseDateTimeUTC desc ");
-			    */
 				/*
-				 * 条件为UID
+				 * 条件为UID，无“仓位”
 				 * 原先为ItemInventories表
 				 * 改成UID_xTend_MaterialTransactionsRHDCDW表
 				 * 131 DB modified by GuoZhao Ding
 				 */
+		        /*
+		        PreparedStatement pstmtA3 = connMes.prepareStatement("select II.Identifier, II.StockLocation " +
+	        			" from ItemInventories II " +
+	        			" where II.Identifier = ? ");
+	        	*/
 				PreparedStatement pstmtA3 = connMes.prepareStatement("select " +
 						"ToStock_Input as StockLocation " +
 						"from " +
@@ -181,26 +189,30 @@ public class AutoToReceiveWarehouse {
 						"ToStock_Input is not null " +
 						"and " +
 						"ToStock_Input != ''");
-		        /*
-		        PreparedStatement pstmtA3 = connMes.prepareStatement("select II.Identifier, II.StockLocation " +
-	        			" from ItemInventories II " +
-	        			" where II.Identifier = ? ");
-	        	*/
 				PreparedStatement pstmtDB1 = connDB.prepareStatement(" select inventory,needQty,gotQty,soStartDate " +
 	                 	" from NotFinishSO where plant=? and bom=? order by soStartDate ");
+				// 查询GRN已绑库记录
 				PreparedStatement pstmtDB2 = connDB.prepareStatement("select * from ToReceiveWarehouse where ReturnWarehouseTime <>'' " +
 						" and GRN=? ");
 				// vendorrid
+				// '1100', 暂时注释掉，减少数据量，加快执行速度
+				// GRN = '5003395550' and  暂时加入GRN条件，原条件有10000条数据，耗时太久
 				rs = vpsDB.executeQuery("select grn, partNumber, printQTY, rid, plent from vendorrid " +
-		                " where convert(varchar(10),GRNDATE,23) between '"+nowDay_2+"' and '"+nowDay+"' and UpAegis='pass' and plent in ('1100','1200','5000')  ");
+		                " where GRN = '5003395550' and convert(varchar(10),GRNDATE,23) between '"+nowDay_2+"' and '"+nowDay+"' and UpAegis='pass' and plent in ('1100', '1200','5000')  ");
 				// 把查询结果存入map
 				Map<String,String[]> rsMap=new HashMap<String,String[]>();
+				// 测试
+				int i = 0;
+				// 循环开始时间
+				long startTime = System.currentTimeMillis();
 		        while (rs.next()) {
-		        	// grn 来源于vps
+					System.out.println("rsMap："+rsMap.size());
 		        	String grn = rs.getString("grn");
 		        	String pn = rs.getString("partNumber");
+		        	// 根据VPS的GRN查已绑库的记录
 		        	pstmtDB2.setString(1, grn);
-					ResultSet rsFinish  = pstmtDB2.executeQuery();
+					ResultSet rsFinish = pstmtDB2.executeQuery();
+					// 当有已绑库的记录时，删除看板表未绑库数据
 					if(rsFinish.next()) {
 						grnewdbDB.executeUpdate("delete from ToReceiveWarehouse where ReturnWarehouseTime ='' " +
 								" and GRN='"+grn+"'");
@@ -211,7 +223,7 @@ public class AutoToReceiveWarehouse {
 			                dou[0]=rs.getString("partNumber");
 			                dou[1]=(Double.parseDouble(dou[1])+Double.parseDouble(rs.getString("printQTY"))) + "";
 			                dou[2]=(Integer.parseInt(dou[2])+1) + "";
-			                if(dou[3].length()< 5000) {
+			                if(dou[3].length() < 5000) {
 			                    dou[3]=rs.getString("rid")+","+dou[3];
 			                }
 			                dou[4]=rs.getString("plent");
@@ -225,27 +237,34 @@ public class AutoToReceiveWarehouse {
 			                rsMap.put(grn+pn, dou);
 			            }
 					}
+					i += 1;
+					commonsLog.info("VPS查询GRN:" + i);
+					commonsLog.info("GRN:" + grn);
 		        }
+		        // 测试
+				System.out.println("循环耗时：" + (System.currentTimeMillis() - startTime) / 60000);
+				commonsLog.info("退出循环");
 		        commonsLog.info("3a vendorrid size:"+rsMap.size());
 		        // 把Aegis数据放入model中，在jsp中展示
 		        for(String key : rsMap.keySet()) {
-		        	//
 		        	String startDateTime = "";
 		        	String endDateTime = "";
+		        	// 调用SAP接口查询321
 		        	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
 	            	if("X".equalsIgnoreCase(sapDateTime[0])) {
-	            		// 前端model
+	            		// 看板表model
 	            		ToReceiveWarehouse trw = new ToReceiveWarehouse();
 	            		startDateTime = sapDateTime[2];
 	            		trw.setCloseDate(sapDateTime[2]);
+	            		// SAP合格
 	            		trw.setSAPQualify("是");
-	            		//
 	            		String[] temp = rsMap.get(key);
 			            ResultSet rsA = null;
 			            boolean flagRH = false;
 			            String[] UIDs = temp[3].split(",");
 			            for (String UID : UIDs) {
 			            	pstmtA2.setString(1, UID) ;
+			            	// 获取IQC归还时间、收货库位
 			            	rsA = pstmtA2.executeQuery();
 			            	if(rsA.next()) {
 			            		flagRH = true;
@@ -264,9 +283,15 @@ public class AutoToReceiveWarehouse {
 			            	trw.setReturnWarehouseTime("");
 			            	trw.setAegisQualify("是");
 			            	endDateTime = nowDayTime;
+			            	// 测试
+			            	commonsLog.info(trw.getUID());
 			            	pstmtA3.setString(1, trw.getUID());
 			            	ResultSet rsA3 = pstmtA3.executeQuery();
+			            	commonsLog.info(rsA3);
 			            	if(rsA3.next()) {
+								// 测试
+								commonsLog.info("rsA3");
+								commonsLog.info("仓位" + rsA3.getString("StockLocation"));
 								// 收货库位
 			            		trw.setReceivingLocation(rsA3.getString("StockLocation"));
 			            	}
@@ -282,7 +307,7 @@ public class AutoToReceiveWarehouse {
 		                	// 没用的
 		                    trw.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
 		                }else {
-		                    //根据工厂 物料 取工单开始日期
+		                    // 根据工厂 物料 取工单开始日期
 		                    double totalInventory = 0.0;
 		                    double leftInventory = 0.0;
 		                    String soStartDate = "NA";
@@ -317,7 +342,7 @@ public class AutoToReceiveWarehouse {
 							continue;
 						}
 		                trw.setPlant(temp[4]);
-		                //计算待入主料仓时间                   
+		                // 计算待入主料仓时间
 		                if(!"".equals(startDateTime)&&!"null".equalsIgnoreCase(startDateTime)) { 
 		                    if (startDateTime.substring(11).compareTo("21:00")>0) {
 		                    	startDateTime = startDateTime.substring(0, 10) + " 21:00";
@@ -325,9 +350,9 @@ public class AutoToReceiveWarehouse {
 		                    if (startDateTime.substring(11).compareTo("08:00")<0) {
 		                    	startDateTime = startDateTime.substring(0, 10) + " 08:00";
 		                    }
-		                    if(startDateTime.compareTo(endDateTime) > 0) {
+		                    if (startDateTime.compareTo(endDateTime) > 0) {
 		                        trw.setWaitTimeToMainbin("0.0");
-		                    }else {
+		                    } else {
 	                        	int day = DateUtils.diffDays(df.parse(endDateTime.substring(0, 10)), df.parse(startDateTime.substring(0, 10)) );
 								int hour = 0;
 								int min = 0;
@@ -356,11 +381,20 @@ public class AutoToReceiveWarehouse {
 		                trw.setSequence(seq);
 		                trw.setCreatedate(nowDayTime);
 		                list.add(trw);
+		                // 测试
+						commonsLog.info("list输出");
+						for (int j = 0; j < list.size(); j++) {
+							commonsLog.info("list" + j + ":" + list.get(j));
+						}
 		            }
 		        }
-		        //pcbvendorrid
+		        // 测试
+				commonsLog.info("第一段结束");
+		        // pcbvendorrid表，数据源和上面不一样
+				// '1100', 暂时注释掉，减少数据量，加快程序执行速度
+				// GRN = '5003395550' and  暂时加入GRN条件，原条件有10000条数据，耗时太久
 				rs = vpsDB.executeQuery("select grn, partNumber, printQTY, rid, plent from pcbvendorrid " +
-		                " where convert(varchar(10),GRNDATE,23) between '"+nowDay_2+"' and '"+nowDay+"' and UpAegis='pass' and plent in ('1100','1200','5000')  ");
+		                " where GRN = '5003395550' and convert(varchar(10),GRNDATE,23) between '"+nowDay_2+"' and '"+nowDay+"' and UpAegis='pass' and plent in ('1100', '1200','5000')  ");
 				rsMap=new HashMap<String,String[]>();
 				while (rs.next()) {
 		        	String grn = rs.getString("grn");
@@ -368,8 +402,8 @@ public class AutoToReceiveWarehouse {
 		        	pstmtDB2.setString(1, grn);
 					ResultSet rsFinish  = pstmtDB2.executeQuery();
 					if(rsFinish.next()) {
-						grnewdbDB.executeUpdate("delete from ToReceiveWarehouse where ReturnWarehouseTime ='' " +
-								" and GRN='"+grn+"'");
+						grnewdbDB.executeUpdate("delete from ToReceiveWarehouse where ReturnWarehouseTime = '' " +
+								" and GRN = '"+grn+"'");
 					}else {
 						String[] dou=new String[5];
 			            if(rsMap.containsKey(grn+pn)){
@@ -394,11 +428,14 @@ public class AutoToReceiveWarehouse {
 		        }
 		        commonsLog.info("3a pcbvendorrid size:"+rsMap.size());
 		        for(String key : rsMap.keySet()) {
-		        	//
+		        	// 测试
+		        	commonsLog.info("for循环");
 		        	String startDateTime = "";
 		        	String endDateTime = "";
 		        	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
 	            	if("X".equalsIgnoreCase(sapDateTime[0])) {
+	            		// 测试
+						commonsLog.info("进入SAp");
 	            		ToReceiveWarehouse trw = new ToReceiveWarehouse();
 	            		startDateTime = sapDateTime[2];
 	            		trw.setCloseDate(sapDateTime[2]);
@@ -479,9 +516,8 @@ public class AutoToReceiveWarehouse {
 						}else {
 							continue;
 						}
-		                
 		                trw.setPlant(temp[4]);
-		                //计算待入主料仓时间                   
+		                // 计算待入主料仓时间
 		                if(!"".equals(startDateTime)&&!"null".equalsIgnoreCase(startDateTime)) { 
 		                    if (startDateTime.substring(11).compareTo("21:00")>0) {
 		                    	startDateTime = startDateTime.substring(0, 10) + " 21:00";
@@ -510,7 +546,6 @@ public class AutoToReceiveWarehouse {
 									min = min + calFoodTime(endDateTime.substring(0, 10)+" 08:00", endDateTime);
 								}
 								min = hour * 60 + min;
-								//
 								double minToHour = min/60.0;
 		                        trw.setWaitTimeToMainbin(String.format("%.2f", minToHour));
 		                    }
@@ -519,11 +554,21 @@ public class AutoToReceiveWarehouse {
 		                }
 		                trw.setSequence(seq);
 		                trw.setCreatedate(nowDayTime);
+		                // 测试
+						commonsLog.info("测试数据");
+						commonsLog.info(trw);
 		                list.add(trw);
 		            }
 		        }
+		        // 测试
+				commonsLog.info("第二段结束");
+				commonsLog.info("插入测试数据库");
+		        commonsLog.info("list:" + list);
 		        // 把查出来的数据插入看板数据库
-		        trWarehouseService.saveToReceiveWarehouse(list);   
+		        trWarehouseService.saveToReceiveWarehouse(list);
+		        commonsLog.info("插入完成");
+			} else {
+				commonsLog.info("非上班时间：" + System.currentTimeMillis());
 			}
 	        // 关闭数据库连接
 	        vpsDB.close();
@@ -536,9 +581,9 @@ public class AutoToReceiveWarehouse {
 	}
 
 	/**
+	 * 减去用餐时间
 	 * @param startDateTime endDateTime
 	 * @return min
-	 * 减去用餐时间
 	 */
 	public int calFoodTime(String startDateTime, String endDateTime) {
 		int min = 0;

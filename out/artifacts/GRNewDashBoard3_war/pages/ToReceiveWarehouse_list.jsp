@@ -29,8 +29,6 @@
 <script src="js/dialog-min.js"></script>
 <script type="text/javascript">
   $(function () {
-    //table2_demo2_js_start
-    //表格(DataTables)-1，html数据源
     var language = {  
         zeroRecords: "没找到相应的数据！",
         info: "总记录数:<font style='color:5c90d5;font-weight:bold'>_MAX_</font>&nbsp|&nbsp当前页/总页数:<font style='color:5c90d5;font-weight:bold'>_PAGE_/_PAGES_</font>&nbsp|&nbsp每页显示 15 条记录",
@@ -145,7 +143,7 @@
                                     <th style="font-size:18px;color:#000">GRN数量</th>
                                     <th style="font-size:18px;color:#000">收货库位</th>
                                     <th style="font-size:18px;color:#000">急料类别</th>
-                                    <th style="font-size:18px;color:#000">Aegis-合格</th>
+                                    <th style="font-size:18px;color:#000">IQC系统-合格</th>
                                     <th style="font-size:18px;color:#000">SAP-合格</th>
                                     <th style="font-size:18px;color:#000">待入主料仓时间(H)</th>                                 
                                 </tr>

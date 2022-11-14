@@ -11,15 +11,15 @@ import org.springframework.stereotype.Component;
 public class UrgentMaterialCheckNotOCRServiceImpl implements IUrgentMaterialCheckNotOCRService{
     @Autowired
     private IUrgentMaterialCheckNotOCRDao umCheckNotOCRDao;
-    
-    
+
+	@Override
     public List<UrgentMaterialCheckNotOCR> findAllUrgentMaterialCheckNotOCR() {
-        List<UrgentMaterialCheckNotOCR> list = umCheckNotOCRDao.listData("select * from UrgentMaterialCheckNotOCR where Type in ('A','B','C') " +
+        List<UrgentMaterialCheckNotOCR> list = umCheckNotOCRDao.listData("select * from UrgentMaterialCheckNotOCR where Type in ('A','B','C','D') " +
         		" and Sequence = (select max(Sequence) from UrgentMaterialCheckNotOCR) and closeDate is null  order by Type, GRN ");
         return list;
     }
-    
-  
+
+	@Override
     public void saveUrgentMaterialCheckNotOCR(List<UrgentMaterialCheckNotOCR> list) throws Exception {
     	StringBuilder sbSql = new StringBuilder();
 		String[] arraySql = new String[list.size()];
@@ -44,8 +44,8 @@ public class UrgentMaterialCheckNotOCRServiceImpl implements IUrgentMaterialChec
 		}
 		
     }
-    
 
+	@Override
     public void deleteAllUrgentMaterialCheckNotOCR() throws Exception {
         umCheckNotOCRDao.execute("delete from UrgentMaterialCheckNotOCR");       
     }

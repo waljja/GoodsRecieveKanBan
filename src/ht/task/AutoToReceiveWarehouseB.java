@@ -2,30 +2,21 @@ package ht.task;
 
 import ht.biz.IToReceiveWarehouseBService;
 import ht.entity.ToReceiveWarehouseB;
-import ht.entity.ToReceiveWarehouseB;
 import ht.util.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.opensymphony.xwork2.ActionContext;
+import java.util.*;
 
 /**
  * 3b
- * @Date 2020-9-3
+ * @date 2020-9-3
  * @author 刘惠明
  * 
  */
@@ -38,10 +29,10 @@ public class AutoToReceiveWarehouseB {
     public void execute() throws Exception {
 		commonsLog.info("start...");
 		try {
-			ConMes conMes = new ConMes();
-			Connection connMes = conMes.con;
 	    	ConVPS vpsDB = new ConVPS();
 	    	Connection connVPS = vpsDB.con;
+	    	ConMes conMes = new ConMes();
+	    	Connection connMes = conMes.con;
 	    	ConDashBoard grnewdbDB = new ConDashBoard();
 	    	Connection connDB = grnewdbDB.con;
 	    	SAPService sap = new SAPService();
@@ -55,6 +46,8 @@ public class AutoToReceiveWarehouseB {
 	        String nowDayTime = df2.format(c.getTime());
 	        c.add(Calendar.DATE, -2); // -2 天
 	        String nowDay_2 = df.format(c.getTime());
+	        commonsLog.info(nowDay);
+	        commonsLog.info("2:"+nowDay_2);
 	        //
 			if( (nowDayTime.substring(11).compareTo("08:00") >0 && nowDayTime.substring(11).compareTo("12:00") <=0 ) 
 					|| (nowDayTime.substring(11).compareTo("13:00") >0 && nowDayTime.substring(11).compareTo("17:00") <=0 )
@@ -111,19 +104,54 @@ public class AutoToReceiveWarehouseB {
 				if(rs.next()) {
 					seq = rs.getInt("maxseq")+1;
 				}
-				PreparedStatement pstmtA1 = connMes.prepareStatement(" select RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
-	             		" where PartNumber = ? and convert(varchar(10),RequireTime,23) =? order by RequireTime ");
-				// 改成UID_xTend_MaterialTransactionsRHDCDW表
-		        PreparedStatement pstmtA2 = connMes.prepareStatement("select II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+				/*PreparedStatement pstmtA1 = connAegis.prepareStatement(" select RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+	             		" where PartNumber = ? and convert(varchar(10),RequireTime,23) =? order by RequireTime ");*/
+				PreparedStatement pstmtA1 = connMes.prepareStatement("select " +
+						"a.CreateTime as RequireTime " +
+						"from " +
+						"TO_TransportOrder a , TO_TransportOrderItem b " +
+						"where " +
+						"a.ID = b.TransportOrderID " +
+						"and " +
+						"b.Status = 'MissingPart' " +
+						"and " +
+						"b.PartNumber = ? " +
+						"and " +
+						"a.LLDHDate= ? " +
+						"order by " +
+						"CreateTime ");
+		        /*PreparedStatement pstmtA2 = connAegis.prepareStatement("select II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 			    		" from ItemInventories II " +
 			            " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
 			            " left join StockLocations SL on SL.ID = IIH.StockLocationID" +
 			            " where SL.Identifier is not null and (SL.Identifier like'%RT%') and II.Identifier = ? " +
-			    		" order by IIH.TimePosted_BaseDateTimeUTC desc ");
-				// 改成UID_xTend_MaterialTransactionsRHDCDW表
-		        PreparedStatement pstmtA3 = connMes.prepareStatement("select II.Identifier, II.StockLocation " +
+			    		" order by IIH.TimePosted_BaseDateTimeUTC desc ");*/
+				PreparedStatement pstmtA2 = connMes.prepareStatement("select " +
+						"II.UID, II.ToStock_Input as StockLocation, II.TransactionTime AS 'localtime' " +
+						"from " +
+						"[dbo].[UID_xTend_MaterialTransactionsRHDCDW] II  " +
+						"where " +
+						"II.UID = ? " +
+						"and " +
+						"II.ToStock_Input is not null " +
+						"and " +
+						"(II.ToStock_Input like'%RT%' ) " +
+						"order by " +
+						"II.TransactionTime " +
+						"desc");
+		        /*PreparedStatement pstmtA3 = connAegis.prepareStatement("select II.Identifier, II.StockLocation " +
 	        			" from ItemInventories II " +
-	        			" where II.Identifier = ? ");
+	        			" where II.Identifier = ? ");*/
+				PreparedStatement pstmtA3 = connMes.prepareStatement("select " +
+						"ToStock_Input as StockLocation " +
+						"from " +
+						"UID_xTend_MaterialTransactionsRHDCDW " +
+						"where " +
+						"UID = ? " +
+						"and " +
+						"ToStock_Input is not null " +
+						"and " +
+						"ToStock_Input<> ''");
 				PreparedStatement pstmtDB1 = connDB.prepareStatement(" select inventory,needQty,gotQty,soStartDate " +
 	                 	" from NotFinishSO where plant=? and bom=? order by soStartDate ");
 				PreparedStatement pstmtDB2 = connDB.prepareStatement("select * from ToReceiveWarehouseB where ReturnWarehouseTime <>'' " +
@@ -452,11 +480,15 @@ public class AutoToReceiveWarehouseB {
 		                list.add(trw);
 		            }
 		        }
+		        commonsLog.info("list输出");
+				for (int j = 0; j < list.size(); j++) {
+					commonsLog.info("list" + (j + 1) + ":" + list.get(j).getGRN());
+				}
 		        trWarehouseBService.saveToReceiveWarehouseB(list);   
 			}
 	        //
 	        vpsDB.close();
-	        conMes.close();
+			conMes.close();
 	        grnewdbDB.close();
 		} catch (Exception e) {
 			commonsLog.error("Exception:", e);
@@ -492,6 +524,8 @@ public class AutoToReceiveWarehouseB {
 		}
 		return min;
 	}
-	
-	
+
+	public static void main(String[]args) throws Exception{
+		new AutoToReceiveWarehouseB().execute();
+	}
 }

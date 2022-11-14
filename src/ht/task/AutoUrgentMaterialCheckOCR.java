@@ -3,24 +3,16 @@ package ht.task;
 import ht.biz.IUrgentMaterialCheckOCRService;
 import ht.entity.UrgentMaterialCheckOCR;
 import ht.util.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.opensymphony.xwork2.ActionContext;
+import java.util.*;
 
 /**
  * 2b
@@ -31,17 +23,18 @@ import com.opensymphony.xwork2.ActionContext;
  */
 
 public class AutoUrgentMaterialCheckOCR {
+	@Autowired
+	private IUrgentMaterialCheckOCRService umCheckOCRService;
+
 	private static Log commonsLog = LogFactory.getLog(AutoUrgentMaterialCheckOCR.class);
-    @Autowired
-    private IUrgentMaterialCheckOCRService umCheckOCRService;
 	
 	public void execute() throws Exception {
 		commonsLog.info("start...");
 		try {
-			ConMes conMes = new ConMes();
-			Connection connMes = conMes.con;
 	    	ConVPS vpsDB = new ConVPS();
 	    	Connection connVPS = vpsDB.con;
+			ConMes conMes = new ConMes();
+			Connection connMes = conMes.con;
 	    	ConDashBoard grnewdbDB = new ConDashBoard();
 	    	Connection connDB = grnewdbDB.con;
 	        SAPService sap = new SAPService();
@@ -108,29 +101,47 @@ public class AutoUrgentMaterialCheckOCR {
 				List<UrgentMaterialCheckOCR> list = new ArrayList<UrgentMaterialCheckOCR>();
 				int seq = 1;
 				ResultSet rs = grnewdbDB.executeQuery("select max(Sequence) as maxseq from UrgentMaterialCheckOCR where Sequence is not null");
-
 				if(rs.next()) {
 					seq = rs.getInt("maxseq")+1;
 				}
-
-				/*
-					PreparedStatement pstmtA1 = connMes.prepareStatement("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
-		                            "where ReceivingNumber=? ");
-				*/
-
-				/*
-				 * 131 DB modified by GuoZhao Ding
-				 * PreparedStatement pstmtA1 = connVPS.prepareStatement("select CreateDate from [imslabel].[dbo].[vendorrid] where GRN = ?"); // vendorrid
-				 * PreparedStatement pstmtA1_ = connVPS.prepareStatement("select CreateDate from [imslabel].[dbo].[pcbvendorrid] where GRN = ?"); // pcbvendorrid
-				*/
-
-				PreparedStatement pstmtA2 = connMes.prepareStatement("select RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
-		                            " where PartNumber = ? and convert(varchar(10),RequireTime,23) =? order by RequireTime ");
-				PreparedStatement pstmtA3 = connMes.prepareStatement("select II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+				/*PreparedStatement pstmtA1 = connAegis.prepareStatement("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+		                            "where ReceivingNumber=? ");*/
+				/*PreparedStatement pstmtA2 = connMes.prepareStatement("select RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+		                            " where PartNumber = ? and convert(varchar(10),RequireTime,23) =? order by RequireTime ");*/
+				PreparedStatement pstmtA2 = connMes.prepareStatement("select " +
+						"a.CreateTime as RequireTime " +
+						"from " +
+						"TO_TransportOrder a , TO_TransportOrderItem b " +
+						"where " +
+						"a.ID = b.TransportOrderID " +
+						"and " +
+						"b.Status = 'MissingPart' " +
+						"and " +
+						"b.PartNumber = ? " +
+						"and " +
+						"a.LLDHDate= ? " +
+						"order by " +
+						"CreateTime");
+				/*PreparedStatement pstmtA3 = connMes.prepareStatement("select II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 	            		" from ItemInventories II " +
 	                    " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
-	                    " where II.StockLocation like '%QM%' and II.Identifier =? " +
-	                    " order by IIH.TimePosted_BaseDateTimeUTC desc ");
+	                    " where (StockLocation like '%QM%' or StockLocation like '%RH%') and II.Identifier =? " +
+	                    " order by IIH.TimePosted_BaseDateTimeUTC desc ");*/
+				PreparedStatement pstmtA3 = connMes.prepareStatement("select " +
+						"II.ToStock_Input as StockLocation, IIH.TimePosted_BaseDateTimeUTC AS 'localtime' " +
+						"from " +
+						"[dbo].[UID_xTend_MaterialTransactionsRHDCDW] II " +
+						"left join " +
+						"ItemInventoryHistories IIH " +
+						"on " +
+						"IIH.UID COLLATE Chinese_PRC_CI_AS = II.UID " +
+						"where " +
+						"II.UID = ? " +
+						"and " +
+						"(II.ToStock_Input like '%QM%' or II.ToStock_Input like '%RH%')" +
+						"order by " +
+						"IIH.TimePosted_BaseDateTimeUTC " +
+						"desc");
 				PreparedStatement pstmtDB1 = connDB.prepareStatement(" select inventory,needQty,gotQty,soStartDate " +
 						" from NotFinishSO where plant=? and bom=? order by soStartDate ");
 		        PreparedStatement pstmtDB2 = connDB.prepareStatement("select * from UrgentMaterialCheckOCR where closeDate is not null " +
@@ -148,9 +159,15 @@ public class AutoUrgentMaterialCheckOCR {
 		                " partNumber like '275%' or partNumber like '470%' " +
 		                " ) ");
 				Map<String,String[]> rsMap=new HashMap<String,String[]>();
+				// 测试
+				int i = 0;
+				// 循环开始时间
+				long startTime = System.currentTimeMillis();
+				//1.vps查询所有对应pn
 		        while (rs.next()) {
 		        	String grn = rs.getString("grn");
 		        	pstmtDB2.setString(1, grn);
+		        	//2.根据grn 查询 UrgentMaterialCheckOCR closeDate是否为空 
 					ResultSet rsFinish  = pstmtDB2.executeQuery();
 					if(rsFinish.next()) {
 						grnewdbDB.executeUpdate("delete from UrgentMaterialCheckOCR where closeDate is null " +
@@ -179,7 +196,12 @@ public class AutoUrgentMaterialCheckOCR {
 			                rsMap.put(grn+pn, dou);
 			            }
 					}
+					i += 1;
+					commonsLog.info("VPS查询GRN:" + i);
+					commonsLog.info("GRN:" + grn);
 		        }
+				System.out.println("循环耗时：" + (System.currentTimeMillis() - startTime) / 60000);
+				commonsLog.info("退出循环");
 		        commonsLog.info("2b vendorrid size:"+rsMap.size());
 		        for(String key : rsMap.keySet()) {
 		            String[] temp = rsMap.get(key);
@@ -190,10 +212,13 @@ public class AutoUrgentMaterialCheckOCR {
 		            	pstmtA3.setString(1, UID) ;
 		            	rsA = pstmtA3.executeQuery();
 		            	if(rsA.next()) {
+		            		commonsLog.info("time");
+		            		commonsLog.info(rsA.getString("localtime"));
 		            		flagQM = true;
 		            		break;
 		            	}
 					}
+
 		            if(flagQM){
 		            	UrgentMaterialCheckOCR umc = new UrgentMaterialCheckOCR();
 		            	String endDateTime = "";
@@ -244,17 +269,24 @@ public class AutoUrgentMaterialCheckOCR {
 	                        }
 	                        umc.setProductionTime(soStartDate);
 	                    }
+	                    
 	                    umc.setType("");
-	                    if(!"NA".equals(umc.getProductionTime()) ){
-							if(umc.getProductionTime().compareTo(nowDayAdd2) <= 0) {
-								umc.setType("A");
-							}else if(umc.getProductionTime().compareTo(nowDayAdd4) <= 0) {
-								umc.setType("B");
-							}else{
+						String[] split = temp[0].split("-");
+						String plant = temp[4];
+						if(plant.equals("5000")&&!split[2].contains("D")){
+							umc.setType("D");
+						}else{
+		                    if(!"NA".equals(umc.getProductionTime()) ){
+	    						if(umc.getProductionTime().compareTo(nowDayAdd2) <= 0) {
+	    							umc.setType("A");
+	    						}else if(umc.getProductionTime().compareTo(nowDayAdd4) <= 0) {
+	    							umc.setType("B");
+	    						}else{
+									continue;
+								}
+							}else {
 								continue;
-							}
-						}else {
-							continue;
+							}							
 						}
 	                    umc.setUID(UIDs[0]);
 	                    umc.setPlant(temp[4]);
@@ -297,6 +329,7 @@ public class AutoUrgentMaterialCheckOCR {
 	                    umc.setSequence(seq);
 	                    umc.setCreatedate(nowDayTime);
 	                    if(!"".equals(umc.getRDFinishTime())){
+	                    	commonsLog.info("添加");
 	                    	list.add(umc);
 	                    }
 		            }
@@ -409,16 +442,22 @@ public class AutoUrgentMaterialCheckOCR {
 	                        umc.setProductionTime(soStartDate);
 	                    }
 	                    umc.setType("");
-	                    if(!"NA".equals(umc.getProductionTime()) ){
-							if(umc.getProductionTime().compareTo(nowDayAdd2) <= 0) {
-								umc.setType("A");
-							}else if(umc.getProductionTime().compareTo(nowDayAdd4) <= 0) {
-								umc.setType("B");
-							}else{
+						String[] split = temp[0].split("-");
+						String plant = temp[4];
+						if(plant.equals("5000")&&!split[2].contains("D")){
+							umc.setType("D");
+						}else{
+		                    if(!"NA".equals(umc.getProductionTime()) ){
+	    						if(umc.getProductionTime().compareTo(nowDayAdd2) <= 0) {
+	    							umc.setType("A");
+	    						}else if(umc.getProductionTime().compareTo(nowDayAdd4) <= 0) {
+	    							umc.setType("B");
+	    						}else{
+									continue;
+								}
+							}else {
 								continue;
-							}
-						}else {
-							continue;
+							}							
 						}
 	                    umc.setUID(UIDs[0]);
 	                    umc.setPlant(temp[4]);
@@ -465,9 +504,13 @@ public class AutoUrgentMaterialCheckOCR {
 	                    }
 		            }
 		        }
-		        umCheckOCRService.saveUrgentMaterialCheckOCR(list);
+				commonsLog.info("list输出");
+				for (int j = 0; j < list.size(); j++) {
+					commonsLog.info("list" + j + ":" + list.get(j).getGRN());
+				}
+				umCheckOCRService.saveUrgentMaterialCheckOCR(list);
+				commonsLog.info("插入完成");
 			}
-			//
 	        vpsDB.close();
 	        conMes.close();
 	        grnewdbDB.close();
@@ -477,7 +520,15 @@ public class AutoUrgentMaterialCheckOCR {
 		commonsLog.info("end...");
 	}
 	
-	
+	public static void main(String[] args) {
+		try {
+			new AutoUrgentMaterialCheckOCR().execute();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	//减去 用餐时间
 	public int calFoodTime(String startDateTime, String endDateTime) {
 		int min = 0;

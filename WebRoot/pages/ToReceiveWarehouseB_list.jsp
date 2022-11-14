@@ -145,7 +145,7 @@
                                     <th style="font-size:18px;color:#000">GRN数量</th>
                                     <th style="font-size:18px;color:#000">收货库位</th>
                                     <th style="font-size:18px;color:#000">急料类别</th>
-                                    <th style="font-size:18px;color:#000">Aegis-合格</th>
+                                    <th style="font-size:18px;color:#000">IQC系统-合格</th>
                                     <th style="font-size:18px;color:#000">SAP-合格</th>
                                     <th style="font-size:18px;color:#000">待入退货仓或开MRB时间(H)</th>                              
                                 </tr>

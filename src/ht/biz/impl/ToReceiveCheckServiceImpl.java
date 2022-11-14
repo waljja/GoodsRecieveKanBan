@@ -1,16 +1,9 @@
 package ht.biz.impl;
 
-import com.fr.third.org.apache.poi.hssf.usermodel.HSSFCell;
 import ht.biz.IToReceiveCheckService;
 import ht.dao.IToReceiveCheckDao;
 import ht.entity.ToReceiveCheck;
 import ht.mapper.ToReceiveCheckMapper;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFDataFormat;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -18,20 +11,30 @@ import java.io.InputStream;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.fr.third.org.apache.poi.hssf.usermodel.HSSFCell;
+
 
 @Component("trCheckService")
 public class ToReceiveCheckServiceImpl implements IToReceiveCheckService{
     @Autowired
     private IToReceiveCheckDao trCheckDao;
-    
+
+    @Override
     public List<ToReceiveCheck> findAllToReceiveCheck() throws Exception {
         List<ToReceiveCheck> list = trCheckDao.listData("select * from ToReceiveCheck where Type in ('A','B','C') " +
         		" and Sequence = (select max(Sequence) from ToReceiveCheck) and closeDate IS  NULL" +
-        		" AND ItemNumber in ( select a.bom from NotFinishSO a left join ( select  plant,bom,sum(convert(float,needQty)) qty from NotFinishSO group by bom,plant) b on a.bom=b.bom where b.qty> convert(float,REPLACE(inventory,'null',0.0)))" +
-        		"order by Type, GRN");  //ProductionTime
+        		//" AND ItemNumber in ( select a.bom from NotFinishSO a left join ( select  plant,bom,sum(convert(float,needQty)) qty from NotFinishSO group by bom,plant) b on a.bom=b.bom where b.qty> convert(float,REPLACE(inventory,'null',0.0)))" +
+        		" order by Type, GRN");  //ProductionTime
         return list;
     }
-    
+
     private List<ToReceiveCheck> getLatestList(){
         String condition = " Type in ('A','B','C') and Sequence = (select max(Sequence) from ToReceiveCheck) ";
         LinkedHashMap<String, String> orderby = new LinkedHashMap<String, String>();
@@ -40,7 +43,8 @@ public class ToReceiveCheckServiceImpl implements IToReceiveCheckService{
         List<ToReceiveCheck> list = trCheckDao.listData("ToReceiveCheck", condition, orderby, new ToReceiveCheckMapper());
         return list;
     }
-    
+
+    @Override
     public InputStream doExport() throws Exception {
         InputStream is = null;
         List<ToReceiveCheck> list = getLatestList();
@@ -151,7 +155,8 @@ public class ToReceiveCheckServiceImpl implements IToReceiveCheckService{
         is = new ByteArrayInputStream(content);
         return is;
     }
-    
+
+    @Override
 	public void saveToReceiveCheck(List<ToReceiveCheck> list) throws Exception {
 		StringBuilder sbSql = new StringBuilder();
 		String[] arraySql = new String[list.size()];
@@ -172,7 +177,8 @@ public class ToReceiveCheckServiceImpl implements IToReceiveCheckService{
 		}
 		//System.out.println(sbSql);
 	}
-	
+
+	@Override
 	public void deleteAllToReceiveCheck() throws Exception {
 		trCheckDao.execute("delete from ToReceiveCheck");
 	}

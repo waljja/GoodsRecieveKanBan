@@ -28,12 +28,13 @@ public class ToReceiveWarehouseAction extends ActionSupport{
     private IToReceiveWarehouseService trWarehouseService;
 
     /**
-     * 加载页面
+     * 获取看板数据，加载页面
      * @return 重定向页面
      */
     public String doList()throws Exception {
+    	// 看板数据获取（33 DB GRNewDashBoard3），存入model
         List<ToReceiveWarehouse> list = trWarehouseService.findAllToReceiveWarehouse();    
-        if (list!=null&&list.size()>0) {
+        if (list != null && list.size()>0) {
             Map request = (Map) ActionContext.getContext().get("request");
             request.put("toReceiveWarehouseList", list); 
         }

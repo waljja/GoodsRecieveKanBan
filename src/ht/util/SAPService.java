@@ -40,7 +40,6 @@ public class SAPService {
 			Properties connectProperties = new Properties();
 			connectProperties.setProperty(DestinationDataProvider.JCO_ASHOST,p.getProperty("JCO_ASHOST"));
 			connectProperties.setProperty(DestinationDataProvider.JCO_SYSNR,p.getProperty("JCO_SYSNR"));
-			//connectProperties.setProperty(DestinationDataProvider.JCO_SYSNR,"01");//测试机
 			connectProperties.setProperty(DestinationDataProvider.JCO_CLIENT,p.getProperty("JCO_CLIENT"));
 			connectProperties.setProperty(DestinationDataProvider.JCO_USER,p.getProperty("JCO_USER"));
 			connectProperties.setProperty(DestinationDataProvider.JCO_PASSWD,p.getProperty("JCO_PASSWD"));
@@ -129,25 +128,20 @@ public class SAPService {
 					b+= c;
 					System.out.println(stock+" | "+b);
 				}
-//				ResultSet rs = grnewdbDB.executeQuery("select plant, stock from NotFinishStock where plant='"+plant+"' ");
-//				if(rs.next()) {
-				
-					if(!mapStock.containsKey(plant+pn)){
-						dou=rs2.getString("LABST");
-						if("".equals(dou)) {
-							dou="0";
-						}
-						mapStock.put(plant+pn, dou);
-					}else{
-						String oldValue = mapStock.get(plant+pn);
-						dou=rs2.getString("LABST");
-						if("".equals(dou)) {
-							dou="0";
-						}
-						mapStock.put(plant+pn, String.valueOf(Double.parseDouble(oldValue) + Double.parseDouble(dou)));
-					}	
-				
-//				}
+				if(!mapStock.containsKey(plant+pn)){
+					dou=rs2.getString("LABST");
+					if("".equals(dou)) {
+						dou="0";
+					}
+					mapStock.put(plant+pn, dou);
+				}else{
+					String oldValue = mapStock.get(plant+pn);
+					dou=rs2.getString("LABST");
+					if("".equals(dou)) {
+						dou="0";
+					}
+					mapStock.put(plant+pn, String.valueOf(Double.parseDouble(oldValue) + Double.parseDouble(dou)));
+				}
 				rs2.nextRow();
 			}
 			//BOM 明细
@@ -184,9 +178,13 @@ public class SAPService {
 		grnewdbDB.close();
 		return msdList;
 	}
-    
-    
-     //获取GRN 是否做过  321 或者 122
+
+	/**
+	 * 获取GRN 是否做过 321 或者 122
+	 * @param GRN
+	 * @param year
+	 * @return 结果
+	 */
 	public String[] getGrnStatus(String GRN, String year){
 		String[] rtc = new String[3];
 		rtc[0] = "";
@@ -201,10 +199,11 @@ public class SAPService {
 				throw new RuntimeException("Z_JAVA_GET_GRN_STATUS not found in SAP.");
 			
 			JCoParameterList input = function.getImportParameterList();
-			input.setValue("I_MBLNR", GRN);   //
-			input.setValue("I_MJAHR", year);   //
+			input.setValue("I_MBLNR", GRN);
+			input.setValue("I_MJAHR", year);
 			try {
-				function.execute(destination); // 函数执行
+				// 函数执行
+				function.execute(destination);
 			} catch (AbapException e) {
 				e.printStackTrace();
 				System.out.println(e.toString());
@@ -218,7 +217,6 @@ public class SAPService {
      	    	rtc[1] = r122;
      	    	rtc[2] = exports.getString("E_CPUDT").substring(0, 10) + " " 
      	    		+ exports.getString("E_CUPTM").substring(0, 5) ;
-     	    	//System.out.println(GRN+","+exports.getString("E_CPUDT").substring(0, 10)+","+exports.getString("E_CUPTM").substring(0, 5) );
      	    }
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -228,12 +226,8 @@ public class SAPService {
     
     
 	public static void main(String[] args) {
-		//SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
 		SAPService sap=new SAPService();
-		//System.out.println(sap.getPlantByPo("4500318530"));
-		//List<NotFinishSO> msdList = sap.getMsdList("20220419", "20220619");
 		sap.getGrnStatus("5003311598", "2022");
 		sap.getGrnStatus("5003311599", "2022");
-
 	}
 }

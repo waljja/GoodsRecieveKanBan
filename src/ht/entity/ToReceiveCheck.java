@@ -3,23 +3,36 @@ package ht.entity;
 import java.util.Date;
 
 
-/*
- *  待点收看板
+/**
+ * 待点收看板实体类
+ * @author 刘惠明
+ * @createDate 2020-9-3
+ * @updateUser 丁国钊
+ * @updateDate 2022-11-3
+ * @updateRemark 修改注释
  */
 public class ToReceiveCheck {
 	private int id;
 	private String GRN;
-	private String ItemNumber;/* 物料编号*/
-	private String GRNQuantity;  /*GRN数量*/
-	private String UIDQuantity;  /*UID数量*/
-	private String ProductionTime; /*生产需要时间*/
-	private String waittime; /*待收料等待时间*/
+	/** 物料编号 */
+	private String ItemNumber;
+	/** GRN数量 */
+	private String GRNQuantity;
+	/** UID数量 */
+	private String UIDQuantity;
+	/** 生产需要时间，与急料类别有关 */
+	private String ProductionTime;
+	/** 待收料等待时间 */
+	private String waittime;
+	/** 工厂 */
 	private String plant;
 	private String UID;
 	private String GRNDATE;
 	private String GRN103;
+	/** 急料类别 */
 	private String type;
 	private int sequence;
+	/** 关闭时间 */
 	private Date closeDate;
 	private String createdate;
 	
@@ -113,5 +126,4 @@ public class ToReceiveCheck {
 	public void setCreatedate(String createdate) {
 		this.createdate = createdate;
 	}
-	
 }
