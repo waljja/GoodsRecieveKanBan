@@ -2,6 +2,9 @@ package ht.util;
 
 import java.sql.*;
 
+/**
+ * 172.31.2.33 GRNewDashboard3 看板数据库
+ */
 public class ConDashBoard
 {
 	private static String strDBDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";

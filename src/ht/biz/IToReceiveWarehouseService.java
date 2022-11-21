@@ -2,8 +2,9 @@ package ht.biz;
 
 
 import ht.entity.ToReceiveWarehouse;
-import java.util.List;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
 
 public interface IToReceiveWarehouseService {
     public List<ToReceiveWarehouse> findAllToReceiveWarehouse();

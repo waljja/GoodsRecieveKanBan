@@ -1,9 +1,9 @@
 package ht.biz;
 
 import ht.entity.UrgentMaterialCheckOCR;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
-
-
 
 public interface IUrgentMaterialCheckOCRService {
     public List<UrgentMaterialCheckOCR> findAllUrgentMaterialCheckOCR();

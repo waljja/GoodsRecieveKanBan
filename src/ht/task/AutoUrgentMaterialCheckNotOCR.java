@@ -23,9 +23,9 @@ import java.util.*;
  */
 
 public class AutoUrgentMaterialCheckNotOCR {
-	private static Log commonsLog = LogFactory.getLog(AutoUrgentMaterialCheckNotOCR.class);
 	@Autowired
     private IUrgentMaterialCheckNotOCRService umCheckNotOCRService;
+	private static Log commonsLog = LogFactory.getLog(AutoUrgentMaterialCheckNotOCR.class);
 
 	public void execute() throws Exception {
 
@@ -35,6 +35,8 @@ public class AutoUrgentMaterialCheckNotOCR {
 	    	Connection connVPS = vpsDB.con;
 	    	ConMes conMes = new ConMes();
 	    	Connection connMes = conMes.con;
+	    	ConOrbitX conOrbitX = new ConOrbitX();
+	    	Connection connOrbitX = conOrbitX.con;
 	    	ConDashBoard grnewdbDB = new ConDashBoard();
 	    	Connection connDB = grnewdbDB.con;
 	    	SAPService sap = new SAPService();
@@ -119,12 +121,12 @@ public class AutoUrgentMaterialCheckNotOCR {
 					seq = rs.getInt("maxseq")+1;
 				}
 				// Aegis
-		        /*PreparedStatement pstmtA1 = connMes.prepareStatement("select II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
+		        /* PreparedStatement pstmtA1 = connMes.prepareStatement("select II.Identifier, II.StockLocation, SL.Identifier as 'historyStock', DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 	            		" from ItemInventories II " +
 	                    " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
 	                    " left join StockLocations SL on SL.ID = IIH.StockLocationID" +
 	                    " where II.Identifier = ? and SL.Identifier is not null " +
-	            		" order by IIH.TimePosted_BaseDateTimeUTC desc ");*/
+	            		" order by IIH.TimePosted_BaseDateTimeUTC desc "); */
 				PreparedStatement pstmtA1 = connMes.prepareStatement("select " +
 						"II.UID, II.ToStock_Input as StockLocation, IIH.StockLocation as 'historyStock', IIH.TimePosted_BaseDateTimeUTC AS 'localtime' " +
 						"from " +
@@ -142,6 +144,8 @@ public class AutoUrgentMaterialCheckNotOCR {
 						"desc");
 		        /*PreparedStatement pstmtA2 = connMes.prepareStatement("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
 	                    "where ReceivingNumber=?");*/
+				/*PreparedStatement pstmtA3 = connAegis.prepareStatement("select RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+						" where PartNumber = ? and convert(varchar(10),RequireTime,23) =? order by RequireTime ");*/
 		        PreparedStatement pstmtA3 = connMes.prepareStatement("select " +
 						"a.CreateTime as RequireTime " +
 						"from " +
@@ -166,7 +170,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 			            " where (SL.Identifier like'%IQ%' ) and II.Identifier = ? " +
 			    		" order by IIH.TimePosted_BaseDateTimeUTC desc ");*/
 				PreparedStatement pstmtA5 = connMes.prepareStatement("select " +
-						"II.UID, II.ToStock_Input as StockLocation, IIH.StockLocation as 'historyStock', IIH.TimePosted_BaseDateTimeUTC AS 'localtime' " +
+						"II.UID, II.ToStoc_kInput as StockLocation, IIH.StockLocation as 'historyStock', IIH.TimePosted_BaseDateTimeUTC AS 'localtime' " +
 						"from " +
 						"[dbo].[UID_xTend_MaterialTransactionsRHDCDW] II " +
 						"left join " +
@@ -201,6 +205,25 @@ public class AutoUrgentMaterialCheckNotOCR {
 						"order by " +
 						"IIH.TimePosted_BaseDateTimeUTC " +
 						"asc ");
+				// 196 Orbit X
+				// IQC 321 122 时间
+				PreparedStatement findIqcDateByGrn = connOrbitX.prepareStatement("select distinct " +
+						"IQCdate " +
+						"from " +
+						"[OrBitX].[dbo].[xTend_MaterialReceived]" +
+						"where " +
+						"GRN = ? " +
+						"and " +
+						"IQCMVT = '321' " +
+						"union all " +
+						"select distinct " +
+						"IQCdate " +
+						"from " +
+						"[OrBitX].[dbo].[xTend_MaterialReceived] " +
+						"where " +
+						"GRN = ? " +
+						"and " +
+						"IQCMVT = '122'");
 		        PreparedStatement pstmtDB1 = connDB.prepareStatement("select inventory,needQty,gotQty,soStartDate " +
 	            		" from NotFinishSO where plant=? and bom=? order by soStartDate ");
 		        PreparedStatement pstmtDB2 = connDB.prepareStatement("select * from UrgentMaterialCheckNotOCR where closeDate is not null " +
@@ -274,15 +297,30 @@ public class AutoUrgentMaterialCheckNotOCR {
 		            	//有IQ库位
 		            	UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
 			        	String endDateTime = "";
-		            	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
+						String grnSub = key.substring(0, 10);
+						ResultSet rsIqc;
+			        	// sa获取 321 122 时间改为IQC
+						findIqcDateByGrn.setString(1, grnSub);
+						rsIqc  = findIqcDateByGrn.executeQuery();
+						if (rsIqc.next()) {
+							// 321 或 122 时间
+							String iqcDate = rsIqc.getString("IQCdate");
+							if (iqcDate.length() != 0 && iqcDate != null ) {
+								endDateTime = iqcDate;
+								umcn.setCloseDate(iqcDate);
+							} else {
+								endDateTime = nowDayTime;
+								umcn.setCloseDate(null);
+							}
+						}
+		            	/*String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
 		            	if(!"".equals(sapDateTime[2])) {
 		            		endDateTime = sapDateTime[2];
 		            		umcn.setCloseDate(sapDateTime[2]);
 		            	}else{
 		            		endDateTime = nowDayTime;
 		            		umcn.setCloseDate(null);
-		            	}
-		            	//
+		            	}*/
 		            	String uid = rsA.getString("UID");
 		            	pstmtA1.setString(1, uid);
 		            	ResultSet rsA2 = pstmtA1.executeQuery();
@@ -357,7 +395,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 	                    umcn.setUID(uid);
 	                    umcn.setPlant(temp[4]);
 	                    umcn.setGRNDATE(temp[5]);
-	                    //计算IQC检验等待时间
+	                    // 计算IQC检验等待时间
 	                    String auditDataTime = umcn.getRDFinishTime();              
 	                    if (!"".equals(auditDataTime)&&!"null".equalsIgnoreCase(auditDataTime)) {
 	                        if (auditDataTime.substring(11).compareTo("21:00")>0) {
@@ -415,15 +453,30 @@ public class AutoUrgentMaterialCheckNotOCR {
 		            	if(flagQM) {
 		            		UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
 				        	String endDateTime = "";
-			            	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
+							String grnSub = key.substring(0, 10);
+							ResultSet rsIqc;
+							// sa获取 321 122 时间改为IQC
+							findIqcDateByGrn.setString(1, grnSub);
+							rsIqc  = findIqcDateByGrn.executeQuery();
+							if (rsIqc.next()) {
+								// 321 或 122 时间
+								String iqcDate = rsIqc.getString("IQCdate");
+								if (iqcDate.length() != 0 && iqcDate != null ) {
+									endDateTime = iqcDate;
+									umcn.setCloseDate(iqcDate);
+								} else {
+									endDateTime = nowDayTime;
+									umcn.setCloseDate(null);
+								}
+							}
+			            	/*String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
 			            	if(!"".equals(sapDateTime[2])) {
 			            		endDateTime = sapDateTime[2];
 			            		umcn.setCloseDate(sapDateTime[2]);
 			            	}else{
 			            		endDateTime = nowDayTime;
 			            		umcn.setCloseDate(null);
-			            	}
-			            	//
+			            	}*/
 		            		String uid = rsA.getString("UID");
 			                umcn.setGRN(key.substring(0,10));
 			                umcn.setItemNumber(temp[0]);
@@ -603,15 +656,30 @@ public class AutoUrgentMaterialCheckNotOCR {
 		            if(flagIQC){ //有IQ库位
 		            	UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
 			        	String endDateTime = "";
-		            	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
+						String grnSub = key.substring(0, 10);
+						ResultSet rsIqc;
+						// sa获取 321 122 时间改为IQC
+						findIqcDateByGrn.setString(1, grnSub);
+						rsIqc = findIqcDateByGrn.executeQuery();
+						if (rsIqc.next()) {
+							// 321 或 122 时间
+							String iqcDate = rsIqc.getString("IQCdate");
+							if (iqcDate.length() != 0 && iqcDate != null ) {
+								endDateTime = iqcDate;
+								umcn.setCloseDate(iqcDate);
+							} else {
+								endDateTime = nowDayTime;
+								umcn.setCloseDate(null);
+							}
+						}
+		            	/*String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
 		            	if(!"".equals(sapDateTime[2])) {
 		            		endDateTime = sapDateTime[2];
 		            		umcn.setCloseDate(sapDateTime[2]);
 		            	}else{
 		            		endDateTime = nowDayTime;
 		            		umcn.setCloseDate(null);
-		            	}
-		            	//
+		            	}*/
 		            	String uid = rsA.getString("UID");
 		            	pstmtA1.setString(1, uid);
 		            	ResultSet rsA2 = pstmtA1.executeQuery();
@@ -742,14 +810,30 @@ public class AutoUrgentMaterialCheckNotOCR {
 		            	if(flagQM) {
 		            		UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
 				        	String endDateTime = "";
-			            	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
+							String grnSub = key.substring(0, 10);
+							ResultSet rsIqc;
+							// sa获取 321 122 时间改为IQC
+							findIqcDateByGrn.setString(1, grnSub);
+							rsIqc  = findIqcDateByGrn.executeQuery();
+							if (rsIqc.next()) {
+								// 321 或 122 时间
+								String iqcDate = rsIqc.getString("IQCdate");
+								if (iqcDate.length() != 0 && iqcDate != null ) {
+									endDateTime = iqcDate;
+									umcn.setCloseDate(iqcDate);
+								} else {
+									endDateTime = nowDayTime;
+									umcn.setCloseDate(null);
+								}
+							}
+			            	/*String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
 			            	if(!"".equals(sapDateTime[2])) {
 			            		endDateTime = sapDateTime[2];
 			            		umcn.setCloseDate(sapDateTime[2]);
 			            	}else{
 			            		endDateTime = nowDayTime;
 			            		umcn.setCloseDate(null);
-			            	}
+			            	}*/
 			            	//
 		            		String uid = rsA.getString("UID");
 			                umcn.setGRN(key.substring(0,10));

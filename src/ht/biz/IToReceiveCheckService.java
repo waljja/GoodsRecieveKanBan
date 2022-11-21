@@ -1,10 +1,10 @@
 package ht.biz;
 
 import ht.entity.ToReceiveCheck;
+import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
 import java.util.List;
-
 
 public interface IToReceiveCheckService {
     public List<ToReceiveCheck> findAllToReceiveCheck() throws Exception;

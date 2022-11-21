@@ -182,8 +182,10 @@ public class SAPService {
 	/**
 	 * 获取GRN 是否做过 321 或者 122
 	 * @param GRN
+	 			收货号
 	 * @param year
-	 * @return 结果
+				年份
+	 * @return 321时间
 	 */
 	public String[] getGrnStatus(String GRN, String year){
 		String[] rtc = new String[3];

@@ -35,6 +35,8 @@ public class AutoUrgentMaterialCheckOCR {
 	    	Connection connVPS = vpsDB.con;
 			ConMes conMes = new ConMes();
 			Connection connMes = conMes.con;
+			ConOrbitX conOrbitX = new ConOrbitX();
+			Connection connOrbitX = conOrbitX.con;
 	    	ConDashBoard grnewdbDB = new ConDashBoard();
 	    	Connection connDB = grnewdbDB.con;
 	        SAPService sap = new SAPService();
@@ -104,7 +106,7 @@ public class AutoUrgentMaterialCheckOCR {
 				if(rs.next()) {
 					seq = rs.getInt("maxseq")+1;
 				}
-				/*PreparedStatement pstmtA1 = connAegis.prepareStatement("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
+				/*PreparedStatement pstmtA1 = connMes.prepareStatement("SELECT CreateDate FROM [HT_FactoryLogix].[dbo].[xTend_MaterialReceived] " +
 		                            "where ReceivingNumber=? ");*/
 				/*PreparedStatement pstmtA2 = connMes.prepareStatement("select RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
 		                            " where PartNumber = ? and convert(varchar(10),RequireTime,23) =? order by RequireTime ");*/
@@ -142,6 +144,25 @@ public class AutoUrgentMaterialCheckOCR {
 						"order by " +
 						"IIH.TimePosted_BaseDateTimeUTC " +
 						"desc");
+				// 196 Orbit X
+				// IQC 321 122 时间
+				PreparedStatement findIqcDateByGrn = connOrbitX.prepareStatement("select distinct " +
+						"IQCdate " +
+						"from " +
+						"[OrBitX].[dbo].[xTend_MaterialReceived]" +
+						"where " +
+						"GRN = ? " +
+						"and " +
+						"IQCMVT = '321' " +
+						"union all " +
+						"select distinct " +
+						"IQCdate " +
+						"from " +
+						"[OrBitX].[dbo].[xTend_MaterialReceived] " +
+						"where " +
+						"GRN = ? " +
+						"and " +
+						"IQCMVT = '122'");
 				PreparedStatement pstmtDB1 = connDB.prepareStatement(" select inventory,needQty,gotQty,soStartDate " +
 						" from NotFinishSO where plant=? and bom=? order by soStartDate ");
 		        PreparedStatement pstmtDB2 = connDB.prepareStatement("select * from UrgentMaterialCheckOCR where closeDate is not null " +
@@ -222,14 +243,30 @@ public class AutoUrgentMaterialCheckOCR {
 		            if(flagQM){
 		            	UrgentMaterialCheckOCR umc = new UrgentMaterialCheckOCR();
 		            	String endDateTime = "";
-		            	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
+						String grnSub = key.substring(0, 10);
+						ResultSet rsIqc;
+						// sa获取 321 122 时间改为IQC
+						findIqcDateByGrn.setString(1, grnSub);
+						rsIqc = findIqcDateByGrn.executeQuery();
+						if (rsIqc.next()) {
+							// 321 或 122 时间
+							String iqcDate = rsIqc.getString("IQCdate");
+							if (iqcDate.length() != 0 && iqcDate != null ) {
+								endDateTime = iqcDate;
+								umc.setCloseDate(iqcDate);
+							} else {
+								endDateTime = nowDayTime;
+								umc.setCloseDate(null);
+							}
+						}
+		            	/*String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
 		            	if(!"".equals(sapDateTime[2])) {
 		            		endDateTime = sapDateTime[2];
 		            		umc.setCloseDate(sapDateTime[2]);
 		            	}else{
 		            		endDateTime = nowDayTime;
 		            		umc.setCloseDate(null);
-		            	}
+		            	}*/
 	                    umc.setGRN(key.substring(0,10));
 	                    umc.setItemNumber(temp[0]);
 	                    umc.setGRNQuantity(temp[1]);
@@ -394,14 +431,30 @@ public class AutoUrgentMaterialCheckOCR {
 		            if(flagQM){
 		            	UrgentMaterialCheckOCR umc = new UrgentMaterialCheckOCR();
 		            	String endDateTime = "";
-		            	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
+						String grnSub = key.substring(0, 10);
+						ResultSet rsIqc;
+						// sa获取 321 122 时间改为IQC
+						findIqcDateByGrn.setString(1, grnSub);
+						rsIqc  = findIqcDateByGrn.executeQuery();
+						if (rsIqc.next()) {
+							// 321 或 122 时间
+							String iqcDate = rsIqc.getString("IQCdate");
+							if (iqcDate.length() != 0 && iqcDate != null ) {
+								endDateTime = iqcDate;
+								umc.setCloseDate(iqcDate);
+							} else {
+								endDateTime = nowDayTime;
+								umc.setCloseDate(null);
+							}
+						}
+		            	/*String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
 		            	if(!"".equals(sapDateTime[2])) {
 		            		endDateTime = sapDateTime[2];
 		            		umc.setCloseDate(sapDateTime[2]);
 		            	}else{
 		            		endDateTime = nowDayTime;
 		            		umc.setCloseDate(null);
-		            	}
+		            	}*/
 	                    umc.setGRN(key.substring(0,10));
 	                    umc.setItemNumber(temp[0]);
 	                    umc.setGRNQuantity(temp[1]);

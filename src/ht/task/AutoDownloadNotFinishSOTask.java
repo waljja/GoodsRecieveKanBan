@@ -12,13 +12,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 从SAP下载
- * 
+ * SAP下载
  * @date 2020-8-7
  * @author 刘惠明
- *
  */
-
 public class AutoDownloadNotFinishSOTask {
 	@Autowired
 	private INotFinishSODao nfsoDao;

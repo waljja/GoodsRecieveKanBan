@@ -2,6 +2,11 @@ package ht.util;
 
 import java.sql.*;
 
+/**
+ * 131 HonortoneMesDb
+ * @author 丁国钊
+ * @date 2022-11-17
+ */
 public class ConMes {
     private static String strDBDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static String strDBUrl = "jdbc:sqlserver://172.31.2.131;databaseName=HonortoneMesDb";
@@ -138,7 +143,7 @@ public class ConMes {
     }
 
     public static void main(String[] args) {
-        ConAegis c = new ConAegis();
+        ConMes c = new ConMes();
         System.out.println(c.con);
     }
 }

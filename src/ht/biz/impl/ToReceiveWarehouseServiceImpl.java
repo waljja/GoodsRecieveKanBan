@@ -8,6 +8,9 @@ import ht.biz.IToReceiveWarehouseService;
 import ht.dao.IToReceiveWarehouseDao;
 import ht.entity.ToReceiveWarehouse;
 
+/**
+ * @author
+ */
 @Component("trWarehouseService")
 public class ToReceiveWarehouseServiceImpl implements IToReceiveWarehouseService{
     @Autowired

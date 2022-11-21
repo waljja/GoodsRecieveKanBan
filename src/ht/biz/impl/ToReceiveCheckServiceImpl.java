@@ -30,7 +30,6 @@ public class ToReceiveCheckServiceImpl implements IToReceiveCheckService{
     public List<ToReceiveCheck> findAllToReceiveCheck() throws Exception {
         List<ToReceiveCheck> list = trCheckDao.listData("select * from ToReceiveCheck where Type in ('A','B','C') " +
         		" and Sequence = (select max(Sequence) from ToReceiveCheck) and closeDate IS  NULL" +
-        		//" AND ItemNumber in ( select a.bom from NotFinishSO a left join ( select  plant,bom,sum(convert(float,needQty)) qty from NotFinishSO group by bom,plant) b on a.bom=b.bom where b.qty> convert(float,REPLACE(inventory,'null',0.0)))" +
         		" order by Type, GRN");  //ProductionTime
         return list;
     }

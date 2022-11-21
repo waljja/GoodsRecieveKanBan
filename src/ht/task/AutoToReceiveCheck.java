@@ -18,16 +18,14 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * 1.待点收看板
+ * 待点收看板
  * @date 2020-9-3
  * @author 刘惠明
- *
  */
-
 public class AutoToReceiveCheck {
-    private static Log commonsLog = LogFactory.getLog(AutoToReceiveCheck.class);
     @Autowired
     private IToReceiveCheckService trCheckService;
+    private static Log commonsLog = LogFactory.getLog(AutoToReceiveCheck.class);
 
     public void execute() throws Exception {
         commonsLog.info("start...");
@@ -168,7 +166,6 @@ public class AutoToReceiveCheck {
                 Map<String,String[]> rsMap=new HashMap<String,String[]>();
                 System.out.println("test1:"+new Date());
                 while (rs.next()) {
-
                     pstmtDB2.setString(1, rs.getString("grn"));
                     //2.根据vps提供的过账GRN查询看板 closeDate不为null的数据
                     ResultSet rsFinish  = pstmtDB2.executeQuery();//--------
@@ -203,8 +200,7 @@ public class AutoToReceiveCheck {
                 }
                 System.out.println("test2:"+new Date());
                 commonsLog.info("1 vendorrid size:"+rsMap.size());
-
-                //查询看板还Sequence<max(Sequence)还未绑库的数据
+                //查询看板Sequence<max(Sequence)还未绑库的数据
                 ResultSet executeQuery = grnewdbDB.executeQuery("select * from ToReceiveCheck t " +
                         "join (select GRN,max(Sequence)as Sequence,closeDate from ToReceiveCheck group by GRN,closeDate having closeDate is null) t2 on t.GRN=t2.GRN and t.Sequence=t2.Sequence" +
                         " where t.Sequence < (select max(Sequence) from ToReceiveCheck)");
@@ -314,7 +310,6 @@ public class AutoToReceiveCheck {
                                     grnDateTime = grnDateTime.substring(0, 10) + " 08:00";
                                 }
                             }
-
                             if(grnDateTime.compareTo(nowDayTime) > 0) {
                                 trc.setWaittime("0.0");
                             }else {
@@ -397,6 +392,7 @@ public class AutoToReceiveCheck {
         }
         return min;
     }
+
     public static void main(String[] args) {
         try {
             new AutoToReceiveCheck().execute();
@@ -405,6 +401,4 @@ public class AutoToReceiveCheck {
             e.printStackTrace();
         }
     }
-
-
 }

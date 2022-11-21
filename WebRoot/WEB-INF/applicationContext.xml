@@ -3,13 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
- http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
- http://www.springframework.org/schema/context 
- http://www.springframework.org/schema/context/spring-context-2.5.xsd
- http://www.springframework.org/schema/aop
- http://www.springframework.org/schema/tx/spring-aop-2.5.xsd
- http://www.springframework.org/schema/tx 
- http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+ 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+ 	http://www.springframework.org/schema/context
+ 	http://www.springframework.org/schema/context/spring-context-2.5.xsd
+ 	http://www.springframework.org/schema/aop
+ 	http://www.springframework.org/schema/tx/spring-aop-2.5.xsd
+ 	http://www.springframework.org/schema/tx
+ 	http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
 	<!-- 配置文件占位符 -->
 	<context:property-placeholder location="classpath:jdbc.properties" />
@@ -21,26 +21,60 @@
 		<property name="username" value="${username}"></property>
 		<property name="password" value="${password}"></property>
 	</bean>
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-		<property name="dataSource">
-			<ref bean="dataSource" />
+	<bean id="dataSource131" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver">
 		</property>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.connection.release_mode">after_statement</prop>
-				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
-				<prop key="hibernate.show_sql">false</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				<prop key="hibernate.format_sql">true</prop><!-- 格式化sql语句 -->
-				<prop key="hibernate.use_sql_comments">true</prop><!-- 显示sql语句的注释 -->
-			</props>
+		<property name="url" value="jdbc:sqlserver://172.31.2.131;databaseName=HonortoneMesDb">
 		</property>
-		
+		<property name="username" value="sa"></property>
+		<property name="password" value="dyb8110!"></property>
+	</bean>
+	<bean id="dataSource108" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver">
+		</property>
+		<property name="url" value="jdbc:sqlserver://172.31.2.108;databaseName=HT_FactoryLogix">
+		</property>
+		<property name="username" value="Aegis-sa"></property>
+		<property name="password" value="ABC789_"></property>
+	</bean>
+<!--	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">-->
+<!--		<property name="dataSource">-->
+<!--			<ref bean="dataSource" />-->
+<!--		</property>-->
+<!--		<property name="hibernateProperties">-->
+<!--			<props>-->
+<!--				<prop key="hibernate.connection.release_mode">after_statement</prop>-->
+<!--				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>-->
+<!--				<prop key="hibernate.show_sql">false</prop>-->
+<!--				<prop key="hibernate.hbm2ddl.auto">update</prop>-->
+<!--				<prop key="hibernate.format_sql">true</prop>&lt;!&ndash; 格式化sql语句 &ndash;&gt;-->
+<!--				<prop key="hibernate.use_sql_comments">true</prop>&lt;!&ndash; 显示sql语句的注释 &ndash;&gt;-->
+<!--			</props>-->
+<!--		</property>-->
+<!--	</bean>-->
+
+	<!--  mapper.xml扫描  -->
+	<bean id="sqlSessionFactory131" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource108" />
+		<property name="mapperLocations" value="classpath:../../../src/resources/mapper/131/*.xml" />
+	</bean>
+	<bean id="sqlSessionFactory108" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource131" />
+		<property name="mapperLocations" value="classpath:../../../src/resources/mapper/108/*.xml" />
 	</bean>
 	
 	<!--自己扫描-->
 	<context:component-scan base-package="ht" />
+
+	<!--  mapper接口扫描  -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="net.aazj.mapper2" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory131"/>
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="net.aazj.mapper2" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory108"/>
+	</bean>
 
 	<bean id="jdbctemplateDataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="${driverClassName}">
@@ -139,7 +173,7 @@
  	<!-- 配置一个触发器() -->
 	<bean id="startTrigger104" class="org.springframework.scheduling.quartz.CronTriggerBean">
 	  <property name="jobDetail" ref="startTask104"></property>
-	  <property name="cronExpression" value="0 0/15 * ? * 2-7"></property> <!--每15分钟执行一次-->
+	  <property name="cronExpression" value="* 24 16 * * ? "></property> <!--每15分钟执行一次-->
 	</bean>
 
 	<!--定时任务： 3b. 待入退貨仓物料看板  -->
@@ -155,7 +189,7 @@
  	<!-- 配置一个触发器() -->
 	<bean id="startTrigger105" class="org.springframework.scheduling.quartz.CronTriggerBean">
 	  <property name="jobDetail" ref="startTask105"></property>
-	  <property name="cronExpression" value="* * 15/1 * * ?"></property> <!--每15分钟执行一次-->
+	  <property name="cronExpression" value="0 0/15 * ? * 2-7"></property> <!--每15分钟执行一次-->
 	</bean>
 
 	<!-- 总调度,用于启动定时器 -->
@@ -169,7 +203,7 @@
 <!--			<ref bean="startTrigger102"/>-->
 <!--			<ref bean="startTrigger103"/>-->
 <!--			<ref bean="startTrigger104"/>-->
-			<ref bean="startTrigger105"/>
+<!--			<ref bean="startTrigger105"/>-->
 	   	</list>
 	   </property>
 	</bean>
