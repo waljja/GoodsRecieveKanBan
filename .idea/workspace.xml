@@ -1,150 +1,247 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AnalysisUIOptions">
-    <option name="GROUP_BY_SEVERITY" value="true" />
-  </component>
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="GRNewDashBoard3:war" />
+      <artifact name="GRNewDashBoard3:war exploded" />
     </artifacts-to-build>
   </component>
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="048470a3-5912-4436-a76b-dd1e8a094a5f" name="默认变更列表" comment="">
+    <list default="true" id="2a48f6ef-6bac-46b6-a95f-b9252f3ca1f3" name="默认变更列表" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/GRNewDashBoard3_war.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/GRNewDashBoard3_war_exploded.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_1_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_1_7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_baomidou_dynamic_datasource_spring_boot_starter_2_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_baomidou_mybatis_plus_2_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_baomidou_mybatis_plus_boot_starter_2_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_baomidou_mybatis_plus_core_2_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_baomidou_mybatis_plus_generate_2_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_baomidou_mybatis_plus_support_2_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_classmate_1_3_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_8_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_8_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_8_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_easonjim_com_sap_conn_jco_sapjco3_3_0_11.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_jsqlparser_jsqlparser_1_1.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_microsoft_sqlserver_mssql_jdbc_6_4_0_jre7.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_validation_validation_api_1_1_0_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_8_5_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_el_8_5_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_websocket_8_5_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_jdbc_8_5_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_juli_8_5_5.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_aspectj_aspectjweaver_1_8_9.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_validator_5_2_4_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibersap_sapjco3_3_0.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_3_0_Final.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_json_json_20140107.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_3_4_6.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_spring_1_3_2.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_21.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_1_7_21.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_log4j_over_slf4j_1_7_21.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_21.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_1_4_1_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_1_4_1_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_1_4_1_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_aop_1_4_1_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_jdbc_1_4_1_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_1_4_1_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_tomcat_1_4_1_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_web_1_4_1_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_4_3_3_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_4_3_3_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_4_3_3_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_4_3_3_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_4_3_3_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_4_3_3_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_4_3_3_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_4_3_3_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_4_3_3_RELEASE.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_17.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GRNewDashBoard3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/GRNewDashBoard3.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/applicationContext.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/generatorIEConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveCheckAction$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveCheckAction.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveWarehouseAction.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveWarehouseBAction$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/ToReceiveWarehouseBAction.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/UrgentMaterialCheckNotOCRAction$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/UrgentMaterialCheckNotOCRAction.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/UrgentMaterialCheckOCRAction$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/action/UrgentMaterialCheckOCRAction.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/IToReceiveCheckService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/IToReceiveWarehouseBService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/IToReceiveWarehouseService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/IUrgentMaterialCheckNotOCRService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/IUrgentMaterialCheckOCRService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/impl/ToReceiveCheckServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/impl/ToReceiveWarehouseServiceBImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/impl/ToReceiveWarehouseServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/impl/UrgentMaterialCheckNotOCRServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/biz/impl/UrgentMaterialCheckOCRServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/INotFinishSODao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/IToReceiveCheckDao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/IToReceiveWarehouseBDao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/IToReceiveWarehouseDao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/IUrgentMaterialCheckNotOCRDao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/IUrgentMaterialCheckOCRDao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/JdbcTemplateDao.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/JdbcTemplateSupport$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/JdbcTemplateSupport.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/NotFinishSODaoImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/ToReceiveCheckDaoImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/ToReceiveWarehouseBDaoImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/ToReceiveWarehouseDaoImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/UrgentMaterialCheckNotOCRDaoImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/dao/impl/UrgentMaterialCheckOCRDaoImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/NotFinishSO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/ToReceiveCheck.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/ToReceiveWarehouse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/ToReceiveWarehouseB.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/UrgentMaterialCheckNotOCR.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/entity/UrgentMaterialCheckOCR.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/NotFinishSOMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/ToReceiveCheckMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/ToReceiveWarehouseBMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/ToReceiveWarehouseMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/UrgentMaterialCheckNotOCRMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/mapper/UrgentMaterialCheckOCRMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoDownloadNotFinishSOTask.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveCheck.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveWarehouse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveWarehouseB.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckNotOCR.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckOCR.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/CalFoodTime.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConAegis.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConDashBoard.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConMes.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConOCR.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConVPS.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/CopyOfDBConDashBoard.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DBConAegis.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DBConDashBoard.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DBConDashBoardTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DBConOCR.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DBConVPS.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/DateUtils.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/EmailcontrolByAdmin.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/PageModel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/QueryResult.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/SAPService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/SqlStatements.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/TestMonthDay.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/TestTimePeriod.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/jdbc.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/kanban for ZHOU" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/log4j.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/mybatis-generator-core-1.3.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/sap.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/struts.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/test/sapTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/biz/IToReceiveCheckService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/biz/IToReceiveCheckService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/biz/IToReceiveWarehouseBService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/biz/IToReceiveWarehouseBService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/biz/IToReceiveWarehouseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/biz/IToReceiveWarehouseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/biz/IUrgentMaterialCheckNotOCRService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/biz/IUrgentMaterialCheckNotOCRService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/biz/IUrgentMaterialCheckOCRService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/biz/IUrgentMaterialCheckOCRService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/biz/impl/ToReceiveCheckServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/biz/impl/ToReceiveCheckServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/biz/impl/ToReceiveWarehouseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/biz/impl/ToReceiveWarehouseServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/dao/INotFinishSODao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/dao/INotFinishSODao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/lib/mybatis-plus-2.3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/lib/mybatis-plus-core-2.3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/lib/mybatis-plus-generate-2.3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/lib/mybatis-plus-support-2.3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/AegisMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/mapper108/FactoryResourceBasesMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/mapper108/ItemInventoriesMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/mapper108/ItemInventoryHistoriesMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/mapper108/ItemTypesMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/mapper108/StockLocationsMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/mapper131/ItemInventoryHistoriesMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/mapper131/UID_xTend_MaterialTransactionsRHDCDWMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/mapper26/PcbVendorridMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/mapper26/VendorridMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/mapper26/VpsMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/mapper33/NotFinishSOMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/mapper33/ToReceiveCheckMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/mapper33/ToReceiveWarehouseBMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/mapper33/ToReceiveWarehouseMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/mapper33/UrgentMaterialCheckNotOCRMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/mappergenerator/mapper33/UrgentMaterialCheckOCRMapper.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/task/AutoDownloadNotFinishSOTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoDownloadNotFinishSOTask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoToReceiveCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoToReceiveCheck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouseB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouseB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckNotOCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckNotOCR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckOCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckOCR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/util/ConDashBoard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/util/ConDashBoard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/util/ConMes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/util/ConMes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/util/ConOCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/util/ConOCR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/util/SAPService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/util/SAPService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/FetchMesDataTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/FetchMesDataTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/jdbc.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/jdbc.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/action/ToReceiveCheckAction$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/action/ToReceiveCheckAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/action/ToReceiveWarehouseAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/action/ToReceiveWarehouseBAction$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/action/ToReceiveWarehouseBAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/action/UrgentMaterialCheckNotOCRAction$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/action/UrgentMaterialCheckNotOCRAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/action/UrgentMaterialCheckOCRAction$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/action/UrgentMaterialCheckOCRAction.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/biz/IToReceiveCheckService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/biz/IToReceiveWarehouseBService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/biz/IToReceiveWarehouseService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/biz/IUrgentMaterialCheckNotOCRService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/biz/IUrgentMaterialCheckOCRService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/biz/impl/ToReceiveCheckServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/biz/impl/ToReceiveWarehouseServiceBImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/biz/impl/ToReceiveWarehouseServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/biz/impl/UrgentMaterialCheckNotOCRServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/biz/impl/UrgentMaterialCheckOCRServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/dao/INotFinishSODao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/dao/IToReceiveCheckDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/dao/IToReceiveWarehouseBDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/dao/IToReceiveWarehouseDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/dao/IUrgentMaterialCheckNotOCRDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/dao/IUrgentMaterialCheckOCRDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/dao/JdbcTemplateDao.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/dao/impl/JdbcTemplateSupport$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/dao/impl/JdbcTemplateSupport.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/dao/impl/NotFinishSODaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/dao/impl/ToReceiveCheckDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/dao/impl/ToReceiveWarehouseBDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/dao/impl/ToReceiveWarehouseDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/dao/impl/UrgentMaterialCheckNotOCRDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/dao/impl/UrgentMaterialCheckOCRDaoImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/entity/NotFinishSO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/entity/ToReceiveCheck.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/entity/ToReceiveWarehouse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/entity/ToReceiveWarehouseB.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/entity/UrgentMaterialCheckNotOCR.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/entity/UrgentMaterialCheckOCR.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/generator/Generator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mapper/NotFinishSOMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mapper/ToReceiveCheckMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mapper/ToReceiveWarehouseBMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mapper/ToReceiveWarehouseMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mapper/UrgentMaterialCheckNotOCRMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mapper/UrgentMaterialCheckOCRMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mappergenerator/AegisMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mappergenerator/mapper108/FactoryResourceBasesMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mappergenerator/mapper108/ItemInventoriesMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mappergenerator/mapper108/ItemInventoryHistoriesMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mappergenerator/mapper108/ItemTypesMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mappergenerator/mapper108/StockLocationsMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mappergenerator/mapper131/ItemInventoryHistoriesMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mappergenerator/mapper131/UID_xTend_MaterialTransactionsRHDCDWMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mappergenerator/mapper26/PcbVendorridMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mappergenerator/mapper26/VendorridMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/mappergenerator/mapper26/VpsMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/AegisModel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/FactoryResourceBases.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/FactoryResourceBasesExample$Criteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/FactoryResourceBasesExample$Criterion.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/FactoryResourceBasesExample$GeneratedCriteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/FactoryResourceBasesExample.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/FactoryResourceBasesWithBLOBs.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemInventories.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemInventoriesExample$Criteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemInventoriesExample$Criterion.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemInventoriesExample$GeneratedCriteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemInventoriesExample.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemInventoriesWithBLOBs.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemInventoryHistories.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemInventoryHistoriesExample$Criteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemInventoryHistoriesExample$Criterion.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemInventoryHistoriesExample$GeneratedCriteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemInventoryHistoriesExample.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemTypes.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemTypesExample$Criteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemTypesExample$Criterion.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemTypesExample$GeneratedCriteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemTypesExample.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/ItemTypesWithBLOBs.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/StockLocations.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/StockLocationsExample$Criteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/StockLocationsExample$Criterion.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/StockLocationsExample$GeneratedCriteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/StockLocationsExample.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model108/StockLocationsWithBLOBs.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model131/ItemInventoryHistories.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model131/ItemInventoryHistoriesExample$Criteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model131/ItemInventoryHistoriesExample$Criterion.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model131/ItemInventoryHistoriesExample$GeneratedCriteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model131/ItemInventoryHistoriesExample.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model131/ItemInventoryHistoriesWithBLOBs.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model131/UID_xTend_MaterialTransactionsRHDCDW.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model131/UID_xTend_MaterialTransactionsRHDCDWExample$Criteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model131/UID_xTend_MaterialTransactionsRHDCDWExample$Criterion.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model131/UID_xTend_MaterialTransactionsRHDCDWExample$GeneratedCriteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model131/UID_xTend_MaterialTransactionsRHDCDWExample.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model26/PcbVendorrid.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model26/PcbVendorridExample$Criteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model26/PcbVendorridExample$Criterion.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model26/PcbVendorridExample$GeneratedCriteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model26/PcbVendorridExample.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model26/Vendorrid.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model26/VendorridExample$Criteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model26/VendorridExample$Criterion.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model26/VendorridExample$GeneratedCriteria.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model26/VendorridExample.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/model/model26/Vps.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/task/AutoDownloadNotFinishSOTask.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/task/AutoToReceiveCheck.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/task/AutoToReceiveWarehouse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/task/AutoToReceiveWarehouseB.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/task/AutoToReceiveWarehouseTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/task/AutoUrgentMaterialCheckNotOCR.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/task/AutoUrgentMaterialCheckOCR.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/task/FetchMesDataTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/CalFoodTime.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/ConAegis.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/ConDashBoard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/ConMes.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/ConOCR.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/ConOrbitX.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/ConVPS.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/CopyOfDBConDashBoard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/DBConAegis.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/DBConDashBoard.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/DBConDashBoardTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/DBConOCR.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/DBConVPS.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/DateUtils.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/EmailcontrolByAdmin.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/PageModel.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/QueryResult.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/SAPService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/SqlStatements.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/TestMonthDay.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ht/util/TestTimePeriod.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="JUnit5 Test Class" />
-        <option value="spring-beans.schema" />
-        <option value="Class" />
-        <option value="Interface" />
-      </list>
-    </option>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="Git.Settings">
-    <option name="PREVIOUS_COMMIT_AUTHORS">
-      <list>
-        <option value="丁国钊" />
-      </list>
-    </option>
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="master" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -158,59 +255,31 @@
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
-    <option name="FILTER_INFO" value="false" />
-    <option name="FILTER_DEBUG" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedIndex" value="2" />
-  </component>
-  <component name="ProjectId" id="2G4WcMMiEtuN0ZKXvsYQ2shX24b" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="2HtQmS83UJp4mvLGxG99K08qXSZ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DatabaseDriversLRU" value="sqlserver" />
-    <property name="Downloaded.Files.Path" value="D:\SVN Code\GRNewDashBoardCurrent\WebRoot\WEB-INF\lib" />
-    <property name="Downloaded.Files.Path.Enabled" value="true" />
-    <property name="Repository.Attach.Annotations" value="false" />
-    <property name="Repository.Attach.JavaDocs" value="false" />
-    <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
-    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
-    <property name="create.test.in.the.same.root" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../GRNewDashBoard_VN" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/WebRoot/WEB-INF/lib" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="模块" />
-    <property name="project.structure.proportion" value="0.15487422" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
-    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/../GRNewDashBoard3/src/ht/task/AutoToReceiveCheck.java" />
+    <property name="project.structure.proportion" value="0.16" />
+    <property name="project.structure.side.proportion" value="0.25838926" />
+    <property name="settings.editor.selected.configurable" value="preferences.updates" />
   </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\SVN Code\GRNewDashBoardCurrent\WebRoot\WEB-INF\lib" />
-      <recent name="D:\SVN Code\GRNewDashBoardCurrent\src" />
-      <recent name="D:\SVN Code\GRNewDashBoardCurrent\src\ht\biz\impl" />
-      <recent name="D:\SVN Code\GRNewDashBoardCurrent\src\ht\task" />
-    </key>
-    <key name="CreateTestDialog.Recents.Supers">
-      <recent name="" />
-    </key>
-    <key name="CreateTestDialog.RecentsKey">
-      <recent name="test" />
-    </key>
-  </component>
-  <component name="RunManager" selected="应用程序.Generator">
-    <configuration name="AutoToReceiveCheckBackUp" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ht.task.AutoToReceiveCheckBackUp" />
+  <component name="RunManager" selected="Tomcat 服务器.Tomcat 6.0.44">
+    <configuration name="FetchMesDataTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ht.task.FetchMesDataTest" />
       <module name="GRNewDashBoard3" />
       <extension name="coverage">
         <pattern>
@@ -222,80 +291,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="AutoToReceiveWarehouse" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ht.task.AutoToReceiveWarehouse" />
-      <module name="GRNewDashBoard3" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ht.task.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AutoToReceiveWarehouseTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ht.task.AutoToReceiveWarehouseTest" />
-      <module name="GRNewDashBoard3" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ht.task.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AutoUrgentMaterialCheckNotOCR" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ht.task.AutoUrgentMaterialCheckNotOCR" />
-      <module name="GRNewDashBoard3" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ht.task.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="AutoUrgentMaterialCheckOCR" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ht.task.AutoUrgentMaterialCheckOCR" />
-      <module name="GRNewDashBoard3" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ht.task.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Generator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="ht.generator.Generator" />
-      <module name="GRNewDashBoard3" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="ht.generator.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SapTestTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="test.SapTestTest" />
-      <module name="GRNewDashBoard3" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -304,14 +308,14 @@
       <option name="BROWSER_ID" value="b2a9dca7-9d0b-4e1e-98a8-afb19c1328d2" />
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
-        <artifact name="GRNewDashBoard3:war">
+        <artifact name="GRNewDashBoard3:war exploded">
           <settings>
-            <option name="CONTEXT_PATH" value="/GRNewDashBoard3_war" />
+            <option name="CONTEXT_PATH" value="/GRNewDashBoard3_war_exploded" />
           </settings>
         </artifact>
       </deployment>
       <server-settings>
-        <option name="BASE_DIRECTORY_NAME" value="8126afe7-dc6a-4fa4-818b-7f642e8b49de" />
+        <option name="BASE_DIRECTORY_NAME" value="ae1f3f2f-1a16-4468-a413-2f76ca5a6f25" />
       </server-settings>
       <output_file path="$PROJECT_DIR$/tomcatlog.txt" is_save="true" />
       <predefined_log_file enabled="true" id="Tomcat" />
@@ -320,7 +324,7 @@
       <predefined_log_file id="Tomcat Host Manager" />
       <predefined_log_file id="Tomcat Localhost Access" />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="65477" />
+        <option name="DEBUG_PORT" value="52746" />
       </RunnerSettings>
       <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
         <option name="USE_ENV_VARIABLES" value="true" />
@@ -385,169 +389,39 @@
       <method v="2">
         <option name="Make" enabled="true" />
         <option name="BuildArtifacts" enabled="true">
-          <artifact name="GRNewDashBoard3:war" />
+          <artifact name="GRNewDashBoard3:war exploded" />
         </option>
       </method>
     </configuration>
     <list>
       <item itemvalue="Tomcat 服务器.Tomcat 6.0.44" />
-      <item itemvalue="应用程序.AutoToReceiveCheckBackUp" />
-      <item itemvalue="应用程序.AutoToReceiveWarehouse" />
-      <item itemvalue="应用程序.AutoToReceiveWarehouseTest" />
-      <item itemvalue="应用程序.AutoUrgentMaterialCheckNotOCR" />
-      <item itemvalue="应用程序.AutoUrgentMaterialCheckOCR" />
-      <item itemvalue="应用程序.SapTestTest" />
-      <item itemvalue="应用程序.Generator" />
+      <item itemvalue="应用程序.FetchMesDataTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="应用程序.Generator" />
-        <item itemvalue="应用程序.SapTestTest" />
-        <item itemvalue="应用程序.AutoUrgentMaterialCheckOCR" />
-        <item itemvalue="应用程序.AutoUrgentMaterialCheckNotOCR" />
-        <item itemvalue="应用程序.AutoToReceiveWarehouseTest" />
+        <item itemvalue="应用程序.FetchMesDataTest" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
-  <component name="SvnConfiguration" cleanupOnStartRun="true">
-    <configuration>C:\Users\dingguozhao\AppData\Roaming\Subversion</configuration>
-    <supportedVersion>125</supportedVersion>
-  </component>
-  <component name="SvnFileUrlMappingImpl">
-    <option name="myMappingRoots">
-      <list>
-        <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="D:\SVN Code\GRNewDashBoardCurrent" />
-          <option name="myCopyRoot" value="D:\SVN Code\GRNewDashBoardCurrent" />
-        </SvnCopyRootSimple>
-      </list>
-    </option>
-    <option name="myMoreRealMappingRoots">
-      <list>
-        <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="D:\SVN Code\GRNewDashBoardCurrent" />
-          <option name="myCopyRoot" value="D:\SVN Code\GRNewDashBoardCurrent" />
-        </SvnCopyRootSimple>
-      </list>
-    </option>
-  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="默认任务">
-      <changelist id="048470a3-5912-4436-a76b-dd1e8a094a5f" name="默认变更列表" comment="" />
-      <created>1665648419148</created>
+      <changelist id="2a48f6ef-6bac-46b6-a95f-b9252f3ca1f3" name="默认变更列表" comment="" />
+      <created>1669102066487</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1665648419148</updated>
-      <workItem from="1665648421064" duration="284000" />
-      <workItem from="1665648825315" duration="1367000" />
-      <workItem from="1665706204088" duration="41552000" />
-      <workItem from="1666014827905" duration="22000" />
-      <workItem from="1666053360424" duration="24141000" />
-      <workItem from="1666231861403" duration="635000" />
-      <workItem from="1666245413281" duration="18336000" />
-      <workItem from="1666399346869" duration="15072000" />
-      <workItem from="1666580901976" duration="8436000" />
-      <workItem from="1666677512241" duration="359000" />
-      <workItem from="1666767812506" duration="1977000" />
-      <workItem from="1666774150267" duration="19283000" />
-      <workItem from="1666854220144" duration="21795000" />
-      <workItem from="1667012574143" duration="49000" />
-      <workItem from="1667185784681" duration="11149000" />
-      <workItem from="1667205479829" duration="8538000" />
-      <workItem from="1667271083011" duration="12844000" />
-      <workItem from="1667359095677" duration="429000" />
-      <workItem from="1667359551714" duration="193000" />
-      <workItem from="1667359769682" duration="9155000" />
-      <workItem from="1667373535228" duration="5973000" />
-      <workItem from="1667434875012" duration="282000" />
-      <workItem from="1667442703817" duration="16337000" />
-      <workItem from="1667520635252" duration="25997000" />
-      <workItem from="1667611044006" duration="45254000" />
-      <workItem from="1667962955888" duration="33825000" />
-      <workItem from="1668148443347" duration="5297000" />
-      <workItem from="1668384928134" duration="616000" />
-      <workItem from="1668394258221" duration="39744000" />
-      <workItem from="1668557606616" duration="20679000" />
-      <workItem from="1668647545305" duration="25965000" />
-      <workItem from="1668731394037" duration="10392000" />
-      <workItem from="1668743827454" duration="756000" />
-      <workItem from="1668749871454" duration="2169000" />
-      <workItem from="1668760304840" duration="42463000" />
-      <workItem from="1669041992911" duration="482000" />
+      <updated>1669102066487</updated>
+      <workItem from="1669102072813" duration="21445000" />
+      <workItem from="1669171971482" duration="19589000" />
     </task>
-    <task id="LOCAL-00001" summary="收货看板">
-      <created>1665854766662</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1665854766662</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Aegis数据源更换">
-      <created>1667479063789</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1667479063789</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="2074decc-a609-4395-8196-0c8ce537fd5e">
-          <value>
-            <State>
-              <option name="CUSTOM_BOOLEAN_PROPERTIES">
-                <map>
-                  <entry key="Show.Git.Branches" value="true" />
-                </map>
-              </option>
-              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
-              <option name="FILTERS">
-                <map>
-                  <entry key="branch">
-                    <value>
-                      <list>
-                        <option value="HEAD" />
-                      </list>
-                    </value>
-                  </entry>
-                  <entry key="roots">
-                    <value>
-                      <list>
-                        <option value="$PROJECT_DIR$" />
-                      </list>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-            </State>
-          </value>
-        </entry>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="OPEN_GENERIC_TABS">
-      <map>
-        <entry key="2074decc-a609-4395-8196-0c8ce537fd5e" value="TOOL_WINDOW" />
-      </map>
-    </option>
-    <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="收货看板" />
-    <MESSAGE value="Aegis数据源更换" />
-    <option name="LAST_COMMIT_MESSAGE" value="Aegis数据源更换" />
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/GRNewDashBoardCurrent$FetchMesDataTest.ic" NAME="FetchMesDataTest 覆盖结果" MODIFIED="1669193995337" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>ht.task.*</FILTER>
+    </SUITE>
   </component>
 </project>

@@ -1,19 +1,12 @@
 package ht.task;
 
-import ht.mappergenerator.AegisMapper;
-import ht.mappergenerator.mapper26.VpsMapper;
-import ht.mappergenerator.mapper33.ToReceiveCheckMapper;
-import ht.model.AegisModel;
-import ht.model.model26.Vps;
-import ht.model.model33.ToReceiveCheck;
-import ht.model.model33.ToReceiveCheckExample;
-import org.springframework.beans.factory.annotation.Autowired;
+import ht.util.ConAegis;
+import ht.util.ConMes;
 
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 定时任务，获取数据
@@ -24,12 +17,6 @@ import java.util.List;
  * @date 2022-11-18
  */
 public class FetchMesDataTest {
-    @Autowired
-    VpsMapper vpsMapper;
-    @Autowired
-    AegisMapper aegisMapper;
-    @Autowired
-    ToReceiveCheckMapper toReceiveCheckMapper;
 
     /**
      * 获取 Aegis 库位信息
@@ -38,44 +25,122 @@ public class FetchMesDataTest {
      * <p>
      */
     public void start() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        // 今天
-        String currentDate = simpleDateFormat.format(date);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.add(Calendar.DATE, -2);
-        // 前天
-        String dateSub2 = simpleDateFormat.format(cal.getTime());
-        List<Vps> vpsList;
-        List<Vps> grnList = new ArrayList<>();
-        List<AegisModel> aegisModelList;
-        List<ToReceiveCheck> toReceiveCheckList;
-        // 查询两天内 GRN 数据（待点收）
-        vpsList = vpsMapper.selectGrnByDate(currentDate, dateSub2);
-        for (Vps vps : vpsList) {
-            String grn = vps.getGRN();
-            // 根据 GRN 查看板表未关闭工单
-            ToReceiveCheckExample toReceiveCheckExample = new ToReceiveCheckExample();
-            toReceiveCheckExample.createCriteria().andGRNEqualTo(grn).andCloseDateIsNotNull();
-            toReceiveCheckList = toReceiveCheckMapper.selectByExample(toReceiveCheckExample);
-            // 只拿没有关闭的GRN和UID
-            if (toReceiveCheckList.size() >= 0 && toReceiveCheckList != null) {
-                Vps vps1 = new Vps();
-                vps1.setGRN(vps.getGRN());
-                vps1.setRid(vps.getRid());
-                grnList.add(vps1);
+        try {
+            ConAegis aegis = new ConAegis();
+            ConMes mes = new ConMes();
+            System.out.println("启动-----");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date();
+            // 今天
+            String currentDate = simpleDateFormat.format(date);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            cal.add(Calendar.DATE, -2);
+            // 前天
+            String dateSub2 = simpleDateFormat.format(cal.getTime());
+            System.out.println("c"+currentDate);
+            System.out.println("d"+dateSub2);
+            System.out.println("库存表插入");
+            /*
+             * 获取 aegis 字段
+            */
+            ResultSet rs;
+            rs = aegis.executeQuery("if object_id(N'tempdb..#t1',N'U') is not null " +
+                    "DROP Table #t1 " +
+                    "select rid into #t1 from (select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from [172.31.2.26].[imslabel].[dbo].vendorrid " +
+                    "where convert(varchar(10),GRNDATE,23) between '" + dateSub2 + "' and '" + currentDate + "' and printQTY<>0.0 and plent in ('1100','5000') " +
+                    "union  select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from [172.31.2.26].[imslabel].[dbo].pcbvendorrid " +
+                    "where convert(varchar(10),GRNDATE,23) between '" + dateSub2 + "' and '" + currentDate + "' and printQTY<>0.0 and plent in ('1100','5000') )m  order by grn, partNumber " +
+                    "select " +
+                    "    II.Identifier as UID, II.FIFOTimeStamp_BaseDateTimeUTC as TransactionTime, FRB.Name as ToStock_Input " +
+                    "from " +
+                    "    [HT_FactoryLogix].[dbo].ItemInventories II" +
+                    "    left join [HT_FactoryLogix].[dbo].FactoryResourceBases FRB" +
+                    "        on FRB.ID = II.StockResourceID " +
+                    "where " +
+                    "    II.Identifier collate Chinese_PRC_CI_AS in(select distinct rid from #t1)");
+            // 插入 131 UID 表作为测试数据
+            while (rs.next()) {
+                String uid = rs.getString("UID");
+                // 库位
+                String toStockInput = rs.getString("ToStock_Input");
+                Date transactionTime = rs.getTimestamp("TransactionTime");
+                Boolean isInsert = mes.executeUpdate("IF NOT EXISTS" +
+                        "(" +
+                        "   select * " +
+                        "   from " +
+                        "      UID_xTend_MaterialTransactionsRHDCDW " +
+                        "   where " +
+                        "      UID = '" + uid + "'" +
+                        ")" +
+                        "   insert into [dbo].[UID_xTend_MaterialTransactionsRHDCDW] " +
+                        "      ([TransactionHistoryId],[UID],[Quantity],[ToStock_Input],[TransactionUser],[TransactionTime],[Plant]) " +
+                        "   values " +
+                        "      (NEWID(),'" + uid + "','100','" + toStockInput + "','ding','" + transactionTime + "','1100')" +
+                        "else " +
+                        "   update " +
+                        "       UID_xTend_MaterialTransactionsRHDCDW " +
+                        "   set " +
+                        "       ToStock_Input = '" + toStockInput + "',TransactionTime = '" + transactionTime + "'" +
+                        "   where" +
+                        "       UID = '" + uid + "'");
+                if (isInsert) {
+                    System.out.println("成功");
+                } else {
+                    System.out.println("失败");
+                }
+                System.out.println("UID: " + uid + "    ToStock_Input: " + toStockInput + "    TransactionTime: " + transactionTime);
             }
-        }
-        for (Vps vps : grnList) {
-            // 根据 UID 获取 Aegis 库位信息
-            aegisModelList = aegisMapper.selectStockByIdentifier(vps.getRid());
-            for (int i =0 ; i < aegisModelList.size(); i++) {
-                System.out.println(aegisModelList.get(i).getName());
+            System.out.println("历史表插入");
+            /*
+             * 查历史表数据
+             */
+            ResultSet rsHistory;
+            rsHistory = aegis.executeQuery("if object_id(N'tempdb..#t2',N'U') is not null " +
+                    "DROP Table #t2; " +
+                    "select rid into #t2 from (select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from [172.31.2.26].[imslabel].[dbo].vendorrid " +
+                    "where convert(varchar(10),GRNDATE,23) between '" + dateSub2 + "' and '" + currentDate + "' and printQTY<>0.0 and plent in ('1100','5000') " +
+                    "union  select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from [172.31.2.26].[imslabel].[dbo].pcbvendorrid " +
+                    "where convert(varchar(10),GRNDATE,23) between '" + dateSub2 + "' and '" + currentDate + "' and printQTY<>0.0 and plent in ('1100','5000') )m  order by grn, partNumber; " +
+                    "select " +
+                    "   II.Identifier as UID,SL.Identifier as historyStock,DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS localtime " +
+                    "from " +
+                    "   [HT_FactoryLogix].[dbo].[ItemInventories] II " +
+                    "   left join [HT_FactoryLogix].dbo.ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
+                    "   left join [HT_FactoryLogix].dbo.StockLocations SL on IIH.StockLocationID = SL.ID " +
+                    "where " +
+                    "   II.Identifier collate Chinese_PRC_CI_AS in(select distinct rid from #t2)");
+            // 插入 131 移库历史表
+            while (rsHistory.next()) {
+                System.out.println("history");
+                String uid = rsHistory.getString("UID");
+                // 历史库位
+                String historyStock = rsHistory.getString("historyStock");
+                Date localtime = rsHistory.getTimestamp("localtime");
+                Boolean isInsert = mes.executeUpdate("IF NOT EXISTS " +
+                        "( " +
+                        "   select " +
+                        "       *  " +
+                        "   from  " +
+                        "       ItemInventoryHistories  " +
+                        "   where  " +
+                        "       UID = '" + uid + "' and StockLocation = '" + historyStock + "' and TimePosted_BaseDateTimeUTC = '" + localtime + "'" +
+                        ") " +
+                        "   insert into [dbo].[ItemInventoryHistories]" +
+                        "       ([ID],[ActionEnum],[TimePosted_BaseDateTimeUTC],[Quantity],[UID],[Operator],[StockLocation])" +
+                        "   values" +
+                        "       (NEWID(),'8','" + localtime + "','100','" + uid + "','ding','" + historyStock + "')");
+                if (isInsert) {
+                    System.out.println("成功(history)");
+                } else {
+                    System.out.println("失败(history)");
+                }
+                System.out.println("UID: " + uid + "    historyStock: " + historyStock + "    localtime: " + localtime);
+                System.out.println("结束-----");
             }
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        // 26 获取 vendorrid, pcbvendorrid 表数据
-        // 33 获取 NotFinishSO, ToReceiveCheck, ToReceiveWarehouse, ToReceiveWarehouseB, UrgentMaterialCheckOCR, UrgentMaterialCheckNotOCR 表数据
     }
 
     public static void main(String[] args) {

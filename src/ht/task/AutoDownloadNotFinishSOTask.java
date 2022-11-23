@@ -3,6 +3,8 @@ package ht.task;
 import ht.dao.INotFinishSODao;
 import ht.entity.NotFinishSO;
 import ht.util.SAPService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.DateFormat;
@@ -19,6 +21,7 @@ import java.util.List;
 public class AutoDownloadNotFinishSOTask {
 	@Autowired
 	private INotFinishSODao nfsoDao;
+	private static Log commonsLog = LogFactory.getLog(AutoToReceiveWarehouse.class);
 	
 	public void execute() throws Exception {
 		try {
