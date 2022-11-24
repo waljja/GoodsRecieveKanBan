@@ -1,5 +1,0 @@
-driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
-url=jdbc\:sqlserver\://172.31.2.33;DatabaseName\=GRNewDashboard3
-username=htitsa
-password=htitprogram
-
