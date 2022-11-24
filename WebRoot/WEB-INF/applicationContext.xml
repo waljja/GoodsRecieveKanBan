@@ -230,12 +230,12 @@
        <!--<property name="startupDelay" value="60"/>-->
 	   <property name="triggers" >
 	   	<list>
-<!--			<ref bean="startTrigger07"/>-->
-<!--			<ref bean="startTrigger101"/>-->
-<!--			<ref bean="startTrigger102"/>-->
-<!--			<ref bean="startTrigger103"/>-->
-<!--			<ref bean="startTrigger104"/>-->
-<!--			<ref bean="startTrigger105"/>-->
+			<ref bean="startTrigger07"/>
+			<ref bean="startTrigger101"/>
+			<ref bean="startTrigger102"/>
+			<ref bean="startTrigger103"/>
+			<ref bean="startTrigger104"/>
+			<ref bean="startTrigger105"/>
 			<ref bean="startTrigger666"/>
 	   	</list>
 	   </property>

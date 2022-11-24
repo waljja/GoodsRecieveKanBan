@@ -2,6 +2,8 @@ package ht.task;
 
 import ht.util.ConAegis;
 import ht.util.ConMes;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
@@ -17,6 +19,7 @@ import java.util.Date;
  * @date 2022-11-18
  */
 public class FetchMesDataTest {
+    private static Log commonsLog = LogFactory.getLog(AutoUrgentMaterialCheckOCR.class);
 
     /**
      * 获取 Aegis 库位信息
@@ -28,7 +31,7 @@ public class FetchMesDataTest {
         try {
             ConAegis aegis = new ConAegis();
             ConMes mes = new ConMes();
-            System.out.println("启动-----");
+            commonsLog.info("启动-----");
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date();
             // 今天
@@ -38,27 +41,29 @@ public class FetchMesDataTest {
             cal.add(Calendar.DATE, -2);
             // 前天
             String dateSub2 = simpleDateFormat.format(cal.getTime());
-            System.out.println("c"+currentDate);
-            System.out.println("d"+dateSub2);
-            System.out.println("库存表插入");
+            commonsLog.info("c"+currentDate);
+            commonsLog.info("d"+dateSub2);
+            commonsLog.info("库存表插入");
+            // 执行 SQL 开始时间
+            long startTime = System.currentTimeMillis();
             /*
              * 获取 aegis 字段
             */
             ResultSet rs;
-            rs = aegis.executeQuery("if object_id(N'tempdb..#t1',N'U') is not null " +
-                    "DROP Table #t1 " +
-                    "select rid into #t1 from (select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from [172.31.2.26].[imslabel].[dbo].vendorrid " +
-                    "where convert(varchar(10),GRNDATE,23) between '" + dateSub2 + "' and '" + currentDate + "' and printQTY<>0.0 and plent in ('1100','5000') " +
-                    "union  select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from [172.31.2.26].[imslabel].[dbo].pcbvendorrid " +
-                    "where convert(varchar(10),GRNDATE,23) between '" + dateSub2 + "' and '" + currentDate + "' and printQTY<>0.0 and plent in ('1100','5000') )m  order by grn, partNumber " +
+            rs = aegis.executeQuery("if object_id(N'tempdb..#t1',N'U') is not null" +
+                    "DROP Table #t1" +
+                    "select rid,UpAegisDATE as UpAegisDATE into #t1 from (select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from [172.31.2.26].[imslabel].[dbo].vendorrid" +
+                    "where convert(varchar(10),GRNDATE,23) between '" + dateSub2 + "' and '" + currentDate + "' and printQTY<>0.0 and plent in ('1100','5000')" +
+                    "union  select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from [172.31.2.26].[imslabel].[dbo].pcbvendorrid" +
+                    "where convert(varchar(10),GRNDATE,23) between '" + dateSub2 + "' and '" + currentDate + "' and printQTY<>0.0 and plent in ('1100','5000') )m  order by grn, partNumber" +
                     "select " +
-                    "    II.Identifier as UID, II.FIFOTimeStamp_BaseDateTimeUTC as TransactionTime, FRB.Name as ToStock_Input " +
-                    "from " +
+                    "    II.Identifier as UID, FRB.Name as ToStock_Input,c.UpAegisDATE as TransactionTime" +
+                    "from" +
                     "    [HT_FactoryLogix].[dbo].ItemInventories II" +
                     "    left join [HT_FactoryLogix].[dbo].FactoryResourceBases FRB" +
-                    "        on FRB.ID = II.StockResourceID " +
-                    "where " +
-                    "    II.Identifier collate Chinese_PRC_CI_AS in(select distinct rid from #t1)");
+                    "        on FRB.ID = II.StockResourceID" +
+                    "    inner join #t1  c " +
+                    "        on ii.Identifier collate Chinese_PRC_CI_AS = c.rid");
             // 插入 131 UID 表作为测试数据
             while (rs.next()) {
                 String uid = rs.getString("UID");
@@ -85,13 +90,13 @@ public class FetchMesDataTest {
                         "   where" +
                         "       UID = '" + uid + "'");
                 if (isInsert) {
-                    System.out.println("成功");
+                    commonsLog.info("成功");
                 } else {
-                    System.out.println("失败");
+                    commonsLog.info("失败");
                 }
-                System.out.println("UID: " + uid + "    ToStock_Input: " + toStockInput + "    TransactionTime: " + transactionTime);
+                commonsLog.info("UID: " + uid + "    ToStock_Input: " + toStockInput + "    TransactionTime: " + transactionTime);
             }
-            System.out.println("历史表插入");
+            commonsLog.info("历史表插入");
             /*
              * 查历史表数据
              */
@@ -112,7 +117,7 @@ public class FetchMesDataTest {
                     "   II.Identifier collate Chinese_PRC_CI_AS in(select distinct rid from #t2)");
             // 插入 131 移库历史表
             while (rsHistory.next()) {
-                System.out.println("history");
+                commonsLog.info("history");
                 String uid = rsHistory.getString("UID");
                 // 历史库位
                 String historyStock = rsHistory.getString("historyStock");
@@ -131,15 +136,18 @@ public class FetchMesDataTest {
                         "   values" +
                         "       (NEWID(),'8','" + localtime + "','100','" + uid + "','ding','" + historyStock + "')");
                 if (isInsert) {
-                    System.out.println("成功(history)");
+                    commonsLog.info("成功(history)");
                 } else {
-                    System.out.println("失败(history)");
+                    commonsLog.info("失败(history)");
                 }
-                System.out.println("UID: " + uid + "    historyStock: " + historyStock + "    localtime: " + localtime);
-                System.out.println("结束-----");
+                commonsLog.info("UID: " + uid + "    historyStock: " + historyStock + "    localtime: " + localtime);
             }
+            commonsLog.info("结束-----");
+            // 插入数据结束时间
+            long endTime = System.currentTimeMillis();
+            commonsLog.info("执行耗时：" + ((endTime - startTime) / 1000) + "s");
         } catch (Exception e) {
-            System.out.println(e);
+            commonsLog.info(e);
         }
     }
 
