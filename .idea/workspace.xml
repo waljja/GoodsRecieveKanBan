@@ -7,69 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2a48f6ef-6bac-46b6-a95f-b9252f3ca1f3" name="默认变更列表" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/applicationContext.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/generatorGTConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/generatorIEConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/FetchMesDataTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/FetchMesDataTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/108/AegisMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/108/FactoryResourceBasesMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/108/ItemInventoriesMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/108/ItemInventoryHistoriesMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/108/ItemTypesMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/108/StockLocationsMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/131/ItemInventoryHistoriesMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/131/UID_xTend_MaterialTransactionsRHDCDWMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/26/PcbVendorridMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/26/VendorridMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/26/VpsMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/33/NotFinishSOMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/33/ToReceiveCheckMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/33/ToReceiveWarehouseBMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/33/ToReceiveWarehouseMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/33/UrgentMaterialCheckNotOCRMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/resources/mapper/33/UrgentMaterialCheckOCRMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/applicationContext.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/generatorGTConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/generatorIEConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/ht/task/FetchMesDataTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/ht/task/FetchMesDataTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/108/AegisMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/108/FactoryResourceBasesMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/108/ItemInventoriesMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/108/ItemInventoryHistoriesMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/108/ItemTypesMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/108/StockLocationsMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/131/ItemInventoryHistoriesMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/131/UID_xTend_MaterialTransactionsRHDCDWMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/26/PcbVendorridMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/26/VendorridMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/26/VpsMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/33/NotFinishSOMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/33/ToReceiveCheckMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/33/ToReceiveWarehouseBMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/33/ToReceiveWarehouseMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/33/UrgentMaterialCheckNotOCRMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/GRNewDashBoard3_war_exploded/WEB-INF/classes/resources/mapper/33/UrgentMaterialCheckOCRMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generatorGTConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/generatorIEConfig.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/FetchMesDataTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/FetchMesDataTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/108/AegisMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/108/FactoryResourceBasesMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/108/ItemInventoriesMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/108/ItemInventoryHistoriesMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/108/ItemTypesMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/108/StockLocationsMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/131/ItemInventoryHistoriesMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/131/UID_xTend_MaterialTransactionsRHDCDWMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/26/PcbVendorridMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/26/VendorridMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/26/VpsMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/33/NotFinishSOMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/33/ToReceiveCheckMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/33/ToReceiveWarehouseBMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/33/ToReceiveWarehouseMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/33/UrgentMaterialCheckNotOCRMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/mapper/33/UrgentMaterialCheckOCRMapper.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/tomcatlog.txt" beforeDir="false" afterPath="$PROJECT_DIR$/tomcatlog.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -251,8 +188,16 @@
       <option name="presentableId" value="Default" />
       <updated>1669102066487</updated>
       <workItem from="1669102072813" duration="21445000" />
-      <workItem from="1669171971482" duration="25806000" />
+      <workItem from="1669171971482" duration="26214000" />
     </task>
+    <task id="LOCAL-00001" summary="测试数据查询优化">
+      <created>1669253866915</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1669253866915</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -261,6 +206,11 @@
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
         <entry key="d470916d-921c-45f2-bfbd-1988fd553a8e">
           <value>
             <State>
@@ -299,6 +249,12 @@
         <entry key="d470916d-921c-45f2-bfbd-1988fd553a8e" value="TOOL_WINDOW" />
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="测试数据查询优化" />
+    <option name="LAST_COMMIT_MESSAGE" value="测试数据查询优化" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/GRNewDashBoardCurrent$FetchMesDataTest.ic" NAME="FetchMesDataTest 覆盖结果" MODIFIED="1669193995337" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
