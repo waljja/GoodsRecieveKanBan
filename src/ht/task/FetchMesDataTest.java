@@ -50,26 +50,26 @@ public class FetchMesDataTest {
              * 获取 aegis 字段
             */
             ResultSet rs;
-            rs = aegis.executeQuery("if object_id(N'tempdb..#t1',N'U') is not null" +
-                    "DROP Table #t1" +
-                    "select rid,UpAegisDATE as UpAegisDATE into #t1 from (select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from [172.31.2.26].[imslabel].[dbo].vendorrid" +
-                    "where convert(varchar(10),GRNDATE,23) between '" + dateSub2 + "' and '" + currentDate + "' and printQTY<>0.0 and plent in ('1100','5000')" +
-                    "union  select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from [172.31.2.26].[imslabel].[dbo].pcbvendorrid" +
-                    "where convert(varchar(10),GRNDATE,23) between '" + dateSub2 + "' and '" + currentDate + "' and printQTY<>0.0 and plent in ('1100','5000') )m  order by grn, partNumber" +
+            rs = aegis.executeQuery("if object_id(N'tempdb..#t1',N'U') is not null " +
+                    "DROP Table #t1 " +
+                    "select rid,UpAegisDATE as UpAegisDATE into #t1 from (select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from [172.31.2.26].[imslabel].[dbo].vendorrid " +
+                    "where convert(varchar(10),GRNDATE,23) between '" + dateSub2 + "' and '" + currentDate + "' and printQTY<>0.0 and plent in ('1100','5000') " +
+                    "union  select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from [172.31.2.26].[imslabel].[dbo].pcbvendorrid " +
+                    "where convert(varchar(10),GRNDATE,23) between '" + dateSub2 + "' and '" + currentDate + "' and printQTY<>0.0 and plent in ('1100','5000') )m  order by grn, partNumber " +
                     "select " +
-                    "    II.Identifier as UID, FRB.Name as ToStock_Input,c.UpAegisDATE as TransactionTime" +
+                    "    II.Identifier as uid, FRB.Name as toStockInput,c.UpAegisDATE as transactionTime " +
                     "from" +
-                    "    [HT_FactoryLogix].[dbo].ItemInventories II" +
-                    "    left join [HT_FactoryLogix].[dbo].FactoryResourceBases FRB" +
-                    "        on FRB.ID = II.StockResourceID" +
+                    "    [HT_FactoryLogix].[dbo].ItemInventories II " +
+                    "    left join [HT_FactoryLogix].[dbo].FactoryResourceBases FRB " +
+                    "        on FRB.ID = II.StockResourceID " +
                     "    inner join #t1  c " +
                     "        on ii.Identifier collate Chinese_PRC_CI_AS = c.rid");
-            // 插入 131 UID 表作为测试数据
+            // 插入 131 uid 表
             while (rs.next()) {
-                String uid = rs.getString("UID");
+                String uid = rs.getString("uid");
                 // 库位
-                String toStockInput = rs.getString("ToStock_Input");
-                Date transactionTime = rs.getTimestamp("TransactionTime");
+                String toStockInput = rs.getString("toStockInput");
+                Date transactionTime = rs.getTimestamp("transactionTime");
                 Boolean isInsert = mes.executeUpdate("IF NOT EXISTS" +
                         "(" +
                         "   select * " +
@@ -79,9 +79,9 @@ public class FetchMesDataTest {
                         "      UID = '" + uid + "'" +
                         ")" +
                         "   insert into [dbo].[UID_xTend_MaterialTransactionsRHDCDW] " +
-                        "      ([TransactionHistoryId],[UID],[Quantity],[ToStock_Input],[TransactionUser],[TransactionTime],[Plant]) " +
+                        "      ([TransactionHistoryId],[UID],[Quantity],[ToStock_Input],[TransactionUser],[TransactionTime],[TransactionTime_1],[Plant]) " +
                         "   values " +
-                        "      (NEWID(),'" + uid + "','100','" + toStockInput + "','ding','" + transactionTime + "','1100')" +
+                        "      (NEWID(),'" + uid + "','100','" + toStockInput + "','ding','" + transactionTime + "',GETDATE(),'1100')" +
                         "else " +
                         "   update " +
                         "       UID_xTend_MaterialTransactionsRHDCDW " +
@@ -108,7 +108,7 @@ public class FetchMesDataTest {
                     "union  select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from [172.31.2.26].[imslabel].[dbo].pcbvendorrid " +
                     "where convert(varchar(10),GRNDATE,23) between '" + dateSub2 + "' and '" + currentDate + "' and printQTY<>0.0 and plent in ('1100','5000') )m  order by grn, partNumber; " +
                     "select " +
-                    "   II.Identifier as UID,SL.Identifier as historyStock,DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS localtime " +
+                    "   II.Identifier as uid,SL.Identifier as historyStock,DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS localtime " +
                     "from " +
                     "   [HT_FactoryLogix].[dbo].[ItemInventories] II " +
                     "   left join [HT_FactoryLogix].dbo.ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
@@ -118,7 +118,7 @@ public class FetchMesDataTest {
             // 插入 131 移库历史表
             while (rsHistory.next()) {
                 commonsLog.info("history");
-                String uid = rsHistory.getString("UID");
+                String uid = rsHistory.getString("uid");
                 // 历史库位
                 String historyStock = rsHistory.getString("historyStock");
                 Date localtime = rsHistory.getTimestamp("localtime");
@@ -147,7 +147,7 @@ public class FetchMesDataTest {
             long endTime = System.currentTimeMillis();
             commonsLog.info("执行耗时：" + ((endTime - startTime) / 1000) + "s");
         } catch (Exception e) {
-            commonsLog.info(e);
+            commonsLog.info("try: " + e);
         }
     }
 

@@ -243,7 +243,7 @@ public class AutoUrgentMaterialCheckOCR {
 		            if(flagQM){
 		            	UrgentMaterialCheckOCR umc = new UrgentMaterialCheckOCR();
 		            	String endDateTime = "";
-						String grnSub = key.substring(0, 10);
+						/*String grnSub = key.substring(0, 10);
 						ResultSet rsIqc;
 						// sa获取 321 122 时间改为IQC
 						findIqcDateByGrn.setString(1, grnSub);
@@ -258,15 +258,15 @@ public class AutoUrgentMaterialCheckOCR {
 								endDateTime = nowDayTime;
 								umc.setCloseDate(null);
 							}
-						}
-		            	/*String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
+						}*/
+		            	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
 		            	if(!"".equals(sapDateTime[2])) {
 		            		endDateTime = sapDateTime[2];
 		            		umc.setCloseDate(sapDateTime[2]);
 		            	}else{
 		            		endDateTime = nowDayTime;
 		            		umc.setCloseDate(null);
-		            	}*/
+		            	}
 	                    umc.setGRN(key.substring(0,10));
 	                    umc.setItemNumber(temp[0]);
 	                    umc.setGRNQuantity(temp[1]);
@@ -431,7 +431,7 @@ public class AutoUrgentMaterialCheckOCR {
 		            if(flagQM){
 		            	UrgentMaterialCheckOCR umc = new UrgentMaterialCheckOCR();
 		            	String endDateTime = "";
-						String grnSub = key.substring(0, 10);
+						/*String grnSub = key.substring(0, 10);
 						ResultSet rsIqc;
 						// sa获取 321 122 时间改为IQC
 						findIqcDateByGrn.setString(1, grnSub);
@@ -446,15 +446,15 @@ public class AutoUrgentMaterialCheckOCR {
 								endDateTime = nowDayTime;
 								umc.setCloseDate(null);
 							}
-						}
-		            	/*String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
+						}*/
+		            	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
 		            	if(!"".equals(sapDateTime[2])) {
 		            		endDateTime = sapDateTime[2];
 		            		umc.setCloseDate(sapDateTime[2]);
 		            	}else{
 		            		endDateTime = nowDayTime;
 		            		umc.setCloseDate(null);
-		            	}*/
+		            	}
 	                    umc.setGRN(key.substring(0,10));
 	                    umc.setItemNumber(temp[0]);
 	                    umc.setGRNQuantity(temp[1]);

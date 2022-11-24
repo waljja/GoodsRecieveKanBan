@@ -3,6 +3,8 @@ package ht.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 /**
  * Aegis model
  *
@@ -12,12 +14,13 @@ import lombok.Setter;
 @Setter
 @Getter
 public class AegisModel {
-    /** FactoryResourceBases表，库位，对应 ToStock_Input */
-    private String name;
-    /** ItemInventories表的identifier字段，对应 UID */
-    private String identifier;
+    private String uid;
+    /** 库位 */
+    private String toStockInput;
     /** StockLocation表的identifier字段，对应 historyStock */
     private String historyStock;
+    /** vps 表的 upAegisDate，上传 Aegis 时间 */
+    private Date transactionTime;
     /** ItemInventoryHistories表，对应 TransactionTime */
-    private String localtime;
+    private Date localtime;
 }

@@ -21,30 +21,7 @@
 		<property name="username" value="${username}"></property>
 		<property name="password" value="${password}"></property>
 	</bean>
-	<bean id="dataSource131" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver">
-		</property>
-		<property name="url" value="jdbc:sqlserver://172.31.2.131;databaseName=HonortoneMesDb">
-		</property>
-		<property name="username" value="sa"></property>
-		<property name="password" value="dyb8110!"></property>
-	</bean>
-	<bean id="dataSource108" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver">
-		</property>
-		<property name="url" value="jdbc:sqlserver://172.31.2.108;databaseName=HT_FactoryLogix">
-		</property>
-		<property name="username" value="Aegis-sa"></property>
-		<property name="password" value="ABC789_"></property>
-	</bean>
-	<bean id="dataSource33" class="org.apache.commons.dbcp.BasicDataSource">
-		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver">
-		</property>
-		<property name="url" value="jdbc:sqlserver://172.31.2.33;databaseName=GRNewDashboard3">
-		</property>
-		<property name="username" value="htitsa"></property>
-		<property name="password" value="htitprogram"></property>
-	</bean>
+
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource">
 			<ref bean="dataSource" />
@@ -61,36 +38,8 @@
 		</property>
 	</bean>
 
-	<!--  mapper.xml扫描  -->
-<!--	<bean id="sqlSessionFactory131" class="org.mybatis.spring.SqlSessionFactoryBean">-->
-<!--		<property name="dataSource" ref="dataSource131" />-->
-<!--		<property name="mapperLocations" value="classpath:resources/mapper/131/*.xml" />-->
-<!--	</bean>-->
-<!--	<bean id="sqlSessionFactory108" class="org.mybatis.spring.SqlSessionFactoryBean">-->
-<!--		<property name="dataSource" ref="dataSource108" />-->
-<!--		<property name="mapperLocations" value="classpath:resources/mapper/108/*.xml" />-->
-<!--	</bean>-->
-<!--	<bean id="sqlSessionFactory33" class="org.mybatis.spring.SqlSessionFactoryBean">-->
-<!--		<property name="dataSource" ref="dataSource33" />-->
-<!--		<property name="mapperLocations" value="classpath:resources/mapper/33/*.xml" />-->
-<!--	</bean>-->
-
 	<!--自己扫描-->
 	<context:component-scan base-package="ht" />
-
-<!--	  mapper接口扫描  -->
-<!--	<bean id="configurer1" class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
-<!--		<property name="basePackage" value="ht.mappergenerator.mapper131" />-->
-<!--		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory131"/>-->
-<!--	</bean>-->
-<!--	<bean id="configurer2" class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
-<!--		<property name="basePackage" value="ht.mappergenerator.mapper108" />-->
-<!--		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory108"/>-->
-<!--	</bean>-->
-<!--	<bean id="configurer3" class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
-<!--		<property name="basePackage" value="ht.mappergenerator.mapper33" />-->
-<!--		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory33"/>-->
-<!--	</bean>-->
 
 	<bean id="jdbctemplateDataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="${driverClassName}">
@@ -189,7 +138,7 @@
  	<!-- 配置一个触发器() -->
 	<bean id="startTrigger104" class="org.springframework.scheduling.quartz.CronTriggerBean">
 	  <property name="jobDetail" ref="startTask104"></property>
-	  <property name="cronExpression" value="* 24 16 * * ? "></property> <!--每15分钟执行一次-->
+	  <property name="cronExpression" value="0 0/15 * ? * 2-7"></property> <!--每15分钟执行一次-->
 	</bean>
 
 	<!--定时任务： 3b. 待入退貨仓物料看板  -->
@@ -230,12 +179,12 @@
        <!--<property name="startupDelay" value="60"/>-->
 	   <property name="triggers" >
 	   	<list>
-			<ref bean="startTrigger07"/>
-			<ref bean="startTrigger101"/>
-			<ref bean="startTrigger102"/>
-			<ref bean="startTrigger103"/>
-			<ref bean="startTrigger104"/>
-			<ref bean="startTrigger105"/>
+<!--			<ref bean="startTrigger07"/>-->
+<!--			<ref bean="startTrigger101"/>-->
+<!--			<ref bean="startTrigger102"/>-->
+<!--			<ref bean="startTrigger103"/>-->
+<!--			<ref bean="startTrigger104"/>-->
+<!--			<ref bean="startTrigger105"/>-->
 			<ref bean="startTrigger666"/>
 	   	</list>
 	   </property>

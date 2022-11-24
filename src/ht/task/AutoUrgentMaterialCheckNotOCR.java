@@ -297,7 +297,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 		            	//有IQ库位
 		            	UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
 			        	String endDateTime = "";
-						String grnSub = key.substring(0, 10);
+						/*String grnSub = key.substring(0, 10);
 						ResultSet rsIqc;
 			        	// sa获取 321 122 时间改为IQC
 						findIqcDateByGrn.setString(1, grnSub);
@@ -312,15 +312,15 @@ public class AutoUrgentMaterialCheckNotOCR {
 								endDateTime = nowDayTime;
 								umcn.setCloseDate(null);
 							}
-						}
-		            	/*String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
+						}*/
+		            	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
 		            	if(!"".equals(sapDateTime[2])) {
 		            		endDateTime = sapDateTime[2];
 		            		umcn.setCloseDate(sapDateTime[2]);
 		            	}else{
 		            		endDateTime = nowDayTime;
 		            		umcn.setCloseDate(null);
-		            	}*/
+		            	}
 		            	String uid = rsA.getString("UID");
 		            	pstmtA1.setString(1, uid);
 		            	ResultSet rsA2 = pstmtA1.executeQuery();
@@ -453,7 +453,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 		            	if(flagQM) {
 		            		UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
 				        	String endDateTime = "";
-							String grnSub = key.substring(0, 10);
+							/*String grnSub = key.substring(0, 10);
 							ResultSet rsIqc;
 							// sa获取 321 122 时间改为IQC
 							findIqcDateByGrn.setString(1, grnSub);
@@ -468,15 +468,15 @@ public class AutoUrgentMaterialCheckNotOCR {
 									endDateTime = nowDayTime;
 									umcn.setCloseDate(null);
 								}
-							}
-			            	/*String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
+							}*/
+			            	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
 			            	if(!"".equals(sapDateTime[2])) {
 			            		endDateTime = sapDateTime[2];
 			            		umcn.setCloseDate(sapDateTime[2]);
 			            	}else{
 			            		endDateTime = nowDayTime;
 			            		umcn.setCloseDate(null);
-			            	}*/
+			            	}
 		            		String uid = rsA.getString("UID");
 			                umcn.setGRN(key.substring(0,10));
 			                umcn.setItemNumber(temp[0]);
@@ -656,7 +656,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 		            if(flagIQC){ //有IQ库位
 		            	UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
 			        	String endDateTime = "";
-						String grnSub = key.substring(0, 10);
+						/*String grnSub = key.substring(0, 10);
 						ResultSet rsIqc;
 						// sa获取 321 122 时间改为IQC
 						findIqcDateByGrn.setString(1, grnSub);
@@ -671,15 +671,15 @@ public class AutoUrgentMaterialCheckNotOCR {
 								endDateTime = nowDayTime;
 								umcn.setCloseDate(null);
 							}
-						}
-		            	/*String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
+						}*/
+		            	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
 		            	if(!"".equals(sapDateTime[2])) {
 		            		endDateTime = sapDateTime[2];
 		            		umcn.setCloseDate(sapDateTime[2]);
 		            	}else{
 		            		endDateTime = nowDayTime;
 		            		umcn.setCloseDate(null);
-		            	}*/
+		            	}
 		            	String uid = rsA.getString("UID");
 		            	pstmtA1.setString(1, uid);
 		            	ResultSet rsA2 = pstmtA1.executeQuery();
@@ -810,7 +810,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 		            	if(flagQM) {
 		            		UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
 				        	String endDateTime = "";
-							String grnSub = key.substring(0, 10);
+							/*String grnSub = key.substring(0, 10);
 							ResultSet rsIqc;
 							// sa获取 321 122 时间改为IQC
 							findIqcDateByGrn.setString(1, grnSub);
@@ -825,15 +825,15 @@ public class AutoUrgentMaterialCheckNotOCR {
 									endDateTime = nowDayTime;
 									umcn.setCloseDate(null);
 								}
-							}
-			            	/*String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
+							}*/
+			            	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
 			            	if(!"".equals(sapDateTime[2])) {
 			            		endDateTime = sapDateTime[2];
 			            		umcn.setCloseDate(sapDateTime[2]);
 			            	}else{
 			            		endDateTime = nowDayTime;
 			            		umcn.setCloseDate(null);
-			            	}*/
+			            	}
 			            	//
 		            		String uid = rsA.getString("UID");
 			                umcn.setGRN(key.substring(0,10));
