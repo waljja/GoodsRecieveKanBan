@@ -9,12 +9,9 @@
     <list default="true" id="2a48f6ef-6bac-46b6-a95f-b9252f3ca1f3" name="默认变更列表" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/applicationContext.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/AegisModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/AegisModel.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckNotOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckNotOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/FetchMesDataTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/FetchMesDataTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/model/AegisModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/model/AegisModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckOCR.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckNotOCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckNotOCR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckOCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckOCR.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/task/FetchMesDataTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/FetchMesDataTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -62,7 +59,22 @@
     <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
   </component>
   <component name="RunManager" selected="应用程序.FetchMesDataTest">
+    <configuration name="AutoUrgentMaterialCheckNotOCR" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <output_file path="D:\SVN Code\GRNewDashBoardCurrent\notocrlog.txt" is_save="true" />
+      <option name="MAIN_CLASS_NAME" value="ht.task.AutoUrgentMaterialCheckNotOCR" />
+      <module name="GRNewDashBoard3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ht.task.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="FetchMesDataTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <output_file path="D:\SVN Code\GRNewDashBoardCurrent\fetchlog.txt" is_save="true" />
       <option name="MAIN_CLASS_NAME" value="ht.task.FetchMesDataTest" />
       <module name="GRNewDashBoard3" />
       <extension name="coverage">
@@ -75,13 +87,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -178,10 +192,12 @@
     <list>
       <item itemvalue="Tomcat 服务器.Tomcat 6.0.44" />
       <item itemvalue="应用程序.FetchMesDataTest" />
+      <item itemvalue="应用程序.AutoUrgentMaterialCheckNotOCR" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="应用程序.FetchMesDataTest" />
+        <item itemvalue="应用程序.AutoUrgentMaterialCheckNotOCR" />
       </list>
     </recent_temporary>
   </component>
@@ -195,7 +211,8 @@
       <updated>1669102066487</updated>
       <workItem from="1669102072813" duration="21445000" />
       <workItem from="1669171971482" duration="37431000" />
-      <workItem from="1669276180566" duration="3264000" />
+      <workItem from="1669276180566" duration="7405000" />
+      <workItem from="1669336793979" duration="25671000" />
     </task>
     <task id="LOCAL-00001" summary="测试数据查询优化">
       <created>1669253866915</created>

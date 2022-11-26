@@ -48,8 +48,17 @@ public class FetchMesDataTest {
             long startTime = System.currentTimeMillis();
             /*
              * 获取 aegis 字段
-            */
+             */
             ResultSet rs;
+            /*
+             * FRB.Name(拆分库位) / II.StockLocation(完整库位)
+             * select
+                   II.Identifier as uid, II.StockLocation as toStockInput,c.UpAegisDATE as transactionTime
+               from
+                   [HT_FactoryLogix].[dbo].ItemInventories II
+                   inner join #t1  c
+                       on ii.Identifier collate Chinese_PRC_CI_AS = c.rid
+             */
             rs = aegis.executeQuery("if object_id(N'tempdb..#t1',N'U') is not null " +
                     "DROP Table #t1 " +
                     "select rid,UpAegisDATE as UpAegisDATE into #t1 from (select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from [172.31.2.26].[imslabel].[dbo].vendorrid " +
@@ -57,7 +66,7 @@ public class FetchMesDataTest {
                     "union  select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from [172.31.2.26].[imslabel].[dbo].pcbvendorrid " +
                     "where convert(varchar(10),GRNDATE,23) between '" + dateSub2 + "' and '" + currentDate + "' and printQTY<>0.0 and plent in ('1100','5000') )m  order by grn, partNumber " +
                     "select " +
-                    "    II.Identifier as uid, FRB.Name as toStockInput,c.UpAegisDATE as transactionTime " +
+                    "    II.Identifier as uid, II.StockLocation as toStockInput,c.UpAegisDATE as transactionTime " +
                     "from" +
                     "    [HT_FactoryLogix].[dbo].ItemInventories II " +
                     "    left join [HT_FactoryLogix].[dbo].FactoryResourceBases FRB " +
@@ -70,6 +79,7 @@ public class FetchMesDataTest {
                 // 库位
                 String toStockInput = rs.getString("toStockInput");
                 Date transactionTime = rs.getTimestamp("transactionTime");
+                // 新增 ToStock_Bin 字段（拆分后的库位）
                 Boolean isInsert = mes.executeUpdate("IF NOT EXISTS" +
                         "(" +
                         "   select * " +
@@ -79,19 +89,17 @@ public class FetchMesDataTest {
                         "      UID = '" + uid + "'" +
                         ")" +
                         "   insert into [dbo].[UID_xTend_MaterialTransactionsRHDCDW] " +
-                        "      ([TransactionHistoryId],[UID],[Quantity],[ToStock_Input],[TransactionUser],[TransactionTime],[TransactionTime_1],[Plant]) " +
+                        "      ([TransactionHistoryId],[UID],[Quantity],[ToStock_Input],[ToStock_Bin],[TransactionUser],[TransactionTime],[TransactionTime_1],[Plant]) " +
                         "   values " +
-                        "      (NEWID(),'" + uid + "','100','" + toStockInput + "','ding','" + transactionTime + "',GETDATE(),'1100')" +
+                        "      (NEWID(),'" + uid + "','100','" + toStockInput + "',dbo.substring_stock('" + toStockInput + "','-',3),'ding','" + transactionTime + "',GETDATE(),'1100')" +
                         "else " +
                         "   update " +
                         "       UID_xTend_MaterialTransactionsRHDCDW " +
                         "   set " +
-                        "       ToStock_Input = '" + toStockInput + "',TransactionTime = '" + transactionTime + "'" +
+                        "       ToStock_Input = '" + toStockInput + "',ToStock_Bin = dbo.substring_stock('" + toStockInput + "','-',3),TransactionTime = '" + transactionTime + "'" +
                         "   where" +
                         "       UID = '" + uid + "'");
-                if (isInsert) {
-                    commonsLog.info("成功");
-                } else {
+                if (!isInsert) {
                     commonsLog.info("失败");
                 }
                 commonsLog.info("UID: " + uid + "    ToStock_Input: " + toStockInput + "    TransactionTime: " + transactionTime);
@@ -117,7 +125,6 @@ public class FetchMesDataTest {
                     "   II.Identifier collate Chinese_PRC_CI_AS in(select distinct rid from #t2)");
             // 插入 131 移库历史表
             while (rsHistory.next()) {
-                commonsLog.info("history");
                 String uid = rsHistory.getString("uid");
                 // 历史库位
                 String historyStock = rsHistory.getString("historyStock");
@@ -135,17 +142,16 @@ public class FetchMesDataTest {
                         "       ([ID],[ActionEnum],[TimePosted_BaseDateTimeUTC],[Quantity],[UID],[Operator],[StockLocation])" +
                         "   values" +
                         "       (NEWID(),'8','" + localtime + "','100','" + uid + "','ding','" + historyStock + "')");
-                if (isInsert) {
-                    commonsLog.info("成功(history)");
-                } else {
+                if (!isInsert) {
                     commonsLog.info("失败(history)");
                 }
-                commonsLog.info("UID: " + uid + "    historyStock: " + historyStock + "    localtime: " + localtime);
+                commonsLog.info("history----UID: " + uid + "    historyStock: " + historyStock + "    localtime: " + localtime);
             }
             commonsLog.info("结束-----");
             // 插入数据结束时间
             long endTime = System.currentTimeMillis();
-            commonsLog.info("执行耗时：" + ((endTime - startTime) / 1000) + "s");
+            commonsLog.info("执行耗时：" + ((endTime - startTime) / 6000 + "min");
+            commonsLog.info("执行耗时：" + ((endTime - startTime) % 6000) + "min");
         } catch (Exception e) {
             commonsLog.info("try: " + e);
         }

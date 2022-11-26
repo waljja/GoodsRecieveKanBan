@@ -170,7 +170,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 			            " where (SL.Identifier like'%IQ%' ) and II.Identifier = ? " +
 			    		" order by IIH.TimePosted_BaseDateTimeUTC desc ");*/
 				PreparedStatement pstmtA5 = connMes.prepareStatement("select " +
-						"II.UID, II.ToStoc_kInput as StockLocation, IIH.StockLocation as 'historyStock', IIH.TimePosted_BaseDateTimeUTC AS 'localtime' " +
+						"II.UID, II.ToStock_Input as StockLocation, IIH.StockLocation as 'historyStock', IIH.TimePosted_BaseDateTimeUTC AS 'localtime' " +
 						"from " +
 						"[dbo].[UID_xTend_MaterialTransactionsRHDCDW] II " +
 						"left join " +
@@ -204,7 +204,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 						"IIH.StockLocation like '%QM%' " +
 						"order by " +
 						"IIH.TimePosted_BaseDateTimeUTC " +
-						"asc ");
+						"desc ");
 				// 196 Orbit X
 				// IQC 321 122 时间
 				PreparedStatement findIqcDateByGrn = connOrbitX.prepareStatement("select distinct " +
@@ -438,6 +438,9 @@ public class AutoUrgentMaterialCheckNotOCR {
 	                    umcn.setCreatedate(nowDayTime);
 	                    if(!"".equals(umcn.getRDFinishTime())||umcn.getType().equals("D")) {
 	                    	list.add(umcn);
+							commonsLog.info("IQ" + umcn.getGRN());
+							commonsLog.info("IQ" + umcn.getUID());
+							commonsLog.info("IQ" + umcn.getPlant());
 	                    }
 	                    //end 有IQ 
 		            }else {
@@ -585,6 +588,9 @@ public class AutoUrgentMaterialCheckNotOCR {
 		                    umcn.setCreatedate(nowDayTime);
 		                    if(!"".equals(umcn.getRDFinishTime())||umcn.getType().equals("D")) {
 		                    	list.add(umcn);
+								commonsLog.info("QM" + umcn.getGRN());
+								commonsLog.info("QM" + umcn.getUID());
+								commonsLog.info("QM" + umcn.getPlant());
 		                    }
 		            	}
 		            }
@@ -795,6 +801,9 @@ public class AutoUrgentMaterialCheckNotOCR {
 	                    umcn.setCreatedate(nowDayTime);
 	                    if(!"".equals(umcn.getRDFinishTime())||umcn.getType().equals("D")) {
 	                    	list.add(umcn);
+							commonsLog.info("IQ" + umcn.getGRN());
+							commonsLog.info("IQ" + umcn.getUID());
+							commonsLog.info("IQ" + umcn.getPlant());
 	                    }
 	                    //end 有IQ 
 		            }else {
@@ -943,12 +952,18 @@ public class AutoUrgentMaterialCheckNotOCR {
 		                    umcn.setCreatedate(nowDayTime);
 		                    if(!"".equals(umcn.getRDFinishTime())||umcn.getType().equals("D")) {
 		                    	list.add(umcn);
+								commonsLog.info("QM" + umcn.getGRN());
+								commonsLog.info("QM" + umcn.getUID());
+								commonsLog.info("QM" + umcn.getPlant());
 		                    }
 		            	}
 		            }
 		        }
-		        //
-		        umCheckNotOCRService.saveUrgentMaterialCheckNotOCR(list);
+				commonsLog.info("list输出");
+				for (int j = 0; j < list.size(); j++) {
+					commonsLog.info("list" + (j+1) + ":" + list.get(j).getGRN());
+				}
+				umCheckNotOCRService.saveUrgentMaterialCheckNotOCR(list);
 			}
 	        //
 	        vpsDB.close();
