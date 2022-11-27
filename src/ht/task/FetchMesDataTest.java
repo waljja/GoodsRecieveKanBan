@@ -150,10 +150,10 @@ public class FetchMesDataTest {
             commonsLog.info("结束-----");
             // 插入数据结束时间
             long endTime = System.currentTimeMillis();
-            commonsLog.info("执行耗时：" + ((endTime - startTime) / 6000 + "min");
-            commonsLog.info("执行耗时：" + ((endTime - startTime) % 6000) + "min");
+            commonsLog.info("执行耗时：" + ((endTime - startTime) / 60000) + "min");
+            commonsLog.info("执行耗时：" + ((endTime - startTime) % 60000) + "min");
         } catch (Exception e) {
-            commonsLog.info("try: " + e);
+            commonsLog.info("exception: " + e);
         }
     }
 

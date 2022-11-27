@@ -1,3 +1,6 @@
 out/
 tomcatlog.txt
+notocrlog.txt
+fetchlog.txt
+fetchlogbackup.txt
 .svn/

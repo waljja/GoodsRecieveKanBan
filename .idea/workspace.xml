@@ -7,11 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2a48f6ef-6bac-46b6-a95f-b9252f3ca1f3" name="默认变更列表" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/applicationContext.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckNotOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckNotOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckNotOCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckNotOCR.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/FetchMesDataTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/FetchMesDataTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouseB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouseB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/task/FetchMesDataTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/FetchMesDataTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,12 +51,13 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/WebRoot/WEB-INF/lib" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../GRNewDashBoard3（大亚湾最新版）/src/ht/task/AutoToReceiveWarehouseB.java" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="模块" />
     <property name="project.structure.proportion" value="0.16" />
     <property name="project.structure.side.proportion" value="0.25838926" />
     <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/../GRNewDashBoard3（大亚湾最新版）/src/ht/task/AutoToReceiveWarehouseB.java" />
   </component>
   <component name="RunManager" selected="应用程序.FetchMesDataTest">
     <configuration name="AutoUrgentMaterialCheckNotOCR" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -212,7 +213,7 @@
       <workItem from="1669102072813" duration="21445000" />
       <workItem from="1669171971482" duration="37431000" />
       <workItem from="1669276180566" duration="7405000" />
-      <workItem from="1669336793979" duration="25671000" />
+      <workItem from="1669336793979" duration="30391000" />
     </task>
     <task id="LOCAL-00001" summary="测试数据查询优化">
       <created>1669253866915</created>

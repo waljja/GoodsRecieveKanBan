@@ -129,7 +129,7 @@ public class AutoToReceiveWarehouseB {
 			            " where SL.Identifier is not null and (SL.Identifier like'%RT%') and II.Identifier = ? " +
 			    		" order by IIH.TimePosted_BaseDateTimeUTC desc ");*/
 				PreparedStatement pstmtA2 = connMes.prepareStatement("select " +
-						"II.UID, II.ToStock_Input as StockLocation, II.TransactionTime AS 'localtime' " +
+						"II.UID as Identifier, II.ToStock_Input as StockLocation, II.TransactionTime AS 'localtime' " +
 						"from " +
 						"[dbo].[UID_xTend_MaterialTransactionsRHDCDW] II  " +
 						"where " +
@@ -217,139 +217,141 @@ public class AutoToReceiveWarehouseB {
 		        	//
 		        	String startDateTime = "";
 		        	String endDateTime = "";
-					String grnSub = key.substring(0, 10);
-					ResultSet rsIqc;
-//		        	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
-//	            	if("X".equalsIgnoreCase(sapDateTime[1])) {
+					/*String grnSub = key.substring(0, 10);
+					ResultSet rsIqc;*/
+		        	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
+	            	if("X".equalsIgnoreCase(sapDateTime[1])) {
 					// sap修改为 196 IQCDate 判断 122
 					// 查询IQC 122 时间
-					findIqcDateByGrn122.setString(1, grnSub);
+					/*findIqcDateByGrn122.setString(1, grnSub);
 					rsIqc  = findIqcDateByGrn122.executeQuery();
 					if (rsIqc.next()) {
 						String iqcDate122 = rsIqc.getString("IQCdate");
 						// 是否做过 122
-						if (iqcDate122.length() != 0 && iqcDate122 != null ) {
-							commonsLog.info("grn" + key.substring(0, 10));
-							ToReceiveWarehouseB trw = new ToReceiveWarehouseB();
-							startDateTime = iqcDate122;
-							trw.setCloseDate(iqcDate122);
-							trw.setSAPQualify("否");
-							//
-							String[] temp = rsMap.get(key);
-							ResultSet rsA = null;
-							boolean flagRH = false;
-							String[] UIDs = temp[3].split(",");
-							for (String UID : UIDs) {
-								pstmtA2.setString(1, UID) ;
-								rsA = pstmtA2.executeQuery();
-								if(rsA.next()) {
-									flagRH = true;
+						if (iqcDate122.length() != 0 && iqcDate122 != null ) {*/
+						commonsLog.info("grn" + key.substring(0, 10));
+						ToReceiveWarehouseB trw = new ToReceiveWarehouseB();
+						startDateTime = sapDateTime[2];
+						trw.setCloseDate(sapDateTime[2]);
+						/*startDateTime = iqcDate122;
+						trw.setCloseDate(iqcDate122);*/
+						trw.setSAPQualify("否");
+						//
+						String[] temp = rsMap.get(key);
+						ResultSet rsA = null;
+						boolean flagRH = false;
+						String[] UIDs = temp[3].split(",");
+						for (String UID : UIDs) {
+							pstmtA2.setString(1, UID) ;
+							rsA = pstmtA2.executeQuery();
+							if(rsA.next()) {
+								flagRH = true;
+								break;
+							}
+						}
+						if(flagRH){
+							trw.setUID(rsA.getString("Identifier"));
+							trw.setReturnWarehouseTime(rsA.getString("localtime").substring(0,16));
+							trw.setAegisQualify("否");
+							endDateTime = rsA.getString("localtime").substring(0,16);
+							trw.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
+						}else {
+							trw.setUID(temp[3].substring(0,21));
+							trw.setReturnWarehouseTime("");
+							trw.setAegisQualify("否");
+							endDateTime = nowDayTime;
+							pstmtA3.setString(1, trw.getUID());
+							ResultSet rsA3 = pstmtA3.executeQuery();
+							if(rsA3.next()) {
+								trw.setReceivingLocation(rsA3.getString("StockLocation"));//收货库位
+							}
+						}
+						trw.setGRN(key.substring(0, 10));
+						trw.setItemNumber(temp[0]);
+						trw.setGRNQuantity(temp[1]);
+						pstmtA1.setString(1, temp[0]);
+						pstmtA1.setString(2, nowDay);
+						ResultSet rsB = pstmtA1.executeQuery();
+						if(rsB.next()) {
+							trw.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
+						}else {
+							//根据工厂 物料 取工单开始日期
+							double totalInventory = 0.0;
+							double leftInventory = 0.0;
+							String soStartDate = "NA";
+							pstmtDB1.setString(1, temp[4]);
+							pstmtDB1.setString(2, temp[0]);
+							ResultSet rs31  = pstmtDB1.executeQuery();
+							if(rs31.next()) {
+								if(!"null".equals(rs31.getString("inventory"))) {
+									totalInventory = rs31.getDouble("inventory");
+								}
+
+							}
+							ResultSet rs32  = pstmtDB1.executeQuery();
+							while(rs32.next()) {
+								totalInventory = totalInventory - (rs32.getDouble("needQty") - rs32.getDouble("gotQty"));
+								if(totalInventory < 0.0) {
+									soStartDate = rs32.getString("soStartDate");
 									break;
 								}
 							}
-							if(flagRH){
-								trw.setUID(rsA.getString("Identifier"));
-								trw.setReturnWarehouseTime(rsA.getString("localtime").substring(0,16));
-								trw.setAegisQualify("否");
-								endDateTime = rsA.getString("localtime").substring(0,16);
-								trw.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-							}else {
-								trw.setUID(temp[3].substring(0,21));
-								trw.setReturnWarehouseTime("");
-								trw.setAegisQualify("否");
-								endDateTime = nowDayTime;
-								pstmtA3.setString(1, trw.getUID());
-								ResultSet rsA3 = pstmtA3.executeQuery();
-								if(rsA3.next()) {
-									trw.setReceivingLocation(rsA3.getString("StockLocation"));//收货库位
-								}
-							}
-							trw.setGRN(key.substring(0, 10));
-							trw.setItemNumber(temp[0]);
-							trw.setGRNQuantity(temp[1]);
-							pstmtA1.setString(1, temp[0]);
-							pstmtA1.setString(2, nowDay);
-							ResultSet rsB = pstmtA1.executeQuery();
-							if(rsB.next()) {
-								trw.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
-							}else {
-								//根据工厂 物料 取工单开始日期
-								double totalInventory = 0.0;
-								double leftInventory = 0.0;
-								String soStartDate = "NA";
-								pstmtDB1.setString(1, temp[4]);
-								pstmtDB1.setString(2, temp[0]);
-								ResultSet rs31  = pstmtDB1.executeQuery();
-								if(rs31.next()) {
-									if(!"null".equals(rs31.getString("inventory"))) {
-										totalInventory = rs31.getDouble("inventory");
-									}
-
-								}
-								ResultSet rs32  = pstmtDB1.executeQuery();
-								while(rs32.next()) {
-									totalInventory = totalInventory - (rs32.getDouble("needQty") - rs32.getDouble("gotQty"));
-									if(totalInventory < 0.0) {
-										soStartDate = rs32.getString("soStartDate");
-										break;
-									}
-								}
-								trw.setProductionTime(soStartDate);
-							}
-							trw.setType("");
-							if(!"NA".equals(trw.getProductionTime()) ){
-								if(trw.getProductionTime().compareTo(nowDayAdd2) <= 0) {
-									trw.setType("A");
-								}else if(trw.getProductionTime().compareTo(nowDayAdd4) <= 0) {
-									trw.setType("B");
-								}else{
-									continue;
-								}
-							}else {
+							trw.setProductionTime(soStartDate);
+						}
+						trw.setType("");
+						if(!"NA".equals(trw.getProductionTime()) ){
+							if(trw.getProductionTime().compareTo(nowDayAdd2) <= 0) {
+								trw.setType("A");
+							}else if(trw.getProductionTime().compareTo(nowDayAdd4) <= 0) {
+								trw.setType("B");
+							}else{
 								continue;
 							}
-
-							trw.setPlant(temp[4]);
-							//计算待入主料仓时间
-							if(!"".equals(startDateTime)&&!"null".equalsIgnoreCase(startDateTime)) {
-								if (startDateTime.substring(11).compareTo("21:00")>0) {
-									startDateTime = startDateTime.substring(0, 10) + " 21:00";
-								}
-								if (startDateTime.substring(11).compareTo("08:00")<0) {
-									startDateTime = startDateTime.substring(0, 10) + " 08:00";
-								}
-								if(startDateTime.compareTo(endDateTime) > 0) {
-									trw.setWaitTimeToMainbin("0.0");
-								}else {
-									int day = DateUtils.diffDays(df.parse(endDateTime.substring(0, 10)), df.parse(startDateTime.substring(0, 10)) );
-									int hour = 0;
-									int min = 0;
-									if(day==0) {  // 同一天
-										hour = Integer.parseInt(endDateTime.substring(11, 13)) - Integer.parseInt(startDateTime.substring(11, 13));
-										min = Integer.parseInt(endDateTime.substring(14, 16)) - Integer.parseInt(startDateTime.substring(14, 16));
-										min = min + calFoodTime(startDateTime, endDateTime);
-									}else {
-										day = day-1;
-										hour = day*11;
-										hour = hour + 21 - Integer.parseInt(startDateTime.substring(11, 13));
-										min = min + Integer.parseInt(endDateTime.substring(14, 16)) - Integer.parseInt(startDateTime.substring(14, 16));
-										min = min + calFoodTime(startDateTime, startDateTime.substring(0, 10)+" 21:00");
-										hour = hour + Integer.parseInt(endDateTime.substring(11, 13)) - 8;
-										min = min + calFoodTime(endDateTime.substring(0, 10)+" 08:00", endDateTime);
-									}
-									min = hour * 60 + min;
-									//
-									double minToHour = min/60.0;
-									trw.setWaitTimeToMainbin(String.format("%.2f", minToHour));
-								}
-							}else{
-								trw.setWaitTimeToMainbin("0.0");
-							}
-							trw.setSequence(seq);
-							trw.setCreatedate(nowDayTime);
-							list.add(trw);
+						}else {
+							continue;
 						}
-					}
+
+						trw.setPlant(temp[4]);
+						//计算待入主料仓时间
+						if(!"".equals(startDateTime)&&!"null".equalsIgnoreCase(startDateTime)) {
+							if (startDateTime.substring(11).compareTo("21:00")>0) {
+								startDateTime = startDateTime.substring(0, 10) + " 21:00";
+							}
+							if (startDateTime.substring(11).compareTo("08:00")<0) {
+								startDateTime = startDateTime.substring(0, 10) + " 08:00";
+							}
+							if(startDateTime.compareTo(endDateTime) > 0) {
+								trw.setWaitTimeToMainbin("0.0");
+							}else {
+								int day = DateUtils.diffDays(df.parse(endDateTime.substring(0, 10)), df.parse(startDateTime.substring(0, 10)) );
+								int hour = 0;
+								int min = 0;
+								if(day==0) {  // 同一天
+									hour = Integer.parseInt(endDateTime.substring(11, 13)) - Integer.parseInt(startDateTime.substring(11, 13));
+									min = Integer.parseInt(endDateTime.substring(14, 16)) - Integer.parseInt(startDateTime.substring(14, 16));
+									min = min + calFoodTime(startDateTime, endDateTime);
+								}else {
+									day = day-1;
+									hour = day*11;
+									hour = hour + 21 - Integer.parseInt(startDateTime.substring(11, 13));
+									min = min + Integer.parseInt(endDateTime.substring(14, 16)) - Integer.parseInt(startDateTime.substring(14, 16));
+									min = min + calFoodTime(startDateTime, startDateTime.substring(0, 10)+" 21:00");
+									hour = hour + Integer.parseInt(endDateTime.substring(11, 13)) - 8;
+									min = min + calFoodTime(endDateTime.substring(0, 10)+" 08:00", endDateTime);
+								}
+								min = hour * 60 + min;
+								//
+								double minToHour = min/60.0;
+								trw.setWaitTimeToMainbin(String.format("%.2f", minToHour));
+							}
+						}else{
+							trw.setWaitTimeToMainbin("0.0");
+						}
+						trw.setSequence(seq);
+						trw.setCreatedate(nowDayTime);
+						list.add(trw);
+	            	}
+				//	}
 //		            }
 		        }
 		        commonsLog.info("第一段结束");
@@ -399,138 +401,140 @@ public class AutoToReceiveWarehouseB {
 		        	//
 		        	String startDateTime = "";
 		        	String endDateTime = "";
-					String grnSub = key.substring(0, 10);
-					ResultSet rsIqc;
-//		        	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
-//	            	if("X".equalsIgnoreCase(sapDateTime[1])) {
+					/*String grnSub = key.substring(0, 10);
+					ResultSet rsIqc;*/
+		        	String[] sapDateTime = sap.getGrnStatus(key.substring(0, 10), year);
+	            	if("X".equalsIgnoreCase(sapDateTime[1])) {
 					// sap修改为 196 IQCDate 判断 122
 					// 查询IQC 122 时间
-					findIqcDateByGrn122.setString(1, grnSub);
+					/*findIqcDateByGrn122.setString(1, grnSub);
 					rsIqc  = findIqcDateByGrn122.executeQuery();
 					if (rsIqc.next()) {
 						String iqcDate122 = rsIqc.getString("IQCdate");
 						// 是否做过 122
-						if (iqcDate122.length() != 0 && iqcDate122 != null ) {
-							ToReceiveWarehouseB trw = new ToReceiveWarehouseB();
-							startDateTime = iqcDate122;
-							trw.setCloseDate(iqcDate122);
-							trw.setSAPQualify("否");
-							//
-							String[] temp = rsMap.get(key);
-							ResultSet rsA = null;
-							boolean flagRH = false;
-							String[] UIDs = temp[3].split(",");
-							for (String UID : UIDs) {
-								pstmtA2.setString(1, UID) ;
-								rsA = pstmtA2.executeQuery();
-								if(rsA.next()) {
-									flagRH = true;
+						if (iqcDate122.length() != 0 && iqcDate122 != null ) {*/
+						ToReceiveWarehouseB trw = new ToReceiveWarehouseB();
+						startDateTime = sapDateTime[2];
+						trw.setCloseDate(sapDateTime[2]);
+							/*startDateTime = iqcDate122;
+							trw.setCloseDate(iqcDate122);*/
+						trw.setSAPQualify("否");
+						//
+						String[] temp = rsMap.get(key);
+						ResultSet rsA = null;
+						boolean flagRH = false;
+						String[] UIDs = temp[3].split(",");
+						for (String UID : UIDs) {
+							pstmtA2.setString(1, UID) ;
+							rsA = pstmtA2.executeQuery();
+							if(rsA.next()) {
+								flagRH = true;
+								break;
+							}
+						}
+						if(flagRH){
+							trw.setUID(rsA.getString("Identifier"));
+							trw.setReturnWarehouseTime(rsA.getString("localtime").substring(0,16));
+							trw.setAegisQualify("否");
+							endDateTime = rsA.getString("localtime").substring(0,16);
+							trw.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
+						}else {
+							trw.setUID(temp[3].substring(0,21));
+							trw.setReturnWarehouseTime("");
+							trw.setAegisQualify("否");
+							endDateTime = nowDayTime;
+							pstmtA3.setString(1, trw.getUID());
+							ResultSet rsA3 = pstmtA3.executeQuery();
+							if(rsA3.next()) {
+								trw.setReceivingLocation(rsA3.getString("StockLocation"));//收货库位
+							}
+						}
+						trw.setGRN(key.substring(0, 10));
+						trw.setItemNumber(temp[0]);
+						trw.setGRNQuantity(temp[1]);
+						pstmtA1.setString(1, temp[0]);
+						pstmtA1.setString(2, nowDay);
+						ResultSet rsB = pstmtA1.executeQuery();
+						if(rsB.next()) {
+							trw.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
+						}else {
+							//根据工厂 物料 取工单开始日期
+							double totalInventory = 0.0;
+							double leftInventory = 0.0;
+							String soStartDate = "NA";
+							pstmtDB1.setString(1, temp[4]);
+							pstmtDB1.setString(2, temp[0]);
+							ResultSet rs31  = pstmtDB1.executeQuery();
+							if(rs31.next()) {
+								if(!"null".equals(rs31.getString("inventory"))) {
+									totalInventory = rs31.getDouble("inventory");
+								}
+
+							}
+							ResultSet rs32  = pstmtDB1.executeQuery();
+							while(rs32.next()) {
+								totalInventory = totalInventory - (rs32.getDouble("needQty") - rs32.getDouble("gotQty"));
+								if(totalInventory < 0.0) {
+									soStartDate = rs32.getString("soStartDate");
 									break;
 								}
 							}
-							if(flagRH){
-								trw.setUID(rsA.getString("Identifier"));
-								trw.setReturnWarehouseTime(rsA.getString("localtime").substring(0,16));
-								trw.setAegisQualify("否");
-								endDateTime = rsA.getString("localtime").substring(0,16);
-								trw.setReceivingLocation(rsA.getString("StockLocation"));//收货库位
-							}else {
-								trw.setUID(temp[3].substring(0,21));
-								trw.setReturnWarehouseTime("");
-								trw.setAegisQualify("否");
-								endDateTime = nowDayTime;
-								pstmtA3.setString(1, trw.getUID());
-								ResultSet rsA3 = pstmtA3.executeQuery();
-								if(rsA3.next()) {
-									trw.setReceivingLocation(rsA3.getString("StockLocation"));//收货库位
-								}
-							}
-							trw.setGRN(key.substring(0, 10));
-							trw.setItemNumber(temp[0]);
-							trw.setGRNQuantity(temp[1]);
-							pstmtA1.setString(1, temp[0]);
-							pstmtA1.setString(2, nowDay);
-							ResultSet rsB = pstmtA1.executeQuery();
-							if(rsB.next()) {
-								trw.setProductionTime(rsB.getString("RequireTime").substring(0, 16));
-							}else {
-								//根据工厂 物料 取工单开始日期
-								double totalInventory = 0.0;
-								double leftInventory = 0.0;
-								String soStartDate = "NA";
-								pstmtDB1.setString(1, temp[4]);
-								pstmtDB1.setString(2, temp[0]);
-								ResultSet rs31  = pstmtDB1.executeQuery();
-								if(rs31.next()) {
-									if(!"null".equals(rs31.getString("inventory"))) {
-										totalInventory = rs31.getDouble("inventory");
-									}
-
-								}
-								ResultSet rs32  = pstmtDB1.executeQuery();
-								while(rs32.next()) {
-									totalInventory = totalInventory - (rs32.getDouble("needQty") - rs32.getDouble("gotQty"));
-									if(totalInventory < 0.0) {
-										soStartDate = rs32.getString("soStartDate");
-										break;
-									}
-								}
-								trw.setProductionTime(soStartDate);
-							}
-							trw.setType("");
-							if(!"NA".equals(trw.getProductionTime()) ){
-								if(trw.getProductionTime().compareTo(nowDayAdd2) <= 0) {
-									trw.setType("A");
-								}else if(trw.getProductionTime().compareTo(nowDayAdd4) <= 0) {
-									trw.setType("B");
-								}else{
-									continue;
-								}
-							}else {
+							trw.setProductionTime(soStartDate);
+						}
+						trw.setType("");
+						if(!"NA".equals(trw.getProductionTime()) ){
+							if(trw.getProductionTime().compareTo(nowDayAdd2) <= 0) {
+								trw.setType("A");
+							}else if(trw.getProductionTime().compareTo(nowDayAdd4) <= 0) {
+								trw.setType("B");
+							}else{
 								continue;
 							}
-
-							trw.setPlant(temp[4]);
-							//计算待入主料仓时间
-							if(!"".equals(startDateTime)&&!"null".equalsIgnoreCase(startDateTime)) {
-								if (startDateTime.substring(11).compareTo("21:00")>0) {
-									startDateTime = startDateTime.substring(0, 10) + " 21:00";
-								}
-								if (startDateTime.substring(11).compareTo("08:00")<0) {
-									startDateTime = startDateTime.substring(0, 10) + " 08:00";
-								}
-								if(startDateTime.compareTo(endDateTime) > 0) {
-									trw.setWaitTimeToMainbin("0.0");
-								}else {
-									int day = DateUtils.diffDays(df.parse(endDateTime.substring(0, 10)), df.parse(startDateTime.substring(0, 10)) );
-									int hour = 0;
-									int min = 0;
-									if(day==0) {  // 同一天
-										hour = Integer.parseInt(endDateTime.substring(11, 13)) - Integer.parseInt(startDateTime.substring(11, 13));
-										min = Integer.parseInt(endDateTime.substring(14, 16)) - Integer.parseInt(startDateTime.substring(14, 16));
-										min = min + calFoodTime(startDateTime, endDateTime);
-									}else {
-										day = day-1;
-										hour = day*11;
-										hour = hour + 21 - Integer.parseInt(startDateTime.substring(11, 13));
-										min = min + Integer.parseInt(endDateTime.substring(14, 16)) - Integer.parseInt(startDateTime.substring(14, 16));
-										min = min + calFoodTime(startDateTime, startDateTime.substring(0, 10)+" 21:00");
-										hour = hour + Integer.parseInt(endDateTime.substring(11, 13)) - 8;
-										min = min + calFoodTime(endDateTime.substring(0, 10)+" 08:00", endDateTime);
-									}
-									min = hour * 60 + min;
-									//
-									double minToHour = min/60.0;
-									trw.setWaitTimeToMainbin(String.format("%.2f", minToHour));
-								}
-							}else{
-								trw.setWaitTimeToMainbin("0.0");
-							}
-							trw.setSequence(seq);
-							trw.setCreatedate(nowDayTime);
-							list.add(trw);
+						}else {
+							continue;
 						}
-					}
+
+						trw.setPlant(temp[4]);
+						//计算待入主料仓时间
+						if(!"".equals(startDateTime)&&!"null".equalsIgnoreCase(startDateTime)) {
+							if (startDateTime.substring(11).compareTo("21:00")>0) {
+								startDateTime = startDateTime.substring(0, 10) + " 21:00";
+							}
+							if (startDateTime.substring(11).compareTo("08:00")<0) {
+								startDateTime = startDateTime.substring(0, 10) + " 08:00";
+							}
+							if(startDateTime.compareTo(endDateTime) > 0) {
+								trw.setWaitTimeToMainbin("0.0");
+							}else {
+								int day = DateUtils.diffDays(df.parse(endDateTime.substring(0, 10)), df.parse(startDateTime.substring(0, 10)) );
+								int hour = 0;
+								int min = 0;
+								if(day==0) {  // 同一天
+									hour = Integer.parseInt(endDateTime.substring(11, 13)) - Integer.parseInt(startDateTime.substring(11, 13));
+									min = Integer.parseInt(endDateTime.substring(14, 16)) - Integer.parseInt(startDateTime.substring(14, 16));
+									min = min + calFoodTime(startDateTime, endDateTime);
+								}else {
+									day = day-1;
+									hour = day*11;
+									hour = hour + 21 - Integer.parseInt(startDateTime.substring(11, 13));
+									min = min + Integer.parseInt(endDateTime.substring(14, 16)) - Integer.parseInt(startDateTime.substring(14, 16));
+									min = min + calFoodTime(startDateTime, startDateTime.substring(0, 10)+" 21:00");
+									hour = hour + Integer.parseInt(endDateTime.substring(11, 13)) - 8;
+									min = min + calFoodTime(endDateTime.substring(0, 10)+" 08:00", endDateTime);
+								}
+								min = hour * 60 + min;
+								//
+								double minToHour = min/60.0;
+								trw.setWaitTimeToMainbin(String.format("%.2f", minToHour));
+							}
+						}else{
+							trw.setWaitTimeToMainbin("0.0");
+						}
+						trw.setSequence(seq);
+						trw.setCreatedate(nowDayTime);
+						list.add(trw);
+	            	}
+				//	}
 //		            }
 		        }
 		        commonsLog.info("list输出");
