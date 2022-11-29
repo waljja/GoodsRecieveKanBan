@@ -41,8 +41,6 @@ public class FetchMesDataTest {
             cal.add(Calendar.DATE, -2);
             // 前天
             String dateSub2 = simpleDateFormat.format(cal.getTime());
-            commonsLog.info("c"+currentDate);
-            commonsLog.info("d"+dateSub2);
             commonsLog.info("库存表插入");
             // 执行 SQL 开始时间
             long startTime = System.currentTimeMillis();
@@ -50,15 +48,6 @@ public class FetchMesDataTest {
              * 获取 aegis 字段
              */
             ResultSet rs;
-            /*
-             * FRB.Name(拆分库位) / II.StockLocation(完整库位)
-             * select
-                   II.Identifier as uid, II.StockLocation as toStockInput,c.UpAegisDATE as transactionTime
-               from
-                   [HT_FactoryLogix].[dbo].ItemInventories II
-                   inner join #t1  c
-                       on ii.Identifier collate Chinese_PRC_CI_AS = c.rid
-             */
             rs = aegis.executeQuery("if object_id(N'tempdb..#t1',N'U') is not null " +
                     "DROP Table #t1 " +
                     "select rid,UpAegisDATE as UpAegisDATE into #t1 from (select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from [172.31.2.26].[imslabel].[dbo].vendorrid " +
@@ -150,8 +139,7 @@ public class FetchMesDataTest {
             commonsLog.info("结束-----");
             // 插入数据结束时间
             long endTime = System.currentTimeMillis();
-            commonsLog.info("执行耗时：" + ((endTime - startTime) / 60000) + "min");
-            commonsLog.info("执行耗时：" + ((endTime - startTime) % 60000) + "min");
+            commonsLog.info("执行耗时：" + ((endTime - startTime) / 60000) + "min" + (((endTime - startTime) % 60000) / 1000 ) + "s");
         } catch (Exception e) {
             commonsLog.info("exception: " + e);
         }

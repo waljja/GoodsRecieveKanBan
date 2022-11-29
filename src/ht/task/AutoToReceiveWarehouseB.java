@@ -15,16 +15,16 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * 3b
- * @date 2020-9-3
+ * 待退货物料看板
+ *
  * @author 刘惠明
- * 
+ * @date 2020-9-3
  */
-
 public class AutoToReceiveWarehouseB {
+	@Autowired
+	private IToReceiveWarehouseBService trWarehouseBService;
+
 	private static Log commonsLog = LogFactory.getLog(AutoToReceiveWarehouseB.class);
-    @Autowired
-    private IToReceiveWarehouseBService trWarehouseBService;
 	
     public void execute() throws Exception {
 		commonsLog.info("start...");
@@ -144,16 +144,6 @@ public class AutoToReceiveWarehouseB {
 		        /*PreparedStatement pstmtA3 = connAegis.prepareStatement("select II.Identifier, II.StockLocation " +
 	        			" from ItemInventories II " +
 	        			" where II.Identifier = ? ");*/
-				// 196 Orbit X
-				// IQC 122 时间
-				PreparedStatement findIqcDateByGrn122 = connOrbitX.prepareStatement("SELECT distinct " +
-						"IQCdate " +
-						"FROM " +
-						"[OrBitX].[dbo].[xTend_MaterialReceived] " +
-						"where " +
-						"GRN = ? " +
-						"and " +
-						"IQCMVT = '122'");
 				PreparedStatement pstmtA3 = connMes.prepareStatement("select " +
 						"ToStock_Input as StockLocation " +
 						"from " +
@@ -164,11 +154,21 @@ public class AutoToReceiveWarehouseB {
 						"ToStock_Input is not null " +
 						"and " +
 						"ToStock_Input<> ''");
+				// 196 Orbit X
+				// IQC 122 时间
+				PreparedStatement findIqcDateByGrn122 = connOrbitX.prepareStatement("SELECT distinct " +
+						"IQCdate " +
+						"FROM " +
+						"[OrBitX].[dbo].[xTend_MaterialReceived] " +
+						"where " +
+						"GRN = ? " +
+						"and " +
+						"IQCMVT = '122'");
 				PreparedStatement pstmtDB1 = connDB.prepareStatement(" select inventory,needQty,gotQty,soStartDate " +
 	                 	" from NotFinishSO where plant=? and bom=? order by soStartDate ");
 				PreparedStatement pstmtDB2 = connDB.prepareStatement("select * from ToReceiveWarehouseB where ReturnWarehouseTime <>'' " +
 						" and GRN=? ");
-				//vendorrid
+				// vendorrid
 				rs = vpsDB.executeQuery("select grn, partNumber, printQTY, rid, plent from vendorrid " +
 		                " where convert(varchar(10),GRNDATE,23) between '"+nowDay_2+"' and '"+nowDay+"' and UpAegis='pass' and plent in ('1100','1200','5000')  ");
 				Map<String,String[]> rsMap=new HashMap<String,String[]>();
@@ -416,8 +416,8 @@ public class AutoToReceiveWarehouseB {
 						ToReceiveWarehouseB trw = new ToReceiveWarehouseB();
 						startDateTime = sapDateTime[2];
 						trw.setCloseDate(sapDateTime[2]);
-							/*startDateTime = iqcDate122;
-							trw.setCloseDate(iqcDate122);*/
+						/*startDateTime = iqcDate122;
+						trw.setCloseDate(iqcDate122);*/
 						trw.setSAPQualify("否");
 						//
 						String[] temp = rsMap.get(key);

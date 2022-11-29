@@ -74,7 +74,7 @@
  	<!-- 配置一个触发器() -->
 	<bean id="startTrigger07" class="org.springframework.scheduling.quartz.CronTriggerBean">
 	  <property name="jobDetail" ref="startTask01"></property>
-	  <property name="cronExpression" value="0 41 16 * * ? *"></property> <!--每日7点40分执行-->
+	  <property name="cronExpression" value="0 0/15 * * * ? *"></property> <!--每日7点40分执行-->
 	</bean>
 
 	<!--定时任务： 1.待点收看板 -->
@@ -90,7 +90,7 @@
  	<!-- 配置一个触发器() -->
 	<bean id="startTrigger101" class="org.springframework.scheduling.quartz.CronTriggerBean">
 	  <property name="jobDetail" ref="startTask101"></property>
-	  <property name="cronExpression" value="0 41 16 * * ? *"></property> <!--每15分钟执行一次-->
+	  <property name="cronExpression" value="0 0/15 * * * ? *"></property> <!--每15分钟执行一次-->
 	</bean>
 
 	<!--定时任务：  2a. 急料检验看板（非OCR）  -->
@@ -106,7 +106,7 @@
  	<!-- 配置一个触发器() -->
 	<bean id="startTrigger102" class="org.springframework.scheduling.quartz.CronTriggerBean">
 	  <property name="jobDetail" ref="startTask102"></property>
-	  <property name="cronExpression" value="0 41 16 * * ? *"></property> <!--每15分钟执行一次-->
+	  <property name="cronExpression" value="0 0/15 * * * ? *"></property> <!--每15分钟执行一次-->
 	</bean>
 
 	<!--定时任务：  2b. 急料检验看板（OCR） -->
@@ -122,7 +122,7 @@
  	<!-- 配置一个触发器() -->
 	<bean id="startTrigger103" class="org.springframework.scheduling.quartz.CronTriggerBean">
 	  <property name="jobDetail" ref="startTask103"></property>
-	  <property name="cronExpression" value="0 41 16 * * ? *"></property> <!--每15分钟执行一次-->
+	  <property name="cronExpression" value="0 0/15 * * * ? *"></property> <!--每15分钟执行一次-->
 	</bean>
 
 	<!--定时任务：   3a. 待入主料仓物料看板 -->
@@ -138,7 +138,7 @@
  	<!-- 配置一个触发器() -->
 	<bean id="startTrigger104" class="org.springframework.scheduling.quartz.CronTriggerBean">
 	  <property name="jobDetail" ref="startTask104"></property>
-	  <property name="cronExpression" value="0 41 16 * * ? *"></property> <!--每15分钟执行一次-->
+	  <property name="cronExpression" value="0 0/15 * * * ? *"></property> <!--每15分钟执行一次-->
 	</bean>
 
 	<!--定时任务： 3b. 待入退貨仓物料看板  -->
@@ -154,7 +154,7 @@
  	<!-- 配置一个触发器() -->
 	<bean id="startTrigger105" class="org.springframework.scheduling.quartz.CronTriggerBean">
 	  <property name="jobDetail" ref="startTask105"></property>
-	  <property name="cronExpression" value="0 41 16 * * ? *"></property> <!--每15分钟执行一次-->
+	  <property name="cronExpression" value="0 0/15 * * * ? *"></property> <!--每15分钟执行一次-->
 	</bean>
 
 	<!--定时任务： 获取看板测试数据  -->
@@ -170,7 +170,7 @@
 	<!-- 配置一个触发器() -->
 	<bean id="startTrigger666" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="startTask666"></property>
-		<property name="cronExpression" value="0 41 16 * * ? *"></property> <!--早上8点开始，每隔两小时执行一次-->
+		<property name="cronExpression" value="0 0/15 * * * ? *"></property> <!--早上8点开始，每隔两小时执行一次-->
 	</bean>
 
 	<!-- 总调度,用于启动定时器 -->
@@ -183,12 +183,15 @@
 			<ref bean="startTrigger07"/>
 <!--			<ref bean="startTrigger101"/>-->
 <!--非OCR-->
-			<ref bean="startTrigger102"/>
+<!--			<ref bean="startTrigger102"/>-->
 <!--OCR-->
-			<ref bean="startTrigger103"/>
+<!--			<ref bean="startTrigger103"/>-->
+<!--待入-->
 <!--			<ref bean="startTrigger104"/>-->
+<!--待退货-->
 <!--			<ref bean="startTrigger105"/>-->
-			<ref bean="startTrigger666"/>
+<!--获取测试数据-->
+<!--			<ref bean="startTrigger666"/>-->
 	   	</list>
 	   </property>
 	</bean>
