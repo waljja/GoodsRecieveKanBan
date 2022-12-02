@@ -2,10 +2,7 @@ package ht.task;
 
 import ht.biz.IToReceiveCheckService;
 import ht.entity.ToReceiveCheck;
-import ht.util.ConDashBoard;
-import ht.util.ConMes;
-import ht.util.ConVPS;
-import ht.util.DateUtils;
+import ht.util.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,14 +33,15 @@ public class AutoToReceiveCheck {
             Connection connMes = conMes.con;
             ConDashBoard grnewdbDB = new ConDashBoard();
             Connection connDB = grnewdbDB.con;
-            //
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Calendar c = Calendar.getInstance();
             c.setTime(new Date());
-            String nowDay = df.format(c.getTime());//当天
-            String nowDayTime = df2.format(c.getTime());//当天
-            c.add(Calendar.DATE, -2); // -2 天
+            // 当天
+            String nowDay = df.format(c.getTime());
+            String nowDayTime = df2.format(c.getTime());
+            // -2 天
+            c.add(Calendar.DATE, -2);
             String nowDay_2 = df.format(c.getTime());
             //8点-12点     13点-17点    18点-21点
             if( (nowDayTime.substring(11).compareTo("08:00") >0 && nowDayTime.substring(11).compareTo("12:00") <=0 )
@@ -103,18 +101,10 @@ public class AutoToReceiveCheck {
                     seq = rs.getInt("maxseq")+1;
                 }
                 // Aegis
-                /*
-                 * 条件为UID，仓位非空，来源仓位非空，时间非空
-                 * 原先拿到的字段名称为stockname，现在改成ToStock_Input
-                 * 改为UID_xTend_MaterialTransactionsRHDCDW表
-                 * 131 DB modified by GuoZhao Ding
-                 */
-				/*
-				 PreparedStatement pstmtA1 = connAegis.prepareStatement("select FRB.Name as stockname from ItemInventories II " +
+				/* PreparedStatement pstmtA1 = connAegis.prepareStatement("select FRB.Name as stockname from ItemInventories II " +
 						" left join ItemTypes IT on IT.ID = II.ItemTypeID " +
 						" left join FactoryResourceBases FRB on FRB.ID = II.StockResourceID " +
-						" where II.Identifier = ? and (FRB.Name is not null and FRB.Name <> '') ");
-				*/
+						" where II.Identifier = ? and (FRB.Name is not null and FRB.Name <> '') "); */
                 PreparedStatement pstmtA1 = connMes.prepareStatement("select " +
                         "ToStock_Input " +
                         "from " +
@@ -129,15 +119,8 @@ public class AutoToReceiveCheck {
                         "(FromStock_Input is null or FromStock_Input = '') " +
                         "and " +
                         "(TransactionTime_1 is null or TransactionTime_1 = '')");
-                /*
-                 * 条件为status = missingPart、partNumber、LLDHDate
-                 * 根据时间排序
-                 * 改成TO表
-                 */
-				/*
-				PreparedStatement pstmtA3 = connMes.prepareStatement("select RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
-						" where PartNumber = ? and convert(varchar(10),RequireTime,23) =? order by RequireTime ");
-				*/
+				/* PreparedStatement pstmtA3 = connMes.prepareStatement("select RequireTime from [HT_InterfaceExchange].[dbo].[xTend_MissingMaterials] " +
+						" where PartNumber = ? and convert(varchar(10),RequireTime,23) =? order by RequireTime "); */
                 PreparedStatement pstmtA3 = connMes.prepareStatement("select " +
                         "a.CreateTime as RequireTime " +
                         "from " +
@@ -154,26 +137,31 @@ public class AutoToReceiveCheck {
                         "CreateTime");
                 PreparedStatement pstmtDB1 = connDB.prepareStatement("select inventory,needQty,gotQty,soStartDate " +
                         " from NotFinishSO where plant=? and bom=? order by soStartDate ");
+                // connDB 暂时 换成 131 看板表
                 PreparedStatement pstmtDB2 = connDB.prepareStatement("select * from ToReceiveCheck where closeDate is not null " +
-                        " and GRN=? ");
-                //vendorrid
-                //1.查询2天内VPS所有过账('1100','5000')
+                        " and GRN=?");
+                // vendorrid
+                // 1.查询2天内VPS所有过账('1100','5000')
                 rs = vpsDB.executeQuery("select * from (select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from vendorrid " +
                         " where convert(varchar(10),GRNDATE,23) between '"+nowDay_2+"' and '"+nowDay+"' and printQTY<>0.0 and plent in ('1100','5000')" +
                         "union  select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from pcbvendorrid " +
                         " where convert(varchar(10),GRNDATE,23) between '"+nowDay_2+"' and '"+nowDay+"' and printQTY<>0.0 and plent in ('1100','5000') )m  order by grn, partNumber"); //and UpAegisDATE is not null
-                //rsMap：存放closedate为null的数 key:grn+pn value:String[] dou(统计对象数组)
+                // rsMap：存放closedate为null的数 key:grn+pn value:String[] dou(统计对象数组)
                 Map<String,String[]> rsMap=new HashMap<String,String[]>();
                 System.out.println("test1:"+new Date());
                 while (rs.next()) {
                     pstmtDB2.setString(1, rs.getString("grn"));
-                    //2.根据vps提供的过账GRN查询看板 closeDate不为null的数据
-                    ResultSet rsFinish  = pstmtDB2.executeQuery();//--------
-                    if(!rsFinish.next()) {//GRN 没有关闭
+                    commonsLog.info("VPS: " + rs.getString("grn"));
+                    // 2.根据vps提供的过账GRN查询看板 closeDate不为null的数据
+                    ResultSet rsFinish  = pstmtDB2.executeQuery();
+                    commonsLog.info("!rs.next" + !rsFinish.next());
+                    // GRN 没有关闭
+                    if(!rsFinish.next()) {
                         String[] dou=new String[8];
                         String grn = rs.getString("grn");
                         String pn = rs.getString("partNumber");
-                        //2.1将同rsMap: grn pn 为key,看板对象数组为value,统计uid数量，grn数量
+                        commonsLog.info("GRN: " + grn);
+                        // 2 .1将同rsMap: grn pn 为key,看板对象数组为value,统计uid数量，grn数量
                         if(rsMap.containsKey(grn+pn)){
                             dou=rsMap.get(grn+pn);
                             dou[0]=rs.getString("partNumber");
@@ -200,17 +188,19 @@ public class AutoToReceiveCheck {
                 }
                 System.out.println("test2:"+new Date());
                 commonsLog.info("1 vendorrid size:"+rsMap.size());
-                //查询看板Sequence<max(Sequence)还未绑库的数据
+                // 查询看板Sequence<max(Sequence)还未绑库的数据
                 ResultSet executeQuery = grnewdbDB.executeQuery("select * from ToReceiveCheck t " +
                         "join (select GRN,max(Sequence)as Sequence,closeDate from ToReceiveCheck group by GRN,closeDate having closeDate is null) t2 on t.GRN=t2.GRN and t.Sequence=t2.Sequence" +
                         " where t.Sequence < (select max(Sequence) from ToReceiveCheck)");
+                // 看板更新已绑库的 GRN 信息，删除之前未绑库的记录
                 while (executeQuery.next()) {
                     String grn = executeQuery.getString("grn");
                     String pn = executeQuery.getString("ItemNumber");
                     String Sequence = executeQuery.getString("Sequence");
                     String UID = executeQuery.getString("UID");
-                    pstmtA1.setString(1, UID);//temp[3] == UID
-                    //3.根据看板对象数组的rid 查询Aegis
+                    // temp[3] == UID
+                    pstmtA1.setString(1, UID);
+                    // 3.根据看板对象数组的rid 查询Aegis
                     ResultSet rsA = pstmtA1.executeQuery();
                     if(rsA.next()){
                         String closeDate = rsA.getString("StockedDate");
@@ -220,18 +210,21 @@ public class AutoToReceiveCheck {
                         grnewdbDB.executeUpdate("delete from ToReceiveCheck where closeDate is null and GRN='"+grn+"'");
                     }
                 }
-
                 commonsLog.info("1 ToReceiveCheck size:"+rsMap.size());
+                // 获取库位信息
                 for(String key : rsMap.keySet()) {
                     String[] temp = rsMap.get(key);
-                    pstmtA1.setString(1, temp[3]);//temp[3] == UID
-                    //3.根据看板对象数组的rid 查询Aegis
+                    // temp[3] == UID
+                    pstmtA1.setString(1, temp[3]);
+                    // 3.根据看板对象数组的rid 查询Aegis
                     ResultSet rsA = pstmtA1.executeQuery();
-                    //if(key.substring(0, 10).equals("5003316348")){//查询到代表UID绑库，查询不到代表没有绑定库位
+                    // if(key.substring(0, 10).equals("5003316348")){//查询到代表UID绑库，查询不到代表没有绑定库位
                     boolean next = rsA.next();
                     ResultSet executeQuery2 = grnewdbDB.executeQuery("select * from ToReceiveCheck where GRN ='"+key.substring(0, 10)+"'");
-                    if(!next ||(next&&!executeQuery2.next())){//查询到代表UID绑库，查询不到代表没有绑定库位
-                        //3.1封装看板对象
+                    // 查询到代表UID绑库，查询不到代表没有绑定库位
+                    if(!next || (next && !executeQuery2.next())){
+                        commonsLog.info("nextGRN: " + key.substring(0, 10));
+                        // 3.1封装看板对象
                         ToReceiveCheck trc = new ToReceiveCheck();
                         trc.setGRN(key.substring(0, 10));
                         trc.setItemNumber(temp[0]);
@@ -249,6 +242,7 @@ public class AutoToReceiveCheck {
                             String soStartDate = "NA";
                             pstmtDB1.setString(1, temp[4]);
                             pstmtDB1.setString(2, temp[0]);
+                            // 查 sap 下载数据
                             ResultSet rs31  = pstmtDB1.executeQuery();
                             if(rs31.next()) {
                                 if(!"null".equals(rs31.getString("inventory"))) {
@@ -351,9 +345,12 @@ public class AutoToReceiveCheck {
                         grnewdbDB.executeUpdate("delete from ToReceiveCheck where closeDate is null and GRN='"+key.substring(0, 10)+"'");
                     }
                 }
+                commonsLog.info("list输出");
+                for (int j = 0; j < list.size(); j++) {
+                    commonsLog.info("list" + (j+1) + ":" + list.get(j).getGRN() + list.get(j).getType());
+                }
                 trCheckService.saveToReceiveCheck(list);
             }
-
             vpsDB.close();
             conMes.close();
             grnewdbDB.close();

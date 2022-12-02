@@ -15,16 +15,15 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * 2a
- * @date 2020-9-3
- * @author 刘惠明
- * 
+ * 急料检验（非OCR）看板
  *
+ * @author 刘惠明
+ * @date 2020-9-3
  */
-
 public class AutoUrgentMaterialCheckNotOCR {
 	@Autowired
     private IUrgentMaterialCheckNotOCRService umCheckNotOCRService;
+
 	private static Log commonsLog = LogFactory.getLog(AutoUrgentMaterialCheckNotOCR.class);
 
 	public void execute() throws Exception {
@@ -39,6 +38,8 @@ public class AutoUrgentMaterialCheckNotOCR {
 	    	Connection connOrbitX = conOrbitX.con;
 	    	ConDashBoard grnewdbDB = new ConDashBoard();
 	    	Connection connDB = grnewdbDB.con;
+	    	ConKanBan conKanBan = new ConKanBan();
+	    	Connection connKanBan = conKanBan.con;
 	    	SAPService sap = new SAPService();
 	        //
 	        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -253,13 +254,14 @@ public class AutoUrgentMaterialCheckNotOCR {
 						grnewdbDB.executeUpdate("delete from UrgentMaterialCheckNotOCR where closeDate is null " +
 								" and GRN='"+grn+"'");
 					}else {
+						commonsLog.info("赋值：" + rs.getString("rid"));
 						String[] dou=new String[7];
 			            if(rsMap.containsKey(grn+pn)){
 			                dou=rsMap.get(grn+pn);
 			                dou[0]=rs.getString("partNumber");
 			                dou[1]=(Double.parseDouble(dou[1])+Double.parseDouble(rs.getString("printQTY"))) + "";
 			                dou[2]=(Integer.parseInt(dou[2])+1) + "";
-			                if(dou[3].length()< 50000) {
+			                if(dou[3].length() < 50000) {
 			                    dou[3]=rs.getString("rid")+","+dou[3];
 			                }             
 			                dou[4]=rs.getString("plent");
@@ -322,6 +324,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 		            		umcn.setCloseDate(null);
 		            	}
 		            	String uid = rsA.getString("UID");
+		            	commonsLog.info("flagIQC: " + uid);
 		            	pstmtA1.setString(1, uid);
 		            	ResultSet rsA2 = pstmtA1.executeQuery();
 		            	umcn.setIQCReturnTime("");
@@ -513,7 +516,6 @@ public class AutoUrgentMaterialCheckNotOCR {
 		                        	if(!"null".equals(rs31.getString("inventory"))) {
 		                        		totalInventory = rs31.getDouble("inventory");
 		                        	}
-		                            
 		                        }
 		                        ResultSet rs32  = pstmtDB1.executeQuery();
 		                        while(rs32.next()) {

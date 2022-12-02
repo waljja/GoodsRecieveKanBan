@@ -3,21 +3,22 @@ package ht.util;
 import java.sql.*;
 
 /**
- * 196 Orbit X 数据库
+ * 131 看板数据库
  *
  * @author 丁国钊
- * @date 2022-11-17
+ * @date 2022-11-29
  */
-public class ConOrbitX {
+public class ConKanBan {
     private static String strDBDriver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private static String strDBUrl = "jdbc:sqlserver://172.31.2.196;databaseName=OrBitX";
+    private static String strDBUrl = "jdbc:sqlserver://172.31.2.131;databaseName=GRNewDashBoard3";
 
     public Connection con = null;
     private ResultSet rs = null;
     private Statement stmt = null;
     private String user = "sa";
-    private String password = "s=a2011!";
-    public ConOrbitX() {
+    private String password = "dyb8110!";
+
+    public ConKanBan() {
         init();
     }
 
@@ -25,7 +26,6 @@ public class ConOrbitX {
         try {
             Class.forName(strDBDriver).newInstance();
             this.con = DriverManager.getConnection(strDBUrl, this.user, this.password);
-
             this.stmt = this.con
                     .createStatement();
         } catch (InstantiationException e) {
@@ -144,7 +144,7 @@ public class ConOrbitX {
     }
 
     public static void main(String[] args) {
-        ConOrbitX c = new ConOrbitX();
+        ConMes c = new ConMes();
         System.out.println(c.con);
     }
 }

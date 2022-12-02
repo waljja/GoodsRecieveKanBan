@@ -26,9 +26,7 @@ public class UrgentMaterialCheckOCRAction extends ActionSupport{
     private IUrgentMaterialCheckOCRService umCheckOCRService;
     
     public String doList()throws Exception {
-        //doSaveRecords();
-    	//System.out.println("UrgentMaterialCheckOCRAction refresh time: "+ new Date());
-        List<UrgentMaterialCheckOCR> list = umCheckOCRService.findAllUrgentMaterialCheckOCR();    
+        List<UrgentMaterialCheckOCR> list = umCheckOCRService.findAllUrgentMaterialCheckOCR();
         if (list!=null&&list.size()>0) {
             Map request = (Map) ActionContext.getContext().get("request");
             request.put("urgentMaterialCheckOCRList", list); 

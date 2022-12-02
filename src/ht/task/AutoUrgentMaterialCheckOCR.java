@@ -50,10 +50,10 @@ public class AutoUrgentMaterialCheckOCR {
 	        String nowDayTime = df2.format(c.getTime());
 	        c.add(Calendar.DATE, -2); // -2 天
 	        String nowDay_2 = df.format(c.getTime());
-	        //
+	        // 21 -> 24 测试暂时修改
 			if( (nowDayTime.substring(11).compareTo("08:00") >0 && nowDayTime.substring(11).compareTo("12:00") <=0 ) 
 					|| (nowDayTime.substring(11).compareTo("13:00") >0 && nowDayTime.substring(11).compareTo("17:00") <=0 )
-					|| (nowDayTime.substring(11).compareTo("18:00") >0 && nowDayTime.substring(11).compareTo("21:00") <=0 )  ){
+					|| (nowDayTime.substring(11).compareTo("18:00") >0 && nowDayTime.substring(11).compareTo("24:00") <=0 )  ){
 				c.setTime(new Date());
 				c.add(Calendar.DATE, +1);
 				String nowDayAdd2 = df.format(c.getTime());
@@ -126,7 +126,7 @@ public class AutoUrgentMaterialCheckOCR {
 						"CreateTime");
 				/*PreparedStatement pstmtA3 = connMes.prepareStatement("select II.StockLocation, DATEADD(HOUR,8,IIH.TimePosted_BaseDateTimeUTC) AS 'localtime' " +
 	            		" from ItemInventories II " +
-	                    " left join ItemInventoryHistories IIH on IIH.ItemInventoryID = II.ID " +
+	                    " left join ItemInventoryHistorifes IIH on IIH.ItemInventoryID = II.ID " +
 	                    " where (StockLocation like '%QM%' or StockLocation like '%RH%') and II.Identifier =? " +
 	                    " order by IIH.TimePosted_BaseDateTimeUTC desc ");*/
 				PreparedStatement pstmtA3 = connMes.prepareStatement("select " +
@@ -239,7 +239,6 @@ public class AutoUrgentMaterialCheckOCR {
 		            		break;
 		            	}
 					}
-
 		            if(flagQM){
 		            	UrgentMaterialCheckOCR umc = new UrgentMaterialCheckOCR();
 		            	String endDateTime = "";

@@ -15,7 +15,7 @@ public class UrgentMaterialCheckOCRServiceImpl implements IUrgentMaterialCheckOC
     private IUrgentMaterialCheckOCRDao umCheckOCRDao;
 
 	/**
-	 * 加了 "D" 类型
+	 * 增加 "D" 类型
 	 * @return
 	 */
 	@Override
