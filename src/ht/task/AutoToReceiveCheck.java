@@ -16,16 +16,19 @@ import java.util.*;
 
 /**
  * 待点收看板
- * @date 2020-9-3
+ *
  * @author 刘惠明
+ * @date 2020-9-3
  */
 public class AutoToReceiveCheck {
     @Autowired
     private IToReceiveCheckService trCheckService;
+
     private static Log commonsLog = LogFactory.getLog(AutoToReceiveCheck.class);
 
     public void execute() throws Exception {
         commonsLog.info("start...");
+
         try {
             ConVPS vpsDB = new ConVPS();
             Connection connVPS = vpsDB.con;
@@ -33,6 +36,9 @@ public class AutoToReceiveCheck {
             Connection connMes = conMes.con;
             ConDashBoard grnewdbDB = new ConDashBoard();
             Connection connDB = grnewdbDB.con;
+            ConKanBan conKanBan = new ConKanBan();
+            Connection connKanBan = conKanBan.con;
+
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             Calendar c = Calendar.getInstance();
@@ -43,24 +49,26 @@ public class AutoToReceiveCheck {
             // -2 天
             c.add(Calendar.DATE, -2);
             String nowDay_2 = df.format(c.getTime());
+
             //8点-12点     13点-17点    18点-21点
             if( (nowDayTime.substring(11).compareTo("08:00") >0 && nowDayTime.substring(11).compareTo("12:00") <=0 )
                     || (nowDayTime.substring(11).compareTo("13:00") >0 && nowDayTime.substring(11).compareTo("17:00") <=0 )
                     || (nowDayTime.substring(11).compareTo("18:00") >0 && nowDayTime.substring(11).compareTo("21:00") <=0 )  ){
                 c.setTime(new Date());
                 c.add(Calendar.DATE, +1);
-                String nowDayAdd2 = df.format(c.getTime());//跳过节假日后时间
-
-                PreparedStatement pstmt = connDB.prepareStatement("select ExcludeDate from schedul_ExcludeDate where ExcludeDate=?");
+                // 跳过节假日后时间
+                String nowDayAdd2 = df.format(c.getTime());
+                PreparedStatement pstmt = connKanBan.prepareStatement("select ExcludeDate from schedul_ExcludeDate where ExcludeDate=?");
                 pstmt.setString(1, nowDayAdd2);
                 ResultSet rsDay = pstmt.executeQuery();
+
                 while(rsDay.next()) {
                     c.add(Calendar.DATE, +1);
                     nowDayAdd2 = df.format(c.getTime());
                     pstmt.setString(1, nowDayAdd2);
                     rsDay = pstmt.executeQuery();
                 }
-                //
+
                 c.add(Calendar.DATE, +1);
                 nowDayAdd2 = df.format(c.getTime());
                 pstmt.setString(1, nowDayAdd2);
@@ -71,7 +79,7 @@ public class AutoToReceiveCheck {
                     pstmt.setString(1, nowDayAdd2);
                     rsDay = pstmt.executeQuery();
                 }
-                //
+
                 c.add(Calendar.DATE, +1);
                 String nowDayAdd4 = df.format(c.getTime());
                 pstmt.setString(1, nowDayAdd4);
@@ -82,7 +90,7 @@ public class AutoToReceiveCheck {
                     pstmt.setString(1, nowDayAdd4);
                     rsDay = pstmt.executeQuery();
                 }
-                //
+
                 c.add(Calendar.DATE, +1);
                 nowDayAdd4 = df.format(c.getTime());
                 pstmt.setString(1, nowDayAdd4);
@@ -93,13 +101,14 @@ public class AutoToReceiveCheck {
                     pstmt.setString(1, nowDayAdd4);
                     rsDay = pstmt.executeQuery();
                 }
-                //
+
                 List<ToReceiveCheck> list = new ArrayList<ToReceiveCheck>();
                 int seq = 1;
-                ResultSet rs = grnewdbDB.executeQuery("select max(Sequence) as maxseq from ToReceiveCheck where Sequence is not null");
+                ResultSet rs = conKanBan.executeQuery("select max(Sequence) as maxseq from ToReceiveCheck where Sequence is not null");
                 if(rs.next()) {
                     seq = rs.getInt("maxseq")+1;
                 }
+
                 // Aegis
 				/* PreparedStatement pstmtA1 = connAegis.prepareStatement("select FRB.Name as stockname from ItemInventories II " +
 						" left join ItemTypes IT on IT.ID = II.ItemTypeID " +
@@ -135,11 +144,12 @@ public class AutoToReceiveCheck {
                         "a.LLDHDate= ? " +
                         "order by " +
                         "CreateTime");
-                PreparedStatement pstmtDB1 = connDB.prepareStatement("select inventory,needQty,gotQty,soStartDate " +
+                PreparedStatement pstmtDB1 = connKanBan.prepareStatement("select inventory,needQty,gotQty,soStartDate " +
                         " from NotFinishSO where plant=? and bom=? order by soStartDate ");
                 // connDB 暂时 换成 131 看板表
-                PreparedStatement pstmtDB2 = connDB.prepareStatement("select * from ToReceiveCheck where closeDate is not null " +
+                PreparedStatement pstmtDB2 = connKanBan.prepareStatement("select * from ToReceiveCheck where closeDate is not null " +
                         " and GRN=?");
+
                 // vendorrid
                 // 1.查询2天内VPS所有过账('1100','5000')
                 rs = vpsDB.executeQuery("select * from (select grn, partNumber, printQTY, rid, plent, GRNDATE, GRN103, UpAegisDATE from vendorrid " +
@@ -149,18 +159,21 @@ public class AutoToReceiveCheck {
                 // rsMap：存放closedate为null的数 key:grn+pn value:String[] dou(统计对象数组)
                 Map<String,String[]> rsMap=new HashMap<String,String[]>();
                 System.out.println("test1:"+new Date());
+
                 while (rs.next()) {
                     pstmtDB2.setString(1, rs.getString("grn"));
                     commonsLog.info("VPS: " + rs.getString("grn"));
                     // 2.根据vps提供的过账GRN查询看板 closeDate不为null的数据
                     ResultSet rsFinish  = pstmtDB2.executeQuery();
                     commonsLog.info("!rs.next" + !rsFinish.next());
+
                     // GRN 没有关闭
                     if(!rsFinish.next()) {
                         String[] dou=new String[8];
                         String grn = rs.getString("grn");
                         String pn = rs.getString("partNumber");
                         commonsLog.info("GRN: " + grn);
+
                         // 2 .1将同rsMap: grn pn 为key,看板对象数组为value,统计uid数量，grn数量
                         if(rsMap.containsKey(grn+pn)){
                             dou=rsMap.get(grn+pn);
@@ -186,10 +199,12 @@ public class AutoToReceiveCheck {
                         }
                     }
                 }
+
                 System.out.println("test2:"+new Date());
                 commonsLog.info("1 vendorrid size:"+rsMap.size());
+
                 // 查询看板Sequence<max(Sequence)还未绑库的数据
-                ResultSet executeQuery = grnewdbDB.executeQuery("select * from ToReceiveCheck t " +
+                ResultSet executeQuery = conKanBan.executeQuery("select * from ToReceiveCheck t " +
                         "join (select GRN,max(Sequence)as Sequence,closeDate from ToReceiveCheck group by GRN,closeDate having closeDate is null) t2 on t.GRN=t2.GRN and t.Sequence=t2.Sequence" +
                         " where t.Sequence < (select max(Sequence) from ToReceiveCheck)");
                 // 看板更新已绑库的 GRN 信息，删除之前未绑库的记录
@@ -202,15 +217,18 @@ public class AutoToReceiveCheck {
                     pstmtA1.setString(1, UID);
                     // 3.根据看板对象数组的rid 查询Aegis
                     ResultSet rsA = pstmtA1.executeQuery();
+
                     if(rsA.next()){
                         String closeDate = rsA.getString("StockedDate");
-                        grnewdbDB.executeUpdate("update ToReceiveCheck set closeDate = '"+closeDate+"' where " +
+                        conKanBan.executeUpdate("update ToReceiveCheck set closeDate = '"+closeDate+"' where " +
                                 " Sequence = '"+Sequence+"'"+
                                 " and GRN='"+grn+"' and closeDate is null ");
-                        grnewdbDB.executeUpdate("delete from ToReceiveCheck where closeDate is null and GRN='"+grn+"'");
+                        conKanBan.executeUpdate("delete from ToReceiveCheck where closeDate is null and GRN='"+grn+"'");
                     }
                 }
+
                 commonsLog.info("1 ToReceiveCheck size:"+rsMap.size());
+
                 // 获取库位信息
                 for(String key : rsMap.keySet()) {
                     String[] temp = rsMap.get(key);
@@ -220,7 +238,8 @@ public class AutoToReceiveCheck {
                     ResultSet rsA = pstmtA1.executeQuery();
                     // if(key.substring(0, 10).equals("5003316348")){//查询到代表UID绑库，查询不到代表没有绑定库位
                     boolean next = rsA.next();
-                    ResultSet executeQuery2 = grnewdbDB.executeQuery("select * from ToReceiveCheck where GRN ='"+key.substring(0, 10)+"'");
+                    ResultSet executeQuery2 = conKanBan.executeQuery("select * from ToReceiveCheck where GRN ='"+key.substring(0, 10)+"'");
+
                     // 查询到代表UID绑库，查询不到代表没有绑定库位
                     if(!next || (next && !executeQuery2.next())){
                         commonsLog.info("nextGRN: " + key.substring(0, 10));
@@ -230,10 +249,11 @@ public class AutoToReceiveCheck {
                         trc.setItemNumber(temp[0]);
                         trc.setGRNQuantity(temp[1]);
                         trc.setUIDQuantity(temp[2]);
+
                         pstmtA3.setString(1, temp[0]);
                         pstmtA3.setString(2, nowDay);
-                        //
                         ResultSet rsB = pstmtA3.executeQuery();
+
                         if(rsB.next()) {
                             trc.setProductionTime(rsB.getString("RequireTime").substring(0, 10));
                         }else {
@@ -244,14 +264,17 @@ public class AutoToReceiveCheck {
                             pstmtDB1.setString(2, temp[0]);
                             // 查 sap 下载数据
                             ResultSet rs31  = pstmtDB1.executeQuery();
+
                             if(rs31.next()) {
                                 if(!"null".equals(rs31.getString("inventory"))) {
                                     totalInventory = rs31.getDouble("inventory");
                                 }
                             }
                             ResultSet rs32  = pstmtDB1.executeQuery();
+
                             while(rs32.next()) {
                                 totalInventory = totalInventory - (rs32.getDouble("needQty") - rs32.getDouble("gotQty"));
+
                                 if(totalInventory < 0.0) {
                                     soStartDate = rs32.getString("soStartDate");
                                     break;
@@ -259,7 +282,9 @@ public class AutoToReceiveCheck {
                             }
                             trc.setProductionTime(soStartDate);
                         }
+
                         trc.setType("");
+
                         if(!"NA".equals(trc.getProductionTime()) ){
                             if(trc.getProductionTime().compareTo(nowDay) <= 0) {
                                 trc.setType("A");
@@ -271,6 +296,7 @@ public class AutoToReceiveCheck {
                         }else {
                             trc.setType("NA");
                         }
+
                         trc.setUID(temp[3]);
                         trc.setPlant(temp[4]);
                         trc.setGRNDATE(temp[5]);
@@ -329,7 +355,7 @@ public class AutoToReceiveCheck {
                                 double minToHour = min/60.0;
                                 trc.setWaittime(String.format("%.2f", minToHour));
                                 grn_log = trc.getGRN()+" UID:"+temp[3] + ":soStartTime:"+trc.getProductionTime() +"type:"+nowDayTime +" waittime:"+trc.getWaittime();
-                                grnewdbDB.executeUpdate("insert into grn_log(grn,grn_log)values('"+trc.getGRN()+"','"+grn_log+"')");
+                                conKanBan.executeUpdate("insert into grn_log(grn,grn_log)values('"+trc.getGRN()+"','"+grn_log+"')");
 
                             }
                         }else{
@@ -339,10 +365,10 @@ public class AutoToReceiveCheck {
                         trc.setCreatedate(nowDayTime);
                         list.add(trc);
                     }else { //绑库了 更新closeDate，考虑删除此GRN的历史刷新
-                        grnewdbDB.executeUpdate("update ToReceiveCheck set closeDate = (select max(createdate) from ToReceiveCheck where GRN='"+key.substring(0, 10)+"')  where " +
+                        conKanBan.executeUpdate("update ToReceiveCheck set closeDate = (select max(createdate) from ToReceiveCheck where GRN='"+key.substring(0, 10)+"')  where " +
                                 " Sequence = (select max(Sequence) from ToReceiveCheck where GRN='"+key.substring(0, 10)+"') " +
                                 " and GRN='"+key.substring(0, 10)+"' and closeDate is null ");
-                        grnewdbDB.executeUpdate("delete from ToReceiveCheck where closeDate is null and GRN='"+key.substring(0, 10)+"'");
+                        conKanBan.executeUpdate("delete from ToReceiveCheck where closeDate is null and GRN='"+key.substring(0, 10)+"'");
                     }
                 }
                 commonsLog.info("list输出");
@@ -354,7 +380,7 @@ public class AutoToReceiveCheck {
             vpsDB.close();
             conMes.close();
             grnewdbDB.close();
-
+            conKanBan.close();
         } catch (Exception e) {
             commonsLog.error("Exception:", e);
         }

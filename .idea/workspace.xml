@@ -9,100 +9,15 @@
     <list default="true" id="2a48f6ef-6bac-46b6-a95f-b9252f3ca1f3" name="默认变更列表" comment="测试数据查询优化">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/applicationContext.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/AegisModel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/FactoryResourceBases.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/FactoryResourceBasesExample$Criteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/FactoryResourceBasesExample$Criterion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/FactoryResourceBasesExample$GeneratedCriteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/FactoryResourceBasesExample.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/FactoryResourceBasesWithBLOBs.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemInventories.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemInventoriesExample$Criteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemInventoriesExample$Criterion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemInventoriesExample$GeneratedCriteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemInventoriesExample.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemInventoriesWithBLOBs.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemInventoryHistories.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemInventoryHistoriesExample$Criteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemInventoryHistoriesExample$Criterion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemInventoryHistoriesExample$GeneratedCriteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemInventoryHistoriesExample.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemTypes.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemTypesExample$Criteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemTypesExample$Criterion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemTypesExample$GeneratedCriteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemTypesExample.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/ItemTypesWithBLOBs.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/StockLocations.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/StockLocationsExample$Criteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/StockLocationsExample$Criterion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/StockLocationsExample$GeneratedCriteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/StockLocationsExample.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model108/StockLocationsWithBLOBs.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model131/ItemInventoryHistories.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model131/ItemInventoryHistoriesExample$Criteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model131/ItemInventoryHistoriesExample$Criterion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model131/ItemInventoryHistoriesExample$GeneratedCriteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model131/ItemInventoryHistoriesExample.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model131/ItemInventoryHistoriesWithBLOBs.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model131/UID_xTend_MaterialTransactionsRHDCDW.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model131/UID_xTend_MaterialTransactionsRHDCDWExample$Criteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model131/UID_xTend_MaterialTransactionsRHDCDWExample$Criterion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model131/UID_xTend_MaterialTransactionsRHDCDWExample$GeneratedCriteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model131/UID_xTend_MaterialTransactionsRHDCDWExample.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model26/PcbVendorrid.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model26/PcbVendorridExample$Criteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model26/PcbVendorridExample$Criterion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model26/PcbVendorridExample$GeneratedCriteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model26/PcbVendorridExample.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model26/Vendorrid.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model26/VendorridExample$Criteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model26/VendorridExample$Criterion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model26/VendorridExample$GeneratedCriteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model26/VendorridExample.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model26/Vps.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/NotFinishSO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/NotFinishSOExample$Criteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/NotFinishSOExample$Criterion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/NotFinishSOExample$GeneratedCriteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/NotFinishSOExample.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/ToReceiveCheck.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/ToReceiveCheckExample$Criteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/ToReceiveCheckExample$Criterion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/ToReceiveCheckExample$GeneratedCriteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/ToReceiveCheckExample.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/ToReceiveWarehouse.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/ToReceiveWarehouseB.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/ToReceiveWarehouseBExample$Criteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/ToReceiveWarehouseBExample$Criterion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/ToReceiveWarehouseBExample$GeneratedCriteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/ToReceiveWarehouseBExample.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/ToReceiveWarehouseExample$Criteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/ToReceiveWarehouseExample$Criterion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/ToReceiveWarehouseExample$GeneratedCriteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/ToReceiveWarehouseExample.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/UrgentMaterialCheckNotOCR.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/UrgentMaterialCheckNotOCRExample$Criteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/UrgentMaterialCheckNotOCRExample$Criterion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/UrgentMaterialCheckNotOCRExample$GeneratedCriteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/UrgentMaterialCheckNotOCRExample.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/UrgentMaterialCheckOCR.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/UrgentMaterialCheckOCRExample$Criteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/UrgentMaterialCheckOCRExample$Criterion.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/UrgentMaterialCheckOCRExample$GeneratedCriteria.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/model/model33/UrgentMaterialCheckOCRExample.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveCheck.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveCheck.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveWarehouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveWarehouse.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckNotOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckNotOCR.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckOCR.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConMes.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConMes.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConOrbitX.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/util/ConOrbitX.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/action/UrgentMaterialCheckOCRAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/action/UrgentMaterialCheckOCRAction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/biz/impl/UrgentMaterialCheckOCRServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/biz/impl/UrgentMaterialCheckOCRServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/task/AutoToReceiveCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoToReceiveCheck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouseB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouseB.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckNotOCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckNotOCR.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckOCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckOCR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/util/ConMes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/util/ConMes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/util/ConOrbitX.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/util/ConOrbitX.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +63,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Git Code/微信小商城+VUE后台管理/litemall/litemall-admin-api" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../dybB1SmartCarelectronicstore_1.0" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="模块" />
     <property name="project.structure.proportion" value="0.16" />
@@ -157,6 +72,19 @@
     <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/../GRNewDashBoard3（大亚湾最新版）/src/ht/task/AutoToReceiveWarehouseB.java" />
   </component>
   <component name="RunManager" selected="Tomcat 服务器.Tomcat 6.0.44">
+    <configuration name="AutoToReceiveWarehouse" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ht.task.AutoToReceiveWarehouse" />
+      <module name="GRNewDashBoard3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="ht.task.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="AutoUrgentMaterialCheckNotOCR" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <output_file path="D:\SVN Code\GRNewDashBoardCurrent\notocrlog.txt" is_save="true" />
       <option name="MAIN_CLASS_NAME" value="ht.task.AutoUrgentMaterialCheckNotOCR" />
@@ -185,7 +113,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Tomcat 6.0.44" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 6.0.44" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8082/GRNewDashBoard3_war_exploded/" />
       <option name="BROWSER_ID" value="b2a9dca7-9d0b-4e1e-98a8-afb19c1328d2" />
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
@@ -197,6 +137,7 @@
       </deployment>
       <server-settings>
         <option name="BASE_DIRECTORY_NAME" value="e7840aa8-d7e4-445e-a30f-8e92806b25ce" />
+        <option name="HTTP_PORT" value="8082" />
       </server-settings>
       <output_file path="$PROJECT_DIR$/tomcatlog.txt" is_save="true" />
       <predefined_log_file enabled="true" id="Tomcat" />
@@ -278,11 +219,13 @@
       <item itemvalue="Tomcat 服务器.Tomcat 6.0.44" />
       <item itemvalue="应用程序.FetchMesDataTest" />
       <item itemvalue="应用程序.AutoUrgentMaterialCheckNotOCR" />
+      <item itemvalue="应用程序.AutoToReceiveWarehouse" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="应用程序.FetchMesDataTest" />
+        <item itemvalue="应用程序.AutoToReceiveWarehouse" />
         <item itemvalue="应用程序.AutoUrgentMaterialCheckNotOCR" />
+        <item itemvalue="应用程序.FetchMesDataTest" />
       </list>
     </recent_temporary>
   </component>
@@ -300,7 +243,10 @@
       <workItem from="1669336793979" duration="35118000" />
       <workItem from="1669600207722" duration="4750000" />
       <workItem from="1669605572279" duration="82509000" />
-      <workItem from="1669952744764" duration="10879000" />
+      <workItem from="1669952744764" duration="11249000" />
+      <workItem from="1670027200668" duration="21845000" />
+      <workItem from="1670164050562" duration="93000" />
+      <workItem from="1670199138299" duration="5439000" />
     </task>
     <task id="LOCAL-00001" summary="测试数据查询优化">
       <created>1669253866915</created>

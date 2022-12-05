@@ -16,10 +16,9 @@ import java.util.*;
 
 /**
  * 2b
- * @date 2020-9-3
- * @author 刘惠明
- * 
  *
+ * @author 刘惠明
+ * @date 2020-9-3
  */
 
 public class AutoUrgentMaterialCheckOCR {
@@ -39,6 +38,8 @@ public class AutoUrgentMaterialCheckOCR {
 			Connection connOrbitX = conOrbitX.con;
 	    	ConDashBoard grnewdbDB = new ConDashBoard();
 	    	Connection connDB = grnewdbDB.con;
+			ConKanBan conKanBan = new ConKanBan();
+			Connection connKanBan = conKanBan.con;
 	        SAPService sap = new SAPService();
 	        //
 	        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -50,14 +51,13 @@ public class AutoUrgentMaterialCheckOCR {
 	        String nowDayTime = df2.format(c.getTime());
 	        c.add(Calendar.DATE, -2); // -2 天
 	        String nowDay_2 = df.format(c.getTime());
-	        // 21 -> 24 测试暂时修改
 			if( (nowDayTime.substring(11).compareTo("08:00") >0 && nowDayTime.substring(11).compareTo("12:00") <=0 ) 
 					|| (nowDayTime.substring(11).compareTo("13:00") >0 && nowDayTime.substring(11).compareTo("17:00") <=0 )
-					|| (nowDayTime.substring(11).compareTo("18:00") >0 && nowDayTime.substring(11).compareTo("24:00") <=0 )  ){
+					|| (nowDayTime.substring(11).compareTo("18:00") >0 && nowDayTime.substring(11).compareTo("21:00") <=0 )  ){
 				c.setTime(new Date());
 				c.add(Calendar.DATE, +1);
 				String nowDayAdd2 = df.format(c.getTime());
-				PreparedStatement pstmt = connDB.prepareStatement("select ExcludeDate from schedul_ExcludeDate where ExcludeDate=?");
+				PreparedStatement pstmt = connKanBan.prepareStatement("select ExcludeDate from schedul_ExcludeDate where ExcludeDate=?");
 				pstmt.setString(1, nowDayAdd2);
 				ResultSet rsDay = pstmt.executeQuery();
 				while(rsDay.next()) {
@@ -102,7 +102,7 @@ public class AutoUrgentMaterialCheckOCR {
 				//
 				List<UrgentMaterialCheckOCR> list = new ArrayList<UrgentMaterialCheckOCR>();
 				int seq = 1;
-				ResultSet rs = grnewdbDB.executeQuery("select max(Sequence) as maxseq from UrgentMaterialCheckOCR where Sequence is not null");
+				ResultSet rs = conKanBan.executeQuery("select max(Sequence) as maxseq from UrgentMaterialCheckOCR where Sequence is not null");
 				if(rs.next()) {
 					seq = rs.getInt("maxseq")+1;
 				}
@@ -163,9 +163,9 @@ public class AutoUrgentMaterialCheckOCR {
 						"GRN = ? " +
 						"and " +
 						"IQCMVT = '122'");
-				PreparedStatement pstmtDB1 = connDB.prepareStatement(" select inventory,needQty,gotQty,soStartDate " +
+				PreparedStatement pstmtDB1 = connKanBan.prepareStatement(" select inventory,needQty,gotQty,soStartDate " +
 						" from NotFinishSO where plant=? and bom=? order by soStartDate ");
-		        PreparedStatement pstmtDB2 = connDB.prepareStatement("select * from UrgentMaterialCheckOCR where closeDate is not null " +
+		        PreparedStatement pstmtDB2 = connKanBan.prepareStatement("select * from UrgentMaterialCheckOCR where closeDate is not null " +
 						" and GRN=? ");
 				//vendorrid
 				//2020-12-11 by XiaoYing HAO
@@ -386,7 +386,7 @@ public class AutoUrgentMaterialCheckOCR {
 		        	pstmtDB2.setString(1, grn);
 					ResultSet rsFinish  = pstmtDB2.executeQuery();
 					if(rsFinish.next()) {
-						grnewdbDB.executeUpdate("delete from UrgentMaterialCheckOCR where closeDate is null " +
+						conKanBan.executeUpdate("delete from UrgentMaterialCheckOCR where closeDate is null " +
 								" and GRN='"+grn+"'");
 					}else {
 						String[] dou=new String[6];
@@ -566,6 +566,7 @@ public class AutoUrgentMaterialCheckOCR {
 	        vpsDB.close();
 	        conMes.close();
 	        grnewdbDB.close();
+	        conKanBan.close();
 		} catch (Exception e) {
 			commonsLog.error("Exception:", e);
 		}

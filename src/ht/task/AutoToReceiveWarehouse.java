@@ -50,6 +50,8 @@ public class AutoToReceiveWarehouse {
 			Connection connOrbitX = conOrbitX.con;
 	    	ConDashBoard grnewdbDB = new ConDashBoard();
 	    	Connection connDB = grnewdbDB.con;
+	    	ConKanBan conKanBan = new ConKanBan();
+	    	Connection connKanBan = conKanBan.con;
 	    	SAPService sap = new SAPService();
 	        //
 	        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -68,7 +70,7 @@ public class AutoToReceiveWarehouse {
 				c.setTime(new Date());
 				c.add(Calendar.DATE, +1);
 				String nowDayAdd2 = df.format(c.getTime());
-				PreparedStatement pstmt = connDB.prepareStatement("select ExcludeDate from schedul_ExcludeDate where ExcludeDate=?");
+				PreparedStatement pstmt = connKanBan.prepareStatement("select ExcludeDate from schedul_ExcludeDate where ExcludeDate=?");
 				pstmt.setString(1, nowDayAdd2);
 				ResultSet rsDay = pstmt.executeQuery();
 				while(rsDay.next()) {
@@ -113,7 +115,7 @@ public class AutoToReceiveWarehouse {
 				//
 				List<ToReceiveWarehouse> list = new ArrayList<ToReceiveWarehouse>();
 				int seq = 1;
-				ResultSet rs = grnewdbDB.executeQuery("select max(Sequence) as maxseq from ToReceiveWarehouse where Sequence is not null");
+				ResultSet rs = conKanBan.executeQuery("select max(Sequence) as maxseq from ToReceiveWarehouse where Sequence is not null");
 				if(rs.next()) {
 					seq = rs.getInt("maxseq")+1;
 				}
@@ -162,9 +164,10 @@ public class AutoToReceiveWarehouse {
 						"GRN = ?" +
 						"and " +
 						"IQCMVT = '321'");
-				PreparedStatement pstmtDB1 = connDB.prepareStatement(" select inventory,needQty,gotQty,soStartDate " +
+				PreparedStatement pstmtDB1 = connKanBan.prepareStatement(" select inventory,needQty,gotQty,soStartDate " +
 	                 	" from NotFinishSO where plant=? and bom=? order by soStartDate ");
-				PreparedStatement pstmtDB2 = connDB.prepareStatement("select * from ToReceiveWarehouse where ReturnWarehouseTime <>'' " +
+				// connDB -> connKanBan 暂时替换
+				PreparedStatement pstmtDB2 = connKanBan.prepareStatement("select * from ToReceiveWarehouse where ReturnWarehouseTime <>'' " +
 						" and GRN=? ");
 				// vendorrid
 				rs = vpsDB.executeQuery("select grn, partNumber, printQTY, rid, plent from vendorrid " +
@@ -179,7 +182,8 @@ public class AutoToReceiveWarehouse {
 		        	pstmtDB2.setString(1, grn);
 					ResultSet rsFinish  = pstmtDB2.executeQuery();
 					if(rsFinish.next()) {
-						grnewdbDB.executeUpdate("delete from ToReceiveWarehouse where ReturnWarehouseTime ='' " +
+						// grnewdbDB -> conKanBan
+						conKanBan.executeUpdate("delete from ToReceiveWarehouse where ReturnWarehouseTime ='' " +
 								" and GRN='"+grn+"'");
 					}else {
 						String[] dou=new String[5];
@@ -205,6 +209,7 @@ public class AutoToReceiveWarehouse {
 					i += 1;
 					commonsLog.info("VPS查询GRN:" + i);
 					commonsLog.info("GRN:" + grn);
+					commonsLog.info("");
 		        }
 				System.out.println("循环耗时：" + (System.currentTimeMillis() - startTime) / 60000);
 				commonsLog.info("退出循环");
@@ -351,7 +356,7 @@ public class AutoToReceiveWarehouse {
 				commonsLog.info("第一段结束");
 		        // pcbvendorrid
 				rs = vpsDB.executeQuery("select grn, partNumber, printQTY, rid, plent from pcbvendorrid " +
-		                " where convert(varchar(10),GRNDATE,23) between '"+nowDay_2+"' and '"+nowDay+"' and UpAegis='pass' and plent in (''1100',1200','5000')  ");
+		                " where convert(varchar(10),GRNDATE,23) between '"+nowDay_2+"' and '"+nowDay+"' and UpAegis='pass' and plent in ('1100','1200','5000')  ");
 				rsMap=new HashMap<String,String[]>();
 				int k = 0;
 				long startTime2 = System.currentTimeMillis();
@@ -361,7 +366,7 @@ public class AutoToReceiveWarehouse {
 		        	pstmtDB2.setString(1, grn);
 					ResultSet rsFinish  = pstmtDB2.executeQuery();
 					if(rsFinish.next()) {
-						grnewdbDB.executeUpdate("delete from ToReceiveWarehouse where ReturnWarehouseTime ='' " +
+						conKanBan.executeUpdate("delete from ToReceiveWarehouse where ReturnWarehouseTime ='' " +
 								" and GRN='"+grn+"'");
 					}else {
 						String[] dou=new String[5];
@@ -543,13 +548,14 @@ public class AutoToReceiveWarehouse {
 	        vpsDB.close();
 	        conMes.close();
 	        grnewdbDB.close();
+	        conKanBan.close();
 		} catch (Exception e) {
 			commonsLog.error("Exception:", e);
 		}
 		commonsLog.info("end...");
 	}
 	
-	//减去 用餐时间
+	// 减去 用餐时间
 	public int calFoodTime(String startDateTime, String endDateTime) {
 		int min = 0;
 		if(startDateTime.substring(11).compareTo("12:00") < 0) {

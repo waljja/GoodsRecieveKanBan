@@ -59,7 +59,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 				c.setTime(new Date());
 				c.add(Calendar.DATE, +1);
 				String nowDayAdd2 = df.format(c.getTime());
-				PreparedStatement pstmt = connDB.prepareStatement("select ExcludeDate from schedul_ExcludeDate where ExcludeDate=?");
+				PreparedStatement pstmt = connKanBan.prepareStatement("select ExcludeDate from schedul_ExcludeDate where ExcludeDate=?");
 				pstmt.setString(1, nowDayAdd2);
 				ResultSet rsDay = pstmt.executeQuery();
 				while(rsDay.next()) {
@@ -117,7 +117,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 				List<UrgentMaterialCheckNotOCR> list = new ArrayList<UrgentMaterialCheckNotOCR>();
 				List<String> deleteList = new ArrayList<String>();
 				int seq = 1;
-				ResultSet rs = grnewdbDB.executeQuery("select max(Sequence) as maxseq from UrgentMaterialCheckNotOCR where Sequence is not null");
+				ResultSet rs = conKanBan.executeQuery("select max(Sequence) as maxseq from UrgentMaterialCheckNotOCR where Sequence is not null");
 				if(rs.next()) {
 					seq = rs.getInt("maxseq")+1;
 				}
@@ -225,9 +225,9 @@ public class AutoUrgentMaterialCheckNotOCR {
 						"GRN = ? " +
 						"and " +
 						"IQCMVT = '122'");
-		        PreparedStatement pstmtDB1 = connDB.prepareStatement("select inventory,needQty,gotQty,soStartDate " +
+		        PreparedStatement pstmtDB1 = connKanBan.prepareStatement("select inventory,needQty,gotQty,soStartDate " +
 	            		" from NotFinishSO where plant=? and bom=? order by soStartDate ");
-		        PreparedStatement pstmtDB2 = connDB.prepareStatement("select * from UrgentMaterialCheckNotOCR where closeDate is not null " +
+		        PreparedStatement pstmtDB2 = connKanBan.prepareStatement("select * from UrgentMaterialCheckNotOCR where closeDate is not null " +
 						" and GRN=? ");
 				//vendorrid
 		        //2020-12-11 by XiaoYing HAO
@@ -251,10 +251,9 @@ public class AutoUrgentMaterialCheckNotOCR {
 		        	pstmtDB2.setString(1, grn);
 					ResultSet rsFinish  = pstmtDB2.executeQuery();
 					if(rsFinish.next()) {
-						grnewdbDB.executeUpdate("delete from UrgentMaterialCheckNotOCR where closeDate is null " +
+						conKanBan.executeUpdate("delete from UrgentMaterialCheckNotOCR where closeDate is null " +
 								" and GRN='"+grn+"'");
 					}else {
-						commonsLog.info("赋值：" + rs.getString("rid"));
 						String[] dou=new String[7];
 			            if(rsMap.containsKey(grn+pn)){
 			                dou=rsMap.get(grn+pn);
@@ -280,13 +279,16 @@ public class AutoUrgentMaterialCheckNotOCR {
 			            }
 					}
 		        }
+
 		        commonsLog.info("2a vendorrid size:"+rsMap.size());
+
 		        for(String key : rsMap.keySet()) {
 	            	//
 		            String[] temp = rsMap.get(key);
 		            ResultSet rsA = null;
 		            boolean flagIQC = false;
 		            String[] UIDs = temp[3].split(",");
+
 		            for (String UID : UIDs) {
 		            	pstmtA5.setString(1, UID) ;
 		            	rsA = pstmtA5.executeQuery();
@@ -295,7 +297,9 @@ public class AutoUrgentMaterialCheckNotOCR {
 		            		break;
 		            	}
 					}
+
 		            if(flagIQC){
+		            	commonsLog.info("iqc");
 		            	//有IQ库位
 		            	UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
 			        	String endDateTime = "";
@@ -324,7 +328,6 @@ public class AutoUrgentMaterialCheckNotOCR {
 		            		umcn.setCloseDate(null);
 		            	}
 		            	String uid = rsA.getString("UID");
-		            	commonsLog.info("flagIQC: " + uid);
 		            	pstmtA1.setString(1, uid);
 		            	ResultSet rsA2 = pstmtA1.executeQuery();
 		            	umcn.setIQCReturnTime("");
@@ -393,7 +396,6 @@ public class AutoUrgentMaterialCheckNotOCR {
 								continue;
 							}							
 						}
-						
 
 	                    umcn.setUID(uid);
 	                    umcn.setPlant(temp[4]);
@@ -448,6 +450,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 	                    //end 有IQ 
 		            }else {
 		            	boolean flagQM = false;
+
 		            	for (String UID : UIDs) {
 		            		pstmtA6.setString(1, UID);
 			            	rsA = pstmtA6.executeQuery();
@@ -456,6 +459,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 			            		break;
 			            	}
 						}
+
 		            	if(flagQM) {
 		            		UrgentMaterialCheckNotOCR umcn = new UrgentMaterialCheckNotOCR();
 				        	String endDateTime = "";
@@ -588,6 +592,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 		                    }
 		                    umcn.setSequence(seq);
 		                    umcn.setCreatedate(nowDayTime);
+		                    commonsLog.info("umcn: " + umcn.getGRN() + "	" + umcn.getRDFinishTime() + "	" + umcn.getType());
 		                    if(!"".equals(umcn.getRDFinishTime())||umcn.getType().equals("D")) {
 		                    	list.add(umcn);
 								commonsLog.info("QM" + umcn.getGRN());
@@ -618,7 +623,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 		        	pstmtDB2.setString(1, grn);
 					ResultSet rsFinish  = pstmtDB2.executeQuery();
 					if(rsFinish.next()) {
-						grnewdbDB.executeUpdate("delete from UrgentMaterialCheckNotOCR where closeDate is null " +
+						conKanBan.executeUpdate("delete from UrgentMaterialCheckNotOCR where closeDate is null " +
 								" and GRN='"+grn+"'");
 					}else {
 						String[] dou=new String[7];
@@ -971,6 +976,7 @@ public class AutoUrgentMaterialCheckNotOCR {
 	        vpsDB.close();
 	        conMes.close();
 	        grnewdbDB.close();
+	        conKanBan.close();
 		} catch (Exception e) {
 			commonsLog.error("Exception:", e);
 		}
