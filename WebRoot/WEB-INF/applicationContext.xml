@@ -90,7 +90,7 @@
  	<!-- 配置一个触发器() -->
 	<bean id="startTrigger101" class="org.springframework.scheduling.quartz.CronTriggerBean">
 	  <property name="jobDetail" ref="startTask101"></property>
-	  <property name="cronExpression" value="0 58 8 * * ? "></property> <!--每15分钟执行一次-->
+	  <property name="cronExpression" value="0 36 15 * * ? "></property> <!--每15分钟执行一次-->
 	</bean>
 
 	<!--定时任务：  2a. 急料检验看板（非OCR）  -->

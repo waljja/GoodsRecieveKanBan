@@ -114,12 +114,16 @@ public class AutoToReceiveCheck {
 						" left join ItemTypes IT on IT.ID = II.ItemTypeID " +
 						" left join FactoryResourceBases FRB on FRB.ID = II.StockResourceID " +
 						" where II.Identifier = ? and (FRB.Name is not null and FRB.Name <> '') "); */
-                PreparedStatement pstmtA1 = connMes.prepareStatement("select " +
-                        "ToStock_Input " +
-                        "from " +
-                        "UID_xTend_MaterialTransactionsRHDCDW " +
-                        "where " +
-                        "UID = ? " +
+                PreparedStatement pstmtA1 = connMes.prepareStatement("select  " +
+                        "UID.ToStock_Input,IIH.TimePosted_BaseDateTimeUTC as StockedDate  " +
+                        "from  " +
+                        "UID_xTend_MaterialTransactionsRHDCDW UID " +
+                        "left join " +
+                        "ItemInventoryHistories IIH " +
+                        "on " +
+                        "IIH.UID COLLATE Chinese_PRC_CI_AS = UID.UID " +
+                        "where  " +
+                        "UID.UID = ? " +
                         "and " +
                         "ToStock_Input is not null " +
                         "and " +

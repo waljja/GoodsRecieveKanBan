@@ -11,13 +11,11 @@
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/applicationContext.xml" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/applicationContext.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveCheck.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveCheck.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveWarehouse.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveWarehouse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveWarehouseB.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoToReceiveWarehouseB.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckNotOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckNotOCR.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckOCR.class" beforeDir="false" afterPath="$PROJECT_DIR$/WebRoot/WEB-INF/classes/ht/task/AutoUrgentMaterialCheckOCR.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ht/task/AutoToReceiveCheck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoToReceiveCheck.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouseB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouseB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckNotOCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckNotOCR.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckOCR.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ht/task/AutoUrgentMaterialCheckOCR.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ht/task/AutoToReceiveWarehouseTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -246,7 +244,7 @@
       <workItem from="1669952744764" duration="11249000" />
       <workItem from="1670027200668" duration="21845000" />
       <workItem from="1670164050562" duration="93000" />
-      <workItem from="1670199138299" duration="5439000" />
+      <workItem from="1670199138299" duration="15916000" />
     </task>
     <task id="LOCAL-00001" summary="测试数据查询优化">
       <created>1669253866915</created>
